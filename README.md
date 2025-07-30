@@ -180,12 +180,6 @@ Las contribuciones son bienvenidas. Por favor:
 
 Este proyecto está bajo la Licencia Apache 2.0 - ver el archivo [LICENSE](LICENSE) para más detalles.
 
-## 🙏 Agradecimientos
-
-- Google ADK por el framework de agentes
-- Google Gemini por el modelo de lenguaje
-- La comunidad de FastAPI
-
 ---
 
 ¡Disfruta tu experiencia con **Félix** en **Comida Rápida Fantástica**! 🍔✨

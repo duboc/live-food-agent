@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comida Rápida Fantástica - Félix, tu Amigo del Sabor</title>
+    <script src="/static/js/app.js" type="module"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --primary-red: #FF4444;
+        --primary-orange: #FF8800;
+        --primary-yellow: #FFD700;
+        --dark-red: #CC2222;
+        --dark-orange: #DD6600;
+        --green-accent: #22CC44;
+        --background-cream: #FFF8F0;
+        --text-dark: #2D1B1B;
+        --text-light: #FFFFFF;
+        --shadow: rgba(0, 0, 0, 0.15);
+        --border-radius: 12px;
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, var(--background-cream) 0%, #FFF5E6 100%);
+        color: var(--text-dark);
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+      
+      .container {
+        display: grid;
+        grid-template-columns: 350px 1fr 300px;
+        gap: 20px;
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 20px;
+        min-height: 100vh;
+      }
+      
+      /* Header */
+      .header {
+        grid-column: 1 / -1;
+        text-align: center;
+        background: linear-gradient(45deg, var(--primary-red), var(--primary-orange));
+        color: var(--text-light);
+        padding: 20px;
+        border-radius: var(--border-radius);
+        box-shadow: 0 4px 20px var(--shadow);
+        margin-bottom: 20px;
+      }
+      
+      .logo {
+        font-family: 'Fredoka One', cursive;
+        font-size: 2.5rem;
+        margin-bottom: 8px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      
+      .tagline {
+        font-size: 1.1rem;
+        font-weight: 500;
+        opacity: 0.95;
+      }
+      
+      /* Menu Section */
+      .menu-section {
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: 0 4px 20px var(--shadow);
+        padding: 20px;
+        height: fit-content;
+        position: sticky;
+        top: 20px;
+      }
+      
+      .menu-title {
+        font-family: 'Fredoka One', cursive;
+        font-size: 1.5rem;
+        color: var(--primary-red);
+        margin-bottom: 20px;
+        text-align: center;
+        border-bottom: 2px solid var(--primary-yellow);
+        padding-bottom: 10px;
+      }
+      
+      .menu-category {
+        margin-bottom: 25px;
+      }
+      
+      .category-title {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: var(--dark-red);
+        margin-bottom: 12px;
+        padding: 8px 12px;
+        background: linear-gradient(45deg, var(--primary-yellow), #FFE55C);
+        border-radius: 8px;
+        text-align: center;
+      }
+      
+      .menu-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 12px;
+        margin-bottom: 8px;
+        background: var(--background-cream);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+      }
+      
+      .menu-item:hover {
+        background: var(--primary-yellow);
+        transform: translateX(5px);
+        border-color: var(--primary-orange);
+      }
+      
+      .item-info {
+        flex: 1;
+      }
+      
+      .item-name {
+        font-weight: 500;
+        color: var(--text-dark);
+        font-size: 0.9rem;
+        margin-bottom: 2px;
+      }
+      
+      .item-description {
+        font-size: 0.75rem;
+        color: #666;
+        line-height: 1.3;
+      }
+      
+      .item-price {
+        font-weight: 600;
+        color: var(--primary-red);
+        font-size: 1rem;
+        margin-left: 10px;
+      }
+      
+      /* Order Section (Third Column) */
+      .order-section {
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: 0 4px 20px var(--shadow);
+        padding: 20px;
+        height: fit-content;
+        position: sticky;
+        top: 20px;
+      }
+      
+      /* Current Order Section */
+      .current-order {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 20px;
+        border: 2px solid var(--green-accent);
+        box-shadow: 0 2px 10px rgba(34, 204, 68, 0.2);
+      }
+      
+      .order-title {
+        font-family: 'Fredoka One', cursive;
+        font-size: 1.3rem;
+        color: var(--green-accent);
+        margin-bottom: 20px;
+        text-align: center;
+        border-bottom: 2px solid var(--primary-yellow);
+        padding-bottom: 10px;
+      }
+      
+      .order-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        border-bottom: 1px solid #eee;
+        font-size: 0.9rem;
+      }
+      
+      .order-total {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: var(--primary-red);
+        text-align: center;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 2px solid var(--primary-yellow);
+      }
+      
+      /* Chat Section */
+      .chat-section {
+        display: flex;
+        flex-direction: column;
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: 0 4px 20px var(--shadow);
+        overflow: hidden;
+        height: calc(100vh - 200px);
+        min-height: 600px;
+      }
+      
+      .chat-header {
+        background: linear-gradient(45deg, var(--primary-orange), var(--primary-yellow));
+        color: var(--text-dark);
+        padding: 15px 20px;
+        text-align: center;
+        font-weight: 600;
+      }
+      
+      .felix-avatar {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background: var(--primary-red);
+        border-radius: 50%;
+        margin-right: 10px;
+        vertical-align: middle;
+        text-align: center;
+        line-height: 40px;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+      
+      #messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        background: linear-gradient(to bottom, #FFFBF7, #FFF8F0);
+        display: flex;
+        flex-direction: column;
+        scroll-behavior: smooth;
+      }
+      
+      #messages p {
+        margin-bottom: 16px;
+        padding: 12px 16px;
+        border-radius: 18px;
+        max-width: 85%;
+        word-wrap: break-word;
+        animation: slideIn 0.3s ease-out;
+      }
+      
+      .agent-message {
+        background: linear-gradient(45deg, var(--primary-yellow), #FFE55C);
+        color: var(--text-dark);
+        align-self: flex-start;
+        border-bottom-left-radius: 4px;
+        border: 1px solid var(--primary-orange);
+        font-weight: 500;
+      }
+      
+      .user-message {
+        background: linear-gradient(45deg, var(--primary-red), var(--dark-red));
+        color: var(--text-light);
+        align-self: flex-end;
+        border-bottom-right-radius: 4px;
+        margin-left: auto;
+        font-weight: 500;
+      }
+      
+      #messageForm {
+        display: flex;
+        gap: 10px;
+        padding: 16px;
+        background: var(--background-cream);
+        border-top: 2px solid var(--primary-yellow);
+      }
+      
+      #message {
+        flex: 1;
+        padding: 12px 16px;
+        border: 2px solid var(--primary-orange);
+        border-radius: 25px;
+        font-size: 16px;
+        outline: none;
+        transition: all 0.2s ease;
+        background: white;
+      }
+      
+      #message:focus {
+        border-color: var(--primary-red);
+        box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.3);
+        transform: scale(1.02);
+      }
+      
+      button {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      #sendButton {
+        background: linear-gradient(45deg, var(--primary-red), var(--dark-red));
+        color: var(--text-light);
+      }
+      
+      #sendButton:hover:not(:disabled) {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 4px 15px rgba(255, 68, 68, 0.4);
+      }
+      
+      #sendButton:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+      }
+      
+      #startAudioButton {
+        background: linear-gradient(45deg, var(--green-accent), #1AA033);
+        color: var(--text-light);
+      }
+      
+      #startAudioButton:hover:not(:disabled) {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 4px 15px rgba(34, 204, 68, 0.4);
+      }
+      
+      #stopAudioButton {
+        background: linear-gradient(45deg, #FF6B6B, #FF5252);
+        color: var(--text-light);
+        display: none;
+      }
+      
+      .status-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 15px;
+        font-size: 14px;
+        font-weight: 500;
+        gap: 20px;
+      }
+      
+      .status-item {
+        display: flex;
+        align-items: center;
+        padding: 8px 15px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #ccc;
+        margin-right: 8px;
+      }
+      
+      .status-dot.connected {
+        background-color: var(--green-accent);
+        animation: pulse 2s infinite;
+      }
+      
+      .status-dot.recording {
+        background-color: var(--primary-red);
+        animation: pulse-recording 1s infinite;
+      }
+      
+      /* Combo Highlights */
+      .combo-section {
+        background: linear-gradient(45deg, var(--green-accent), #22DD55);
+        color: white;
+        padding: 15px;
+        border-radius: var(--border-radius);
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      
+      .combo-title {
+        font-family: 'Fredoka One', cursive;
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+      
+      .combo-item {
+        background: rgba(255, 255, 255, 0.2);
+        margin: 8px 0;
+        padding: 10px;
+        border-radius: 8px;
+        font-weight: 500;
+      }
+      
+      .combo-savings {
+        background: var(--primary-yellow);
+        color: var(--text-dark);
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-weight: 600;
+        display: inline-block;
+        margin-top: 5px;
+      }
+      
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .container {
+          grid-template-columns: 1fr;
+          padding: 10px;
+        }
+        
+        .menu-section {
+          position: static;
+          order: 2;
+        }
+        
+        .chat-section {
+          order: 1;
+          height: 500px;
+        }
+        
+        #messageForm {
+          flex-direction: column;
+        }
+        
+        button {
+          width: 100%;
+        }
+      }
+      
+      /* Animations */
+      @keyframes slideIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      @keyframes pulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.2); opacity: 0.7; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      
+      @keyframes pulse-recording {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.3); }
+        100% { transform: scale(1); }
+      }
+      
+      /* Special Effects */
+      .sparkle {
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .sparkle::before {
+        content: '✨';
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 0.8rem;
+        animation: sparkle 2s infinite;
+      }
+      
+      @keyframes sparkle {
+        0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+        50% { opacity: 1; transform: scale(1) rotate(180deg); }
+      }
+      
+      /* Order Item Styles */
+      .order-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 10px;
+        border-bottom: 1px solid #eee;
+        font-size: 0.9rem;
+        animation: fadeIn 0.3s ease-out;
+      }
+      
+      .order-item:last-child {
+        border-bottom: none;
+      }
+      
+      .order-item-details {
+        flex: 1;
+      }
+      
+      .order-item-name {
+        font-weight: 500;
+        color: var(--text-dark);
+      }
+      
+      .order-item-quantity {
+        font-size: 0.8rem;
+        color: #666;
+      }
+      
+      .order-item-price {
+        font-weight: 600;
+        color: var(--primary-red);
+        margin-left: 10px;
+      }
+      
+      /* Clear Order Button */
+      .clear-order-btn {
+        width: 100%;
+        margin-top: 10px;
+        background: linear-gradient(45deg, #FF6B6B, #FF5252);
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+      
+      .clear-order-btn:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+      }
+      
+      /* Order Success Animation */
+      @keyframes orderSuccess {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); background-color: var(--green-accent); }
+        100% { transform: scale(1); }
+      }
+      
+      .order-success {
+        animation: orderSuccess 0.5s ease-out;
+      }
+      
+      /* Loading Spinner */
+      .loading-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top-color: var(--primary-orange);
+        animation: spin 1s ease-in-out infinite;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      
+      /* Quick Add Buttons */
+      .quick-add {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: none;
+        gap: 5px;
+      }
+      
+      .menu-item:hover .quick-add {
+        display: flex;
+      }
+      
+      .quick-add-btn {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        border: none;
+        background: var(--primary-red);
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      
+      .quick-add-btn:hover {
+        transform: scale(1.2);
+        background: var(--dark-red);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="logo">🍔 Comida Rápida Fantástica</div>
+        <div class="tagline">¡Félix, tu Amigo del Sabor te está esperando!</div>
+      </div>
+      
+      <div class="menu-section">
+        <div class="menu-title">🍟 Nuestro Menú Fantástico</div>
+        
+        <!-- Combos Especiales -->
+        <div class="combo-section sparkle">
+          <div class="combo-title">¡COMBOS INCREÍBLES!</div>
+          <div class="combo-item">
+            <strong>Combo Fantástico Clásico</strong><br>
+            Hamburguesa + Papitas + Refresco<br>
+            <span class="combo-savings">¡Ahorra $2.00! Solo $5.00</span>
+          </div>
+          <div class="combo-item">
+            <strong>Combo Doble Delicia</strong><br>
+            Doble carne + Papitas + Refresco<br>
+            <span class="combo-savings">¡Ahorra $1.50! Solo $7.00</span>
+          </div>
+        </div>
+        
+        <!-- Sándwiches -->
+        <div class="menu-category">
+          <div class="category-title">🍔 SÁNDWICHES</div>
+          <div class="menu-item" data-product="Clásica con Queso CRF">
+            <div class="item-info">
+              <div class="item-name">Clásica con Queso CRF</div>
+              <div class="item-description">La estrella con queso derretido</div>
+            </div>
+            <div class="item-price">$3.50</div>
+          </div>
+          <div class="menu-item" data-product="Doble Delicia CRF">
+            <div class="item-info">
+              <div class="item-name">Doble Delicia CRF</div>
+              <div class="item-description">Doble carne, doble sabor</div>
+            </div>
+            <div class="item-price">$5.00</div>
+          </div>
+          <div class="menu-item" data-product="Pollo Fantástico Crujiente">
+            <div class="item-info">
+              <div class="item-name">Pollo Fantástico Crujiente</div>
+              <div class="item-description">Súper crujiente y delicioso</div>
+            </div>
+            <div class="item-price">$4.00</div>
+          </div>
+          <div class="menu-item" data-product="Rey Tocino CRF">
+            <div class="item-info">
+              <div class="item-name">Rey Tocino CRF</div>
+              <div class="item-description">Paraíso para amantes del tocino</div>
+            </div>
+            <div class="item-price">$6.00</div>
+          </div>
+        </div>
+        
+        <!-- Acompañamientos -->
+        <div class="menu-category">
+          <div class="category-title">🍟 ACOMPAÑAMIENTOS</div>
+          <div class="menu-item" data-product="Papitas Fantásticas (Medianas)">
+            <div class="item-info">
+              <div class="item-name">Papitas Fantásticas (M)</div>
+              <div class="item-description">Doradas y crujientes</div>
+            </div>
+            <div class="item-price">$2.00</div>
+          </div>
+          <div class="menu-item" data-product="Aros de Cebolla Dorados (M)">
+            <div class="item-info">
+              <div class="item-name">Aros de Cebolla (M)</div>
+              <div class="item-description">Crujientes por fuera</div>
+            </div>
+            <div class="item-price">$2.50</div>
+          </div>
+        </div>
+        
+        <!-- Postres -->
+        <div class="menu-category">
+          <div class="category-title">🍨 POSTRES</div>
+          <div class="menu-item" data-product="Batido Fantasía (Choc. Croc.)">
+            <div class="item-info">
+              <div class="item-name">Batido Fantasía</div>
+              <div class="item-description">Con trocitos crocantes</div>
+            </div>
+            <div class="item-price">$3.00</div>
+          </div>
+          <div class="menu-item" data-product="Conito Helado">
+            <div class="item-info">
+              <div class="item-name">Conito Helado</div>
+              <div class="item-description">La opción más económica</div>
+            </div>
+            <div class="item-price">$1.00</div>
+          </div>
+        </div>
+        
+        <!-- Bebidas -->
+        <div class="menu-category">
+          <div class="category-title">🥤 BEBIDAS</div>
+          <div class="menu-item" data-product="Refresco (Mediano)">
+            <div class="item-info">
+              <div class="item-name">Refresco (Mediano)</div>
+              <div class="item-description">Varios sabores disponibles</div>
+            </div>
+            <div class="item-price">$1.50</div>
+          </div>
+          <div class="menu-item" data-product="Jugo de Naranja (Pequeño)">
+            <div class="item-info">
+              <div class="item-name">Jugo de Naranja</div>
+              <div class="item-description">Natural y refrescante</div>
+            </div>
+            <div class="item-price">$2.00</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="chat-section">
+        <div class="chat-header">
+          <span class="felix-avatar">🍔</span>
+          <strong>Félix, tu Amigo del Sabor</strong> - ¡Listo para crear tu comida fantástica!
+        </div>
+        
+        <div id="messages">
+          <div id="typing-indicator" class="typing-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        
+        <form id="messageForm">
+          <input type="text" id="message" name="message" placeholder="¡Habla con Félix! Ej: 'Quiero un combo clásico'..." autocomplete="off" />
+          <button type="submit" id="sendButton" disabled>Enviar</button>
+          <button type="button" id="startAudioButton">🎤 Voz</button>
+          <button type="button" id="stopAudioButton">🛑 Parar</button>
+        </form>
+      </div>
+      
+      <!-- Order Section (Third Column) -->
+      <div class="order-section">
+        <div class="current-order">
+          <div class="order-title">🛒 Tu Pedido Actual</div>
+          <div id="current-order-items">
+            <div id="empty-order-message" style="text-align: center; color: #999; font-style: italic;">
+              ¡Habla con Félix para hacer tu pedido!
+            </div>
+          </div>
+          <div id="order-total" class="order-total" style="display: none;">
+            Total: $<span id="total-amount">0.00</span>
+          </div>
+          <button id="clear-order-btn" class="clear-order-btn" style="display: none;">
+            🗑️ Limpiar Pedido
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="status-indicator">
+      <div class="status-item">
+        <div id="status-dot" class="status-dot"></div>
+        <span id="connection-status">Conectando...</span>
+      </div>
+      <div class="status-item" id="recording-container" style="display: none;">
+        <div class="status-dot recording"></div>
+        <span id="recording-status">Grabando</span>
+      </div>
+    </div>
+    
+    <script>
+      // Order management
+      let currentOrder = { items: [], total: 0.0 };
+      let orderUpdateInterval;
+      
+      // Update order display
+      function updateOrderDisplay(order) {
+        const orderItemsDiv = document.getElementById('current-order-items');
+        const emptyMessage = document.getElementById('empty-order-message');
+        const orderTotalDiv = document.getElementById('order-total');
+        const totalAmount = document.getElementById('total-amount');
+        const clearBtn = document.getElementById('clear-order-btn');
+        
+        if (order.items && order.items.length > 0) {
+          // Hide empty message
+          emptyMessage.style.display = 'none';
+          
+          // Build order items HTML
+          let itemsHTML = '';
+          order.items.forEach(item => {
+            itemsHTML += `
+              <div class="order-item">
+                <div class="order-item-details">
+                  <div class="order-item-name">${item.producto}</div>
+                  <div class="order-item-quantity">Cantidad: ${item.cantidad}</div>
+                </div>
+                <div class="order-item-price">$${item.subtotal.toFixed(2)}</div>
+              </div>
+            `;
+          });
+          
+          // Update items display
+          orderItemsDiv.innerHTML = emptyMessage.outerHTML + itemsHTML;
+          
+          // Show total and clear button
+          orderTotalDiv.style.display = 'block';
+          totalAmount.textContent = order.total.toFixed(2);
+          clearBtn.style.display = 'block';
+          
+          // Add success animation
+          orderItemsDiv.classList.add('order-success');
+          setTimeout(() => orderItemsDiv.classList.remove('order-success'), 500);
+        } else {
+          // Show empty message
+          emptyMessage.style.display = 'block';
+          orderItemsDiv.innerHTML = emptyMessage.outerHTML;
+          orderTotalDiv.style.display = 'none';
+          clearBtn.style.display = 'none';
+        }
+      }
+      
+      // Fetch current order from API
+      async function fetchCurrentOrder() {
+        try {
+          const response = await fetch('/api/pedido/default');
+          const data = await response.json();
+          
+          if (data.success && data.pedido) {
+            // Check if order has changed
+            if (JSON.stringify(currentOrder) !== JSON.stringify(data.pedido)) {
+              currentOrder = data.pedido;
+              updateOrderDisplay(currentOrder);
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching order:', error);
+        }
+      }
+      
+      // Clear order
+      async function clearOrder() {
+        const messageInput = document.getElementById('message');
+        messageInput.value = 'Quiero cancelar mi pedido actual';
+        document.getElementById('sendButton').click();
+      }
+      
+      // Start polling for order updates
+      function startOrderPolling() {
+        // Initial fetch
+        fetchCurrentOrder();
+        
+        // Poll every 2 seconds
+        orderUpdateInterval = setInterval(fetchCurrentOrder, 2000);
+      }
+      
+      // Stop polling
+      function stopOrderPolling() {
+        if (orderUpdateInterval) {
+          clearInterval(orderUpdateInterval);
+        }
+      }
+      
+      // Add menu item click functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const menuItems = document.querySelectorAll('.menu-item[data-product]');
+        const messageInput = document.getElementById('message');
+        const clearBtn = document.getElementById('clear-order-btn');
+        
+        // Start order polling when connected
+        const originalOnOpen = window.onWebSocketOpen || function() {};
+        window.onWebSocketOpen = function() {
+          originalOnOpen();
+          startOrderPolling();
+        };
+        
+        // Stop polling when disconnected
+        const originalOnClose = window.onWebSocketClose || function() {};
+        window.onWebSocketClose = function() {
+          originalOnClose();
+          stopOrderPolling();
+        };
+        
+        menuItems.forEach(item => {
+          item.addEventListener('click', function() {
+            const productName = this.dataset.product;
+            const price = this.querySelector('.item-price').textContent;
+            
+            // Add visual feedback
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+              this.style.transform = '';
+            }, 150);
+            
+            // Pre-fill the message input
+            messageInput.value = `Quiero ${productName}`;
+            messageInput.focus();
+          });
+        });
+        
+        // Add combo button functionality
+        const comboItems = document.querySelectorAll('.combo-item');
+        comboItems.forEach(item => {
+          item.style.cursor = 'pointer';
+          item.addEventListener('click', function() {
+            const comboText = this.querySelector('strong').textContent;
+            messageInput.value = `Quiero el ${comboText}`;
+            messageInput.focus();
+          });
+        });
+        
+        // Clear order button
+        if (clearBtn) {
+          clearBtn.addEventListener('click', function() {
+            if (confirm('¿Estás seguro de que quieres limpiar tu pedido?')) {
+              clearOrder();
+            }
+          });
+        }
+        
+        // Quick order suggestions
+        const quickOrders = [
+          { text: '🍔 Combo Clásico', value: 'Quiero el Combo Fantástico Clásico' },
+          { text: '🍟 Solo Papitas', value: 'Quiero Papitas Fantásticas (Medianas)' },
+          { text: '🥤 Solo Bebida', value: 'Quiero un Refresco (Mediano)' },
+          { text: '🍨 Postre', value: 'Quiero un Conito Helado' }
+        ];
+        
+        // Add quick order buttons after the message form
+        const messageForm = document.getElementById('messageForm');
+        const quickOrderDiv = document.createElement('div');
+        quickOrderDiv.style.cssText = 'display: flex; gap: 10px; padding: 10px 16px; flex-wrap: wrap;';
+        
+        quickOrders.forEach(order => {
+          const btn = document.createElement('button');
+          btn.textContent = order.text;
+          btn.type = 'button';
+          btn.style.cssText = 'padding: 8px 15px; font-size: 12px; background: var(--primary-yellow); color: var(--text-dark); border-radius: 20px;';
+          btn.addEventListener('click', function() {
+            messageInput.value = order.value;
+            messageInput.focus();
+          });
+          quickOrderDiv.appendChild(btn);
+        });
+        
+        messageForm.parentNode.insertBefore(quickOrderDiv, messageForm.nextSibling);
+      });
+      
+      // Listen for WebSocket messages to detect order changes
+      const originalHandleMessage = window.handleWebSocketMessage || function() {};
+      window.handleWebSocketMessage = function(message) {
+        originalHandleMessage(message);
+        
+        // Check if message mentions order update
+        if (message.data && (
+          message.data.includes('agregado') || 
+          message.data.includes('pedido') ||
+          message.data.includes('confirmado')
+        )) {
+          // Fetch order immediately
+          setTimeout(fetchCurrentOrder, 500);
+        }
+      };
+    </script>
+  </body>
+</html>

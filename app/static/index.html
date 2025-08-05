@@ -381,6 +381,86 @@
         display: none;
       }
       
+      /* Audio Mode Enhancements */
+      .chat-section.audio-mode {
+        border: 3px solid #22CC44;
+        box-shadow: 0 0 20px rgba(34, 204, 68, 0.3);
+      }
+      
+      .chat-section.audio-mode .chat-header {
+        background: linear-gradient(45deg, #22CC44, #1AA033);
+      }
+      
+      .chat-section.audio-mode .chat-header::after {
+        content: " 🎤 MODO VOZ ACTIVO";
+        font-size: 0.9rem;
+        opacity: 0.9;
+        animation: pulse-text 2s infinite;
+      }
+      
+      /* Audio mode message styling */
+      #messages.audio-enabled {
+        background: linear-gradient(to bottom, #F8FFF8, #F0FFF0);
+      }
+      
+      #messages.audio-enabled::before {
+        content: "🎤 Modo Voz Activo - Solo se muestran confirmaciones de pedido";
+        display: block;
+        text-align: center;
+        padding: 10px;
+        background: rgba(34, 204, 68, 0.1);
+        color: #1AA033;
+        font-weight: 600;
+        font-size: 0.9rem;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        border: 1px solid rgba(34, 204, 68, 0.3);
+      }
+      
+      /* Audio status improvements */
+      .audio-status-bar {
+        background: linear-gradient(45deg, #22CC44, #1AA033);
+        color: white;
+        padding: 8px 15px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.9rem;
+        display: none;
+        animation: pulse-background 2s infinite;
+      }
+      
+      .audio-status-bar.active {
+        display: block;
+      }
+      
+      /* Enhanced recording indicator */
+      .recording-container.active {
+        background: rgba(213, 0, 0, 0.1);
+        border: 2px solid var(--kfc-red);
+        animation: pulse-border 1s infinite;
+      }
+      
+      /* Audio wave animation */
+      .audio-wave {
+        display: inline-block;
+        margin-left: 10px;
+      }
+      
+      .audio-wave span {
+        display: inline-block;
+        width: 3px;
+        height: 15px;
+        background: #22CC44;
+        margin: 0 1px;
+        border-radius: 2px;
+        animation: audio-wave 1.5s infinite ease-in-out;
+      }
+      
+      .audio-wave span:nth-child(2) { animation-delay: 0.1s; }
+      .audio-wave span:nth-child(3) { animation-delay: 0.2s; }
+      .audio-wave span:nth-child(4) { animation-delay: 0.3s; }
+      .audio-wave span:nth-child(5) { animation-delay: 0.4s; }
+      
       .status-indicator {
         display: flex;
         align-items: center;
@@ -546,6 +626,27 @@
         from { opacity: 0; transform: translateY(-10px); }
         to { opacity: 1; transform: translateY(0); }
       }
+      
+      /* Audio Mode Animations */
+      @keyframes pulse-text {
+        0%, 100% { opacity: 0.9; }
+        50% { opacity: 0.6; }
+      }
+      
+      @keyframes pulse-background {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+      }
+      
+      @keyframes pulse-border {
+        0%, 100% { border-color: var(--kfc-red); }
+        50% { border-color: rgba(213, 0, 0, 0.5); }
+      }
+      
+      @keyframes audio-wave {
+        0%, 100% { height: 15px; }
+        50% { height: 25px; }
+      }
     </style>
   </head>
 
@@ -668,8 +769,8 @@
         <form id="messageForm">
           <input type="text" id="message" name="message" placeholder="¡Habla con el Asistente KFC! Ej: 'Quiero MDK 6 piezas combo'..." autocomplete="off" />
           <button type="submit" id="sendButton" disabled>Enviar</button>
-          <button type="button" id="startAudioButton">🎤 Voz</button>
-          <button type="button" id="stopAudioButton">🛑 Parar</button>
+          <button type="button" id="startAudioButton">🎤 Activar Voz</button>
+          <button type="button" id="stopAudioButton">� Desactivar Voz</button>
         </form>
       </div>
       

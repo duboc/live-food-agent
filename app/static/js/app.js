@@ -102,6 +102,15 @@ function connectWebsocket() {
 
       const role = message_from_server.role || "model";
 
+      // In audio mode, filter messages to show only order-related content
+      if (is_audio && role === "model") {
+        const isOrderRelated = detectOrderMessage(message_from_server.data);
+        if (!isOrderRelated) {
+          // Skip displaying non-order messages in audio mode
+          return;
+        }
+      }
+
       // If we already have a message element for this turn, append to it
       if (currentMessageId && role === "model") {
         const existingMessage = document.getElementById(currentMessageId);
@@ -290,15 +299,24 @@ function stopAudio() {
 // (due to the gesture requirement for the Web Audio API)
 startAudioButton.addEventListener("click", () => {
   startAudioButton.disabled = true;
-  startAudioButton.textContent = "Voice Enabled";
+  startAudioButton.textContent = "🎤 Modo Voz";
   startAudioButton.style.display = "none";
   stopAudioButton.style.display = "inline-block";
   recordingContainer.style.display = "flex";
   startAudio();
   is_audio = true;
 
-  // Add class to messages container to enable audio styling
+  // Add visual feedback for audio mode
   messagesDiv.classList.add("audio-enabled");
+  
+  // Add audio mode styling to chat section
+  const chatSection = document.querySelector('.chat-section');
+  if (chatSection) {
+    chatSection.classList.add("audio-mode");
+  }
+  
+  // Enhanced recording container styling
+  recordingContainer.classList.add("active");
 
   connectWebsocket(); // reconnect with the audio mode
 });
@@ -309,11 +327,20 @@ stopAudioButton.addEventListener("click", () => {
   stopAudioButton.style.display = "none";
   startAudioButton.style.display = "inline-block";
   startAudioButton.disabled = false;
-  startAudioButton.textContent = "Enable Voice";
+  startAudioButton.textContent = "🎤 Activar Voz";
   recordingContainer.style.display = "none";
 
-  // Remove audio styling class
+  // Remove audio styling classes
   messagesDiv.classList.remove("audio-enabled");
+  
+  // Remove audio mode styling from chat section
+  const chatSection = document.querySelector('.chat-section');
+  if (chatSection) {
+    chatSection.classList.remove("audio-mode");
+  }
+  
+  // Remove enhanced recording container styling
+  recordingContainer.classList.remove("active");
 
   // Reconnect without audio mode
   is_audio = false;
@@ -341,6 +368,13 @@ function audioRecorderHandler(pcmData) {
     // Only log ~1% of audio chunks
     console.log("[CLIENT TO AGENT] sent audio data");
   }
+}
+
+// Detect if a message is order-related (should be shown in audio mode)
+function detectOrderMessage(text) {
+  // In audio mode, we want NO text messages to appear in chat
+  // All communication should be audio-only with order tracking in the right column
+  return false;
 }
 
 // Encode an array buffer with Base64

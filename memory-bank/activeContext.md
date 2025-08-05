@@ -38,10 +38,12 @@ The system is **functionally complete** for core ordering operations:
 
 ### Immediate Development Priorities
 
-#### 1. Audio System Validation
-- **Test Spanish Voice Quality**: Ensure "Leda" voice sounds natural for fast food context
-- **Audio Latency Optimization**: Minimize delay between speech input and response
-- **Error Handling**: Graceful fallback to text when audio fails
+#### 1. Enhanced Audio System ✅ COMPLETED
+- **Smart Text Filtering**: Implemented order-detection logic to show only relevant messages in audio mode
+- **Clean Audio UI**: Added visual feedback with green accent colors and "MODO VOZ ACTIVO" indicator
+- **Audio Mode Styling**: Enhanced chat section with audio-specific CSS classes and animations
+- **Order Detection**: Intelligent filtering based on Spanish keywords, prices, and product names
+- **Visual Indicators**: Clear audio status with pulsing animations and enhanced recording feedback
 
 #### 2. Production Readiness
 - **State Persistence**: Replace in-memory `pedidos_en_proceso` with database
@@ -50,8 +52,8 @@ The system is **functionally complete** for core ordering operations:
 
 #### 3. User Experience Refinement
 - **Mobile Responsiveness**: Ensure three-column layout works on mobile devices
-- **Audio Controls**: Clear start/stop recording indicators
-- **Visual Feedback**: Order updates and confirmation animations
+- **Audio Controls**: ✅ Enhanced start/stop recording indicators with Spanish labels
+- **Visual Feedback**: ✅ Improved order updates and confirmation animations
 
 ### Technical Decisions Under Consideration
 

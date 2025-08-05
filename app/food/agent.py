@@ -16,7 +16,18 @@ from food.tools.tools import (
 logger = logging.getLogger(__name__)
 
 root_agent = Agent(
-    model="gemini-live-2.5-flash-preview",
+    
+
+    # Vertex Model 
+    #model="gemini-live-2.5-flash",
+
+    # AI Studio Model
+    #model="gemini-live-2.5-flash-preview",
+
+    #Vertex Model 
+    model="gemini-live-2.5-flash-preview-native-audio",
+
+    #AI Studio Model
     #model="gemini-2.5-flash-preview-native-audio-dialog",
     name="ComidaRapidaFantasticaAgent",
     description="Félix, el Amigo del Sabor - Agente de atendimento para Comida Rápida Fantástica",

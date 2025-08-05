@@ -583,6 +583,538 @@
         transform: scale(1.2);
         background: var(--dark-red);
       }
+
+      /* Settings Modal Styles */
+      .settings-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: none;
+        z-index: 1000;
+        backdrop-filter: blur(4px);
+      }
+
+      .settings-modal.show {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: modalFadeIn 0.3s ease-out;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 20px;
+        max-width: 700px;
+        width: 90%;
+        max-height: 85vh;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: modalSlideIn 0.3s ease-out;
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 25px 30px;
+        background: linear-gradient(45deg, var(--primary-orange), var(--primary-yellow));
+        border-bottom: 1px solid #eee;
+      }
+
+      .modal-header h2 {
+        margin: 0;
+        font-family: 'Fredoka One', cursive;
+        font-size: 1.8rem;
+        color: var(--text-dark);
+      }
+
+      .close-button {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        color: var(--text-dark);
+        cursor: pointer;
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .close-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+      }
+
+      .modal-body {
+        padding: 25px 30px;
+        max-height: calc(85vh - 180px);
+        overflow-y: auto;
+      }
+
+      .setting-group {
+        margin-bottom: 30px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 15px;
+        border: 1px solid #e9ecef;
+      }
+
+      .setting-group h3 {
+        margin: 0 0 15px 0;
+        font-weight: 600;
+        color: var(--text-dark);
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* Voice Control */
+      .voice-control {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      #voice-select {
+        flex: 1;
+        min-width: 200px;
+        padding: 12px 15px;
+        border: 2px solid var(--primary-orange);
+        border-radius: 10px;
+        font-size: 16px;
+        background: white;
+        color: var(--text-dark);
+        font-weight: 500;
+      }
+
+      #voice-select:focus {
+        outline: none;
+        border-color: var(--primary-red);
+        box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.2);
+      }
+
+      .preview-btn {
+        padding: 12px 20px;
+        background: linear-gradient(45deg, var(--green-accent), #1AA033);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+      }
+
+      .preview-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(34, 204, 68, 0.4);
+      }
+
+      .preview-btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* Slider Controls */
+      .slider-control {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-top: 10px;
+      }
+
+      .slider-control span {
+        font-size: 14px;
+        color: #666;
+        min-width: 50px;
+        text-align: center;
+      }
+
+      .slider {
+        flex: 1;
+        height: 8px;
+        border-radius: 4px;
+        background: #ddd;
+        outline: none;
+        -webkit-appearance: none;
+        transition: all 0.3s ease;
+      }
+
+      .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, var(--primary-red), var(--dark-red));
+        cursor: pointer;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        transition: all 0.2s ease;
+      }
+
+      .slider::-webkit-slider-thumb:hover {
+        transform: scale(1.2);
+        box-shadow: 0 4px 12px rgba(255, 68, 68, 0.4);
+      }
+
+      .slider::-moz-range-thumb {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, var(--primary-red), var(--dark-red));
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      }
+
+      .value-display {
+        min-width: 60px;
+        text-align: center;
+        font-weight: 600;
+        color: var(--primary-red);
+        background: white;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid var(--primary-orange);
+      }
+
+      /* Radio Groups */
+      .radio-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 10px;
+      }
+
+      .radio-option {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 15px;
+        background: white;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+      }
+
+      .radio-option:hover {
+        background: #f0f9ff;
+        border-color: var(--primary-orange);
+      }
+
+      .radio-option input[type="radio"] {
+        display: none;
+      }
+
+      .radio-custom {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #ddd;
+        border-radius: 50%;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .radio-option input[type="radio"]:checked + .radio-custom {
+        border-color: var(--primary-red);
+        background: var(--primary-red);
+      }
+
+      .radio-option input[type="radio"]:checked + .radio-custom::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: white;
+      }
+
+      .radio-text {
+        flex: 1;
+      }
+
+      .radio-text strong {
+        display: block;
+        color: var(--text-dark);
+        margin-bottom: 2px;
+      }
+
+      .radio-text small {
+        color: #666;
+        font-size: 13px;
+      }
+
+      /* Toggle Switches */
+      .toggle-setting {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background: white;
+        border-radius: 10px;
+        margin-bottom: 12px;
+        transition: all 0.3s ease;
+      }
+
+      .toggle-setting:hover {
+        background: #f0f9ff;
+      }
+
+      .toggle-info strong {
+        display: block;
+        color: var(--text-dark);
+        margin-bottom: 4px;
+      }
+
+      .toggle-info small {
+        color: #666;
+        font-size: 13px;
+      }
+
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 56px;
+        height: 30px;
+      }
+
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 30px;
+      }
+
+      .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 24px;
+        width: 24px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      input:checked + .toggle-slider {
+        background-color: var(--green-accent);
+      }
+
+      input:checked + .toggle-slider:before {
+        transform: translateX(26px);
+      }
+
+      /* Modal Footer */
+      .modal-footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 30px;
+        background: #f8f9fa;
+        border-top: 1px solid #eee;
+        gap: 15px;
+      }
+
+      .secondary-btn {
+        padding: 12px 24px;
+        background: #6c757d;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .secondary-btn:hover {
+        background: #5a6268;
+        transform: translateY(-2px);
+      }
+
+      .primary-btn {
+        padding: 12px 24px;
+        background: linear-gradient(45deg, var(--primary-red), var(--dark-red));
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .primary-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(255, 68, 68, 0.4);
+      }
+
+      /* Transcription Display */
+      .transcription-container {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        width: 350px;
+        max-height: 300px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        z-index: 900;
+        border: 2px solid var(--primary-yellow);
+        overflow: hidden;
+      }
+
+      .transcription-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background: linear-gradient(45deg, var(--primary-yellow), #FFE55C);
+        color: var(--text-dark);
+        font-weight: 600;
+      }
+
+      .close-transcription {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--text-dark);
+        cursor: pointer;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .close-transcription:hover {
+        background: rgba(0, 0, 0, 0.1);
+      }
+
+      .transcription-content {
+        padding: 15px 20px;
+        max-height: 200px;
+        overflow-y: auto;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .transcript-interim {
+        color: #666;
+        font-style: italic;
+        margin-bottom: 8px;
+      }
+
+      .transcript-final {
+        color: var(--text-dark);
+        margin-bottom: 12px;
+        font-weight: 500;
+      }
+
+      /* Settings Button */
+      .settings-button {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(45deg, var(--primary-orange), var(--primary-yellow));
+        color: var(--text-dark);
+        border: none;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        z-index: 100;
+      }
+
+      .settings-button:hover {
+        transform: scale(1.1) rotate(90deg);
+        box-shadow: 0 6px 20px rgba(255, 136, 0, 0.4);
+      }
+
+      /* Animations */
+      @keyframes modalFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      @keyframes modalSlideIn {
+        from { 
+          opacity: 0; 
+          transform: scale(0.8) translateY(-50px); 
+        }
+        to { 
+          opacity: 1; 
+          transform: scale(1) translateY(0); 
+        }
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .modal-content {
+          width: 95%;
+          max-height: 90vh;
+        }
+
+        .modal-header {
+          padding: 20px;
+        }
+
+        .modal-body {
+          padding: 20px;
+        }
+
+        .setting-group {
+          padding: 15px;
+        }
+
+        .voice-control {
+          flex-direction: column;
+        }
+
+        .slider-control {
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        .transcription-container {
+          left: 10px;
+          right: 10px;
+          width: auto;
+        }
+
+        .settings-button {
+          top: 10px;
+          right: 10px;
+        }
+      }
     </style>
   </head>
 
@@ -743,6 +1275,11 @@
       </div>
     </div>
     
+    <!-- Settings Button -->
+    <button id="settings-button" class="settings-button" title="Configuración de Audio">
+      ⚙️
+    </button>
+    
     <div class="status-indicator">
       <div class="status-item">
         <div id="status-dot" class="status-dot"></div>
@@ -751,6 +1288,143 @@
       <div class="status-item" id="recording-container" style="display: none;">
         <div class="status-dot recording"></div>
         <span id="recording-status">Grabando</span>
+      </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="settings-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>⚙️ Configuración de Audio</h2>
+          <button id="close-settings" class="close-button">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          <!-- Voice Selection -->
+          <div class="setting-group">
+            <h3>🎙️ Voz de Félix</h3>
+            <div class="voice-control">
+              <select id="voice-select">
+                <option value="Leda">Leda (Amigable)</option>
+                <option value="Puck">Puck (Enérgico)</option>
+                <option value="Charon">Charon (Profundo)</option>
+                <option value="Kore">Kore (Neutro)</option>
+                <option value="Fenrir">Fenrir (Fuerte)</option>
+                <option value="Aoede">Aoede (Melódico)</option>
+                <option value="Orus">Orus (Autoritario)</option>
+                <option value="Zephyr">Zephyr (Suave)</option>
+              </select>
+              <button id="preview-voice" class="preview-btn">🔊 Escuchar</button>
+            </div>
+          </div>
+
+          <!-- Voice Speed -->
+          <div class="setting-group">
+            <h3>⚡ Velocidad de Voz</h3>
+            <div class="slider-control">
+              <span>Lento</span>
+              <input type="range" id="voice-speed" class="slider" min="0.5" max="2.0" step="0.1" value="1.0">
+              <span>Rápido</span>
+              <span id="speed-value" class="value-display">1.0x</span>
+            </div>
+          </div>
+
+          <!-- Microphone Sensitivity -->
+          <div class="setting-group">
+            <h3>🎤 Sensibilidad del Micrófono</h3>
+            <div class="slider-control">
+              <span>Bajo</span>
+              <input type="range" id="mic-sensitivity" class="slider" min="0.1" max="1.0" step="0.1" value="0.7">
+              <span>Alto</span>
+              <span id="sensitivity-value" class="value-display">70%</span>
+            </div>
+          </div>
+
+          <!-- Playback Volume -->
+          <div class="setting-group">
+            <h3>🔊 Volumen de Reproducción</h3>
+            <div class="slider-control">
+              <span>Bajo</span>
+              <input type="range" id="playback-volume" class="slider" min="0.1" max="1.0" step="0.1" value="0.8">
+              <span>Alto</span>
+              <span id="volume-value" class="value-display">80%</span>
+            </div>
+          </div>
+
+          <!-- Audio Quality -->
+          <div class="setting-group">
+            <h3>🎵 Calidad de Audio</h3>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="audio-quality" value="low">
+                <span class="radio-custom"></span>
+                <div class="radio-text">
+                  <strong>Baja</strong>
+                  <small>Menor uso de datos</small>
+                </div>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="audio-quality" value="medium" checked>
+                <span class="radio-custom"></span>
+                <div class="radio-text">
+                  <strong>Media</strong>
+                  <small>Equilibrio calidad/datos</small>
+                </div>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="audio-quality" value="high">
+                <span class="radio-custom"></span>
+                <div class="radio-text">
+                  <strong>Alta</strong>
+                  <small>Máxima calidad</small>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Accessibility Features -->
+          <div class="setting-group">
+            <h3>♿ Accesibilidad</h3>
+            
+            <div class="toggle-setting">
+              <div class="toggle-info">
+                <strong>Push-to-Talk</strong>
+                <small>Mantén presionada la barra espaciadora para hablar</small>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="push-to-talk">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="toggle-setting">
+              <div class="toggle-info">
+                <strong>Mostrar Transcripción</strong>
+                <small>Mostrar texto de lo que dices y escuchas</small>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="show-transcription">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button id="reset-settings" class="secondary-btn">🔄 Restablecer</button>
+          <button id="save-settings" class="primary-btn">💾 Guardar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transcription Display -->
+    <div id="transcription-display" class="transcription-container" style="display: none;">
+      <div class="transcription-header">
+        <span>📝 Transcripción</span>
+        <button id="close-transcription" class="close-transcription">&times;</button>
+      </div>
+      <div id="transcription-content" class="transcription-content">
+        <!-- Transcription text will appear here -->
       </div>
     </div>
     
@@ -946,6 +1620,302 @@
           setTimeout(fetchCurrentOrder, 500);
         }
       };
+
+      // Settings Modal Functionality
+      class AudioSettings {
+        constructor() {
+          this.settings = this.loadSettings();
+          this.observers = [];
+          this.setupEventListeners();
+          this.updateUIFromSettings();
+        }
+
+        loadSettings() {
+          const defaults = {
+            voice: {
+              name: "Leda",
+              speed: 1.0
+            },
+            audio: {
+              micSensitivity: 0.7,
+              playbackVolume: 0.8,
+              quality: "medium",
+              pushToTalk: false,
+              showTranscription: false
+            }
+          };
+          
+          const saved = localStorage.getItem('felixAudioSettings');
+          return saved ? { ...defaults, ...JSON.parse(saved) } : defaults;
+        }
+
+        saveSettings() {
+          localStorage.setItem('felixAudioSettings', JSON.stringify(this.settings));
+          this.notifyObservers();
+        }
+
+        subscribe(callback) {
+          this.observers.push(callback);
+        }
+
+        notifyObservers() {
+          this.observers.forEach(cb => cb(this.settings));
+        }
+
+        setupEventListeners() {
+          const modal = document.getElementById('settings-modal');
+          const settingsBtn = document.getElementById('settings-button');
+          const closeBtn = document.getElementById('close-settings');
+          const saveBtn = document.getElementById('save-settings');
+          const resetBtn = document.getElementById('reset-settings');
+
+          // Open modal
+          settingsBtn.addEventListener('click', () => {
+            modal.classList.add('show');
+          });
+
+          // Close modal
+          const closeModal = () => {
+            modal.classList.remove('show');
+          };
+
+          closeBtn.addEventListener('click', closeModal);
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+          });
+
+          // Escape key to close
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('show')) {
+              closeModal();
+            }
+          });
+
+          // Voice selection
+          const voiceSelect = document.getElementById('voice-select');
+          voiceSelect.addEventListener('change', (e) => {
+            this.settings.voice.name = e.target.value;
+          });
+
+          // Voice preview
+          const previewBtn = document.getElementById('preview-voice');
+          previewBtn.addEventListener('click', () => {
+            this.previewVoice();
+          });
+
+          // Voice speed slider
+          const speedSlider = document.getElementById('voice-speed');
+          const speedValue = document.getElementById('speed-value');
+          speedSlider.addEventListener('input', (e) => {
+            const value = parseFloat(e.target.value);
+            this.settings.voice.speed = value;
+            speedValue.textContent = value.toFixed(1) + 'x';
+          });
+
+          // Microphone sensitivity slider
+          const micSlider = document.getElementById('mic-sensitivity');
+          const micValue = document.getElementById('sensitivity-value');
+          micSlider.addEventListener('input', (e) => {
+            const value = parseFloat(e.target.value);
+            this.settings.audio.micSensitivity = value;
+            micValue.textContent = Math.round(value * 100) + '%';
+          });
+
+          // Playback volume slider
+          const volumeSlider = document.getElementById('playback-volume');
+          const volumeValue = document.getElementById('volume-value');
+          volumeSlider.addEventListener('input', (e) => {
+            const value = parseFloat(e.target.value);
+            this.settings.audio.playbackVolume = value;
+            volumeValue.textContent = Math.round(value * 100) + '%';
+          });
+
+          // Audio quality radio buttons
+          const qualityInputs = document.querySelectorAll('input[name="audio-quality"]');
+          qualityInputs.forEach(input => {
+            input.addEventListener('change', (e) => {
+              if (e.target.checked) {
+                this.settings.audio.quality = e.target.value;
+              }
+            });
+          });
+
+          // Push-to-talk toggle
+          const pushToTalkToggle = document.getElementById('push-to-talk');
+          pushToTalkToggle.addEventListener('change', (e) => {
+            this.settings.audio.pushToTalk = e.target.checked;
+          });
+
+          // Show transcription toggle
+          const transcriptionToggle = document.getElementById('show-transcription');
+          transcriptionToggle.addEventListener('change', (e) => {
+            this.settings.audio.showTranscription = e.target.checked;
+            this.toggleTranscriptionDisplay(e.target.checked);
+          });
+
+          // Transcription close button
+          const closeTranscription = document.getElementById('close-transcription');
+          if (closeTranscription) {
+            closeTranscription.addEventListener('click', () => {
+              document.getElementById('transcription-display').style.display = 'none';
+              transcriptionToggle.checked = false;
+              this.settings.audio.showTranscription = false;
+            });
+          }
+
+          // Save settings
+          saveBtn.addEventListener('click', () => {
+            this.saveSettings();
+            this.showNotification('⚙️ Configuración guardada correctamente');
+            closeModal();
+          });
+
+          // Reset settings
+          resetBtn.addEventListener('click', () => {
+            if (confirm('¿Estás seguro de que quieres restablecer todas las configuraciones?')) {
+              this.resetToDefaults();
+              this.showNotification('🔄 Configuración restablecida');
+            }
+          });
+        }
+
+        updateUIFromSettings() {
+          // Voice settings
+          document.getElementById('voice-select').value = this.settings.voice.name;
+          document.getElementById('voice-speed').value = this.settings.voice.speed;
+          document.getElementById('speed-value').textContent = this.settings.voice.speed.toFixed(1) + 'x';
+
+          // Audio settings
+          document.getElementById('mic-sensitivity').value = this.settings.audio.micSensitivity;
+          document.getElementById('sensitivity-value').textContent = Math.round(this.settings.audio.micSensitivity * 100) + '%';
+          
+          document.getElementById('playback-volume').value = this.settings.audio.playbackVolume;
+          document.getElementById('volume-value').textContent = Math.round(this.settings.audio.playbackVolume * 100) + '%';
+
+          // Quality selection
+          const qualityInput = document.querySelector(`input[name="audio-quality"][value="${this.settings.audio.quality}"]`);
+          if (qualityInput) {
+            qualityInput.checked = true;
+          }
+
+          // Toggles
+          document.getElementById('push-to-talk').checked = this.settings.audio.pushToTalk;
+          document.getElementById('show-transcription').checked = this.settings.audio.showTranscription;
+
+          // Apply transcription visibility
+          this.toggleTranscriptionDisplay(this.settings.audio.showTranscription);
+        }
+
+        async previewVoice() {
+          const previewBtn = document.getElementById('preview-voice');
+          const originalText = previewBtn.textContent;
+          
+          try {
+            previewBtn.disabled = true;
+            previewBtn.textContent = '⏳ Cargando...';
+            
+            // For now, just show a notification - voice preview would need backend implementation
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate loading
+            this.showNotification(`🔊 Vista previa de voz: ${this.settings.voice.name}`);
+            
+          } catch (error) {
+            console.error('Voice preview error:', error);
+            this.showNotification('❌ Error al reproducir vista previa');
+          } finally {
+            previewBtn.disabled = false;
+            previewBtn.textContent = originalText;
+          }
+        }
+
+        toggleTranscriptionDisplay(show) {
+          const transcriptionDisplay = document.getElementById('transcription-display');
+          if (transcriptionDisplay) {
+            transcriptionDisplay.style.display = show ? 'block' : 'none';
+          }
+        }
+
+        resetToDefaults() {
+          this.settings = {
+            voice: {
+              name: "Leda",
+              speed: 1.0
+            },
+            audio: {
+              micSensitivity: 0.7,
+              playbackVolume: 0.8,
+              quality: "medium",
+              pushToTalk: false,
+              showTranscription: false
+            }
+          };
+          this.updateUIFromSettings();
+        }
+
+        showNotification(message) {
+          const notification = document.createElement('div');
+          notification.style.cssText = `
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: linear-gradient(45deg, var(--primary-orange), var(--primary-yellow));
+            color: var(--text-dark);
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1100;
+            font-weight: 600;
+            animation: slideInRight 0.3s ease-out;
+          `;
+          notification.textContent = message;
+          document.body.appendChild(notification);
+
+          setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.3s ease-out';
+            setTimeout(() => notification.remove(), 300);
+          }, 3000);
+        }
+      }
+
+      // Initialize settings when DOM is loaded
+      let audioSettings;
+      document.addEventListener('DOMContentLoaded', function() {
+        // Initialize audio settings
+        audioSettings = new AudioSettings();
+
+        // Subscribe to settings changes
+        audioSettings.subscribe((settings) => {
+          console.log('Settings updated:', settings);
+          // Here you can apply the settings to audio components
+          // For example, update microphone sensitivity, playback volume, etc.
+        });
+      });
+
+      // Add notification animations CSS
+      const notificationStyle = document.createElement('style');
+      notificationStyle.textContent = `
+        @keyframes slideInRight {
+          from {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+        
+        @keyframes slideOutRight {
+          from {
+            transform: translateX(0);
+            opacity: 1;
+          }
+          to {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+        }
+      `;
+      document.head.appendChild(notificationStyle);
     </script>
   </body>
 </html>

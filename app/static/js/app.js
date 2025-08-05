@@ -71,12 +71,19 @@ function connectWebsocket() {
       // Reset currentMessageId to ensure the next message gets a new element
       currentMessageId = null;
       typingIndicator.classList.remove("visible");
+      
+      // Mark audio stream as complete
+      if (audioStreamer) {
+        audioStreamer.complete();
+      }
+      
       return;
     }
 
     // If it's audio, play it
-    if (message_from_server.mime_type === "audio/pcm" && audioPlayerNode) {
-      audioPlayerNode.port.postMessage(base64ToArray(message_from_server.data));
+    if (message_from_server.mime_type === "audio/pcm" && audioStreamer) {
+      // Add audio data to streamer
+      audioStreamer.addPCM16(message_from_server.data);
 
       // If we have an existing message element for this turn, add audio icon if needed
       if (currentMessageId) {
@@ -233,55 +240,181 @@ function base64ToArray(base64) {
  * Audio handling
  */
 
-let audioPlayerNode;
-let audioPlayerContext;
-let audioRecorderNode;
-let audioRecorderContext;
-let micStream;
+// Import the new audio components
+import { AudioRecorder } from "./audio/AudioRecorder.js";
+import { AudioStreamer } from "./audio/AudioStreamer.js";
+
+// Audio component instances
+let audioRecorder = null;
+let audioStreamer = null;
 let isRecording = false;
 
-// Import the audio worklets
-import { startAudioPlayerWorklet } from "./audio-player.js";
-import { startAudioRecorderWorklet } from "./audio-recorder.js";
+// Volume visualization elements (will be created dynamically)
+let recordingVolumeBar = null;
+let playbackVolumeBar = null;
 
-// Start audio
-function startAudio() {
-  // Start audio output
-  startAudioPlayerWorklet().then(([node, ctx]) => {
-    audioPlayerNode = node;
-    audioPlayerContext = ctx;
-  });
-  // Start audio input
-  startAudioRecorderWorklet(audioRecorderHandler).then(
-    ([node, ctx, stream]) => {
-      audioRecorderNode = node;
-      audioRecorderContext = ctx;
-      micStream = stream;
-      isRecording = true;
-    }
-  );
+// Create volume visualization UI
+function createVolumeVisualization() {
+  // Create container for volume meters
+  const volumeContainer = document.createElement("div");
+  volumeContainer.id = "volume-meters";
+  volumeContainer.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 200px;
+  `;
+
+  // Recording volume meter
+  const recordingMeter = document.createElement("div");
+  recordingMeter.innerHTML = `
+    <div style="font-size: 12px; font-weight: 600; color: #FF4444; margin-bottom: 5px;">
+      🎤 Micrófono
+    </div>
+    <div style="background: #eee; height: 6px; border-radius: 3px; overflow: hidden;">
+      <div id="recording-volume-bar" style="height: 100%; background: #FF4444; width: 0%; transition: width 0.1s ease;"></div>
+    </div>
+  `;
+
+  // Playback volume meter
+  const playbackMeter = document.createElement("div");
+  playbackMeter.innerHTML = `
+    <div style="font-size: 12px; font-weight: 600; color: #22CC44; margin-bottom: 5px;">
+      🔊 Félix
+    </div>
+    <div style="background: #eee; height: 6px; border-radius: 3px; overflow: hidden;">
+      <div id="playback-volume-bar" style="height: 100%; background: #22CC44; width: 0%; transition: width 0.1s ease;"></div>
+    </div>
+  `;
+
+  volumeContainer.appendChild(recordingMeter);
+  volumeContainer.appendChild(playbackMeter);
+  document.body.appendChild(volumeContainer);
+
+  // Get references to volume bars
+  recordingVolumeBar = document.getElementById("recording-volume-bar");
+  playbackVolumeBar = document.getElementById("playback-volume-bar");
+
+  return volumeContainer;
 }
 
-// Stop audio recording
+// Initialize audio components
+async function startAudio() {
+  try {
+    // Create volume visualization if not exists
+    const volumeMeters = document.getElementById("volume-meters") || createVolumeVisualization();
+    volumeMeters.style.display = "flex";
+
+    // Initialize audio streamer (for playback)
+    audioStreamer = new AudioStreamer();
+    await audioStreamer.resume();
+
+    // Set up playback volume monitoring
+    audioStreamer.onVolume = (volume) => {
+      if (playbackVolumeBar) {
+        const percentage = Math.min(100, volume * 200); // Scale for visibility
+        playbackVolumeBar.style.width = percentage + "%";
+      }
+    };
+
+    audioStreamer.onError = (error) => {
+      console.error("Audio playback error:", error);
+      showError("Error en reproducción de audio");
+    };
+
+    // Initialize audio recorder
+    audioRecorder = new AudioRecorder(16000); // 16kHz for ADK
+
+    // Set up recording callbacks
+    audioRecorder.onData = (base64Data) => {
+      if (isRecording) {
+        sendMessage({
+          mime_type: "audio/pcm",
+          data: base64Data,
+        });
+      }
+    };
+
+    audioRecorder.onVolume = (volume) => {
+      if (recordingVolumeBar) {
+        const percentage = Math.min(100, volume * 200); // Scale for visibility
+        recordingVolumeBar.style.width = percentage + "%";
+      }
+    };
+
+    audioRecorder.onError = (error) => {
+      console.error("Recording error:", error);
+      showError(error.message);
+      stopAudio();
+    };
+
+    // Start recording
+    await audioRecorder.start();
+    isRecording = true;
+
+    console.log("Audio system initialized successfully");
+  } catch (error) {
+    console.error("Failed to start audio:", error);
+    showError("Error al iniciar el audio: " + error.message);
+    throw error;
+  }
+}
+
+// Stop audio components
 function stopAudio() {
-  if (audioRecorderNode) {
-    audioRecorderNode.disconnect();
-    audioRecorderNode = null;
-  }
-
-  if (audioRecorderContext) {
-    audioRecorderContext
-      .close()
-      .catch((err) => console.error("Error closing audio context:", err));
-    audioRecorderContext = null;
-  }
-
-  if (micStream) {
-    micStream.getTracks().forEach((track) => track.stop());
-    micStream = null;
-  }
-
   isRecording = false;
+
+  // Stop and clean up recorder
+  if (audioRecorder) {
+    audioRecorder.stop();
+    audioRecorder = null;
+  }
+
+  // Stop and clean up streamer
+  if (audioStreamer) {
+    audioStreamer.destroy();
+    audioStreamer = null;
+  }
+
+  // Hide volume meters
+  const volumeMeters = document.getElementById("volume-meters");
+  if (volumeMeters) {
+    volumeMeters.style.display = "none";
+  }
+
+  console.log("Audio system stopped");
+}
+
+// Show error message to user
+function showError(message) {
+  const errorDiv = document.createElement("div");
+  errorDiv.style.cssText = `
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #FF4444;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+  `;
+  errorDiv.textContent = message;
+  document.body.appendChild(errorDiv);
+
+  setTimeout(() => {
+    errorDiv.style.animation = "slideOut 0.3s ease-out";
+    setTimeout(() => errorDiv.remove(), 300);
+  }, 5000);
 }
 
 // Start the audio only when the user clicked the button
@@ -323,31 +456,44 @@ stopAudioButton.addEventListener("click", () => {
   }
 });
 
-// Audio recorder handler
-function audioRecorderHandler(pcmData) {
-  // Only send data if we're still recording
-  if (!isRecording) return;
-
-  // Send the pcm data as base64
-  sendMessage({
-    mime_type: "audio/pcm",
-    data: arrayBufferToBase64(pcmData),
-  });
-
-  // Log every few samples to avoid flooding the console
-  if (Math.random() < 0.01) {
-    // Only log ~1% of audio chunks
-    console.log("[CLIENT TO AGENT] sent audio data");
+// Add CSS animations for error messages and volume meters
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -20px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
   }
-}
-
-// Encode an array buffer with Base64
-function arrayBufferToBase64(buffer) {
-  let binary = "";
-  const bytes = new Uint8Array(buffer);
-  const len = bytes.byteLength;
-  for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
+  
+  @keyframes slideOut {
+    from {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+    to {
+      opacity: 0;
+      transform: translate(-50%, -20px);
+    }
   }
-  return window.btoa(binary);
-}
+  
+  /* Audio volume animations */
+  @keyframes pulse-audio {
+    0%, 100% {
+      opacity: 0.8;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  
+  /* Improved audio icon animation when speaking */
+  .audio-icon {
+    animation: pulse-audio 1.5s infinite;
+  }
+`;
+document.head.appendChild(style);

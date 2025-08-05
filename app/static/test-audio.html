@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Test - Félix</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .log {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .volume-bar {
+            width: 100%;
+            height: 20px;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .volume-fill {
+            height: 100%;
+            background: #4CAF50;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎤 Audio System Test - Félix</h1>
+    
+    <div class="section">
+        <h2>1. Basic Audio Context Test</h2>
+        <button id="testContext">Test Audio Context</button>
+        <div class="log" id="contextLog"></div>
+    </div>
+
+    <div class="section">
+        <h2>2. Simple Tone Test</h2>
+        <button id="playTone">Play Test Tone (440Hz)</button>
+        <button id="stopTone" disabled>Stop Tone</button>
+        <div class="log" id="toneLog"></div>
+    </div>
+
+    <div class="section">
+        <h2>3. AudioStreamer Component Test</h2>
+        <button id="testStreamer">Test AudioStreamer</button>
+        <div class="volume-bar">
+            <div class="volume-fill" id="streamerVolume"></div>
+        </div>
+        <div class="log" id="streamerLog"></div>
+    </div>
+
+    <div class="section">
+        <h2>4. Full Audio System Test</h2>
+        <button id="fullTest">Run Full Test</button>
+        <div class="log" id="fullLog"></div>
+    </div>
+
+    <script type="module">
+        import { AudioStreamer } from './js/audio/AudioStreamer.js';
+
+        const log = (elementId, message, isError = false) => {
+            const logElement = document.getElementById(elementId);
+            const entry = document.createElement('div');
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            if (isError) entry.className = 'error';
+            logElement.appendChild(entry);
+            logElement.scrollTop = logElement.scrollHeight;
+            console.log(message);
+        };
+
+        // Test 1: Basic Audio Context
+        document.getElementById('testContext').addEventListener('click', async () => {
+            const logId = 'contextLog';
+            try {
+                log(logId, 'Creating AudioContext...');
+                const context = new AudioContext({ sampleRate: 24000 });
+                log(logId, `✓ AudioContext created. State: ${context.state}, Sample Rate: ${context.sampleRate}`);
+                
+                if (context.state === 'suspended') {
+                    log(logId, 'Resuming context...');
+                    await context.resume();
+                    log(logId, `✓ Context resumed. New state: ${context.state}`);
+                }
+                
+                log(logId, 'Testing worklet support...');
+                await context.audioWorklet.addModule('./js/audio/worklets/vol-meter.js');
+                log(logId, '✓ AudioWorklet support confirmed');
+                
+                context.close();
+                log(logId, '✓ Context closed successfully', false);
+            } catch (error) {
+                log(logId, `✗ Error: ${error.message}`, true);
+            }
+        });
+
+        // Test 2: Simple Tone
+        let oscillator = null;
+        let toneContext = null;
+        
+        document.getElementById('playTone').addEventListener('click', async () => {
+            const logId = 'toneLog';
+            try {
+                log(logId, 'Creating tone generator...');
+                toneContext = new AudioContext();
+                
+                if (toneContext.state === 'suspended') {
+                    await toneContext.resume();
+                }
+                
+                oscillator = toneContext.createOscillator();
+                const gainNode = toneContext.createGain();
+                
+                oscillator.frequency.value = 440;
+                gainNode.gain.value = 0.3;
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(toneContext.destination);
+                
+                oscillator.start();
+                log(logId, '✓ Playing 440Hz tone');
+                
+                document.getElementById('playTone').disabled = true;
+                document.getElementById('stopTone').disabled = false;
+            } catch (error) {
+                log(logId, `✗ Error: ${error.message}`, true);
+            }
+        });
+        
+        document.getElementById('stopTone').addEventListener('click', () => {
+            if (oscillator) {
+                oscillator.stop();
+                oscillator = null;
+            }
+            if (toneContext) {
+                toneContext.close();
+                toneContext = null;
+            }
+            log('toneLog', '✓ Tone stopped');
+            document.getElementById('playTone').disabled = false;
+            document.getElementById('stopTone').disabled = true;
+        });
+
+        // Test 3: AudioStreamer
+        document.getElementById('testStreamer').addEventListener('click', async () => {
+            const logId = 'streamerLog';
+            const volumeBar = document.getElementById('streamerVolume');
+            
+            try {
+                log(logId, 'Creating AudioStreamer...');
+                const streamer = new AudioStreamer();
+                log(logId, '✓ AudioStreamer created');
+                
+                // Set up volume monitoring
+                streamer.onVolume = (volume) => {
+                    const percentage = Math.min(100, volume * 200);
+                    volumeBar.style.width = percentage + '%';
+                };
+                
+                streamer.onError = (error) => {
+                    log(logId, `Streamer error: ${error.message}`, true);
+                };
+                
+                log(logId, 'Resuming audio context...');
+                await streamer.resume();
+                log(logId, '✓ Audio context resumed');
+                
+                // Generate test audio data (1 second of 440Hz tone)
+                log(logId, 'Generating test audio...');
+                const sampleRate = 24000;
+                const duration = 1;
+                const samples = sampleRate * duration;
+                const audioData = new Int16Array(samples);
+                
+                for (let i = 0; i < samples; i++) {
+                    const t = i / sampleRate;
+                    const value = Math.sin(2 * Math.PI * 440 * t) * 0.3 * 32767;
+                    audioData[i] = value;
+                }
+                
+                // Convert to base64
+                const uint8 = new Uint8Array(audioData.buffer);
+                let binary = '';
+                for (let i = 0; i < uint8.length; i++) {
+                    binary += String.fromCharCode(uint8[i]);
+                }
+                const base64 = btoa(binary);
+                
+                log(logId, 'Playing test audio through AudioStreamer...');
+                streamer.addPCM16(base64);
+                
+                log(logId, '✓ Audio data sent to streamer');
+                
+                // Clean up after 2 seconds
+                setTimeout(() => {
+                    streamer.destroy();
+                    log(logId, '✓ AudioStreamer cleaned up');
+                }, 2000);
+                
+            } catch (error) {
+                log(logId, `✗ Error: ${error.message}`, true);
+            }
+        });
+
+        // Test 4: Full System Test
+        document.getElementById('fullTest').addEventListener('click', async () => {
+            const logId = 'fullLog';
+            
+            try {
+                log(logId, 'Running comprehensive audio test...');
+                
+                // Test various sample rates
+                const sampleRates = [16000, 24000, 48000];
+                for (const rate of sampleRates) {
+                    try {
+                        const ctx = new AudioContext({ sampleRate: rate });
+                        log(logId, `✓ ${rate}Hz context created`);
+                        ctx.close();
+                    } catch (e) {
+                        log(logId, `✗ ${rate}Hz failed: ${e.message}`, true);
+                    }
+                }
+                
+                // Test worklet loading
+                log(logId, 'Testing worklet modules...');
+                const testCtx = new AudioContext();
+                try {
+                    await testCtx.audioWorklet.addModule('./js/audio/worklets/audio-processing.js');
+                    log(logId, '✓ audio-processing.js loaded');
+                } catch (e) {
+                    log(logId, `✗ audio-processing.js failed: ${e.message}`, true);
+                }
+                
+                try {
+                    await testCtx.audioWorklet.addModule('./js/audio/worklets/vol-meter.js');
+                    log(logId, '✓ vol-meter.js loaded');
+                } catch (e) {
+                    log(logId, `✗ vol-meter.js failed: ${e.message}`, true);
+                }
+                
+                testCtx.close();
+                
+                log(logId, '✓ All tests completed');
+                
+            } catch (error) {
+                log(logId, `✗ Test failed: ${error.message}`, true);
+            }
+        });
+    </script>
+</body>
+</html>

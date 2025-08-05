@@ -257,14 +257,14 @@ def calcular_combo_tool(nombre_combo: str) -> Dict[str, Any]:
     }
 
 
-def adicionar_item_pedido_tool(session_id: str, producto: str, cantidad: int = 1) -> Dict[str, Any]:
+def adicionar_item_pedido_tool(producto: str, cantidad: int = 1, session_id: str = "default") -> Dict[str, Any]:
     """
     Adicionar un item al pedido en construcción.
 
     Args:
-        session_id: ID de la sesión del cliente
         producto: Nombre del producto a agregar
         cantidad: Cantidad del producto
+        session_id: ID de la sesión del cliente (default: "default")
 
     Returns:
         Estado actual del pedido
@@ -325,12 +325,12 @@ def adicionar_item_pedido_tool(session_id: str, producto: str, cantidad: int = 1
     }
 
 
-def consultar_pedido_atual_tool(session_id: str) -> Dict[str, Any]:
+def consultar_pedido_atual_tool(session_id: str = "default") -> Dict[str, Any]:
     """
     Consultar el estado actual del pedido en construcción.
 
     Args:
-        session_id: ID de la sesión del cliente
+        session_id: ID de la sesión del cliente (default: "default")
 
     Returns:
         Estado actual del pedido
@@ -393,12 +393,12 @@ def sugerir_acompanhamentos_tool(productos_actuales: List[str]) -> Dict[str, Any
     }
 
 
-def finalizar_pedido_tool(session_id: str) -> Dict[str, Any]:
+def finalizar_pedido_tool(session_id: str = "default") -> Dict[str, Any]:
     """
     Finalizar el pedido y preparar los datos para la función finalizeOrder.
 
     Args:
-        session_id: ID de la sesión del cliente
+        session_id: ID de la sesión del cliente (default: "default")
 
     Returns:
         Datos del pedido para finalizeOrder
@@ -439,12 +439,12 @@ def finalizar_pedido_tool(session_id: str) -> Dict[str, Any]:
     }
 
 
-def limpiar_pedido_tool(session_id: str) -> Dict[str, Any]:
+def limpiar_pedido_tool(session_id: str = "default") -> Dict[str, Any]:
     """
     Limpiar/cancelar el pedido actual.
 
     Args:
-        session_id: ID de la sesión del cliente
+        session_id: ID de la sesión del cliente (default: "default")
 
     Returns:
         Confirmación de limpieza

@@ -8,7 +8,9 @@
 
 // Global variables
 const sessionId = "default"; // Use consistent session ID
-const ws_url = "ws://" + window.location.host + "/ws/" + sessionId;
+// Use secure WebSocket (wss://) for HTTPS and insecure (ws://) for HTTP
+const ws_protocol = window.location.protocol === "https:" ? "wss://" : "ws://";
+const ws_url = ws_protocol + window.location.host + "/ws/" + sessionId;
 let websocket = null;
 let is_audio = false;
 let currentMessageId = null; // Track the current message ID during a conversation turn

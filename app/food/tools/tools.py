@@ -8,281 +8,372 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-# Cardápio da Comida Rápida Fantástica
-CARDAPIO_CRF = {
-    "SANDWICHES": {
-        "Clásica CRF": {
-            "descripcion": "Nuestra estrella, sencilla y deliciosa.",
-            "ingredientes": "Pan, carne de res, lechuga, tomate, cebolla, pepinillos, salsa especial CRF.",
-            "calorias": "550-600",
-            "precio": 3.00,
-            "destacado": "¡El sabor original de CRF! Sin queso."
+# Menú de KFC - Miércoles de KFC
+KFC_MENU = {
+    "SOLO_PIEZAS": {
+        "MDK 6 PIEZAS": {
+            "nombre_completo": "Miércoles de KFC: 6 Piezas",
+            "descripcion": "6 deliciosas piezas de pollo con la receta que prefieras",
+            "precio": 19.90,
+            "sku": "13638",
+            "atributos_requeridos": {
+                "receta": {
+                    "nombre": "Elige la Receta",
+                    "opciones": {
+                        "Receta Original": {"id": "79", "descripcion": "El sabor clásico de KFC"},
+                        "Crispy": {"id": "80", "descripcion": "Extra crujiente y dorado"},
+                        "Picante": {"id": "11233", "descripcion": "Con especias picantes"}
+                    }
+                }
+            },
+            "categoria": "solo_piezas"
         },
-        "Clásica con Queso CRF": {
-            "descripcion": "La Clásica con una capa de queso derretido.",
-            "ingredientes": "Pan, carne de res, queso americano, lechuga, tomate, cebolla, pepinillos, salsa especial CRF.",
-            "calorias": "600-650",
-            "precio": 3.50,
-            "destacado": "Un toque de queso que lo hace irresistible."
+        "MDK 8 PIEZAS": {
+            "nombre_completo": "Miércoles de KFC: 8 Piezas",
+            "descripcion": "8 jugosas piezas de pollo para compartir",
+            "precio": 29.90,
+            "sku": "12554",
+            "atributos_requeridos": {
+                "receta": {
+                    "nombre": "Elige la Receta",
+                    "opciones": {
+                        "Receta Original": {"id": "79", "descripcion": "El sabor clásico de KFC"},
+                        "Crispy": {"id": "80", "descripcion": "Extra crujiente y dorado"},
+                        "Picante": {"id": "11233", "descripcion": "Con especias picantes"}
+                    }
+                }
+            },
+            "categoria": "solo_piezas"
         },
-        "Doble Delicia CRF": {
-            "descripcion": "Doble carne, doble queso, ¡doble sabor!",
-            "ingredientes": "Pan, 2 carnes de res, 2 quesos americanos, lechuga, tomate, cebolla, pepinillos, salsa especial CRF.",
-            "calorias": "750-850",
-            "precio": 5.00,
-            "destacado": "Para un hambre voraz."
+        "MDK 10 PIEZAS": {
+            "nombre_completo": "Miércoles de KFC: 10 Piezas",
+            "descripcion": "10 piezas irresistibles para toda la familia",
+            "precio": 39.90,
+            "sku": "11492",
+            "atributos_requeridos": {
+                "receta": {
+                    "nombre": "Elige la Receta",
+                    "opciones": {
+                        "Receta Original": {"id": "79", "descripcion": "El sabor clásico de KFC"},
+                        "Crispy": {"id": "80", "descripcion": "Extra crujiente y dorado"},
+                        "Picante": {"id": "11233", "descripcion": "Con especias picantes"}
+                    }
+                }
+            },
+            "categoria": "solo_piezas"
         },
-        "Torre de Sabor CRF": {
-            "descripcion": "Dos carnes, queso y nuestra salsa Torre secreta.",
-            "ingredientes": "Pan, 2 carnes de res, queso cheddar, tocino crujiente, salsa Torre.",
-            "calorias": "800-900",
-            "precio": 5.50,
-            "destacado": "¡Una explosión de sabor!"
-        },
-        "Rey Tocino CRF": {
-            "descripcion": "Mucha carne, queso y tocino para los reyes.",
-            "ingredientes": "Pan, 2 carnes de res, queso cheddar, abundante tocino, kétchup, mayonesa.",
-            "calorias": "900-1000",
-            "precio": 6.00,
-            "destacado": "El paraíso para los amantes del tocino."
-        },
-        "Gran Rey CRF": {
-            "descripcion": "Dos carnes jugosas con nuestra salsa Rey.",
-            "ingredientes": "Pan triple, 2 carnes de res, queso americano, lechuga, cebolla, pepinillos, salsa Rey.",
-            "calorias": "500-550",
-            "precio": 4.50,
-            "destacado": "Un clásico reinventado."
-        },
-        "Pollo Fantástico Crujiente": {
-            "descripcion": "Filete de pollo empanizado y extra crujiente.",
-            "ingredientes": "Pan, filete de pollo crujiente, lechuga, tomate, mayonesa.",
-            "calorias": "450-500",
-            "precio": 4.00,
-            "destacado": "¡Super crujiente y delicioso!"
-        },
-        "Hamburguesa Vegetal Fantástica": {
-            "descripcion": "Sabor increíble, ¡100% a base de plantas!",
-            "ingredientes": "Pan, medallón vegetal, lechuga, tomate, cebolla, pepinillos, mayonesa (opcional vegana).",
-            "calorias": "500-550",
-            "precio": 5.00,
-            "destacado": "¡Para todos los gustos!"
-        },
-        "Hamburguesita con Queso": {
-            "descripcion": "Simple, clásica y deliciosa.",
-            "ingredientes": "Pan, carne de res, queso americano, pepinillos, kétchup, mostaza.",
-            "calorias": "300-350",
-            "precio": 1.50,
-            "destacado": "Perfecta para un antojo o para niños."
-        },
-        "Doble Queso Económica": {
-            "descripcion": "Dos carnes y queso, ¡directo al punto!",
-            "ingredientes": "Pan, 2 carnes de res, 2 quesos americanos, pepinillos, kétchup, mostaza.",
-            "calorias": "400-450",
-            "precio": 2.50,
-            "destacado": "¡Doble sabor a un precio increíble!"
+        "MDK 12 PIEZAS": {
+            "nombre_completo": "Miércoles de KFC: 12 Piezas",
+            "descripcion": "12 piezas perfectas para grupos grandes",
+            "precio": 49.90,
+            "sku": "15650",
+            "atributos_requeridos": {
+                "receta": {
+                    "nombre": "Elige la Receta",
+                    "opciones": {
+                        "Receta Original": {"id": "79", "descripcion": "El sabor clásico de KFC"},
+                        "Crispy": {"id": "80", "descripcion": "Extra crujiente y dorado"},
+                        "Picante": {"id": "11233", "descripcion": "Con especias picantes"}
+                    }
+                }
+            },
+            "categoria": "solo_piezas"
         }
     },
-    "ACOMPAÑAMIENTOS": {
-        "Papitas Fantásticas (Medianas)": {
-            "descripcion": "Doradas y crujientes, ¡el acompañante perfecto!",
-            "ingredientes": "Papas, aceite vegetal, sal.",
-            "calorias": "300-350",
-            "precio": 2.00,
-            "destacado": "¡Irresistibles!"
+    "EN_COMBO": {
+        "MDK 6 PIEZAS COMBO": {
+            "nombre_completo": "Miércoles de KFC: 6 Piezas en Combo",
+            "descripcion": "6 piezas + complemento + bebida familiar",
+            "precio": 29.90,
+            "sku": "13639",
+            "atributos_requeridos": {
+                "receta": {
+                    "nombre": "Elige la Receta",
+                    "opciones": {
+                        "Receta Original": {"id": "79", "descripcion": "El sabor clásico de KFC"},
+                        "Crispy": {"id": "80", "descripcion": "Extra crujiente y dorado"},
+                        "Picante": {"id": "11233", "descripcion": "Con especias picantes"}
+                    }
+                },
+                "complemento": {
+                    "nombre": "Elige tu complemento",
+                    "opciones": {
+                        "Papa Familiar": {"id": "102", "descripcion": "Papas fritas familiares para compartir"},
+                        "Ensalada Familiar": {"id": "113", "descripcion": "Ensalada fresca familiar"}
+                    }
+                },
+                "bebida": {
+                    "nombre": "Elige el sabor de tu bebida",
+                    "opciones": {
+                        "Coca-Cola Sin Azúcar 1L": {"id": "12194", "descripcion": "Coca-Cola sin azúcar 1 litro"},
+                        "Inca Kola Sin Azúcar 1L": {"id": "12196", "descripcion": "Inca Kola sin azúcar 1 litro"}
+                    }
+                }
+            },
+            "categoria": "combo"
         },
-        "Aros de Cebolla Dorados (M)": {
-            "descripcion": "Crujientes por fuera, tiernos por dentro.",
-            "ingredientes": "Cebolla, empanizado especial, aceite vegetal, sal.",
-            "calorias": "320-380",
-            "precio": 2.50,
-            "destacado": "Un clásico con nuestro toque."
+        "MDK 8 PIEZAS COMBO": {
+            "nombre_completo": "Miércoles de KFC: 8 Piezas en Combo",
+            "descripcion": "8 piezas + complemento + bebida familiar",
+            "precio": 39.90,
+            "sku": "16284",
+            "atributos_requeridos": {
+                "receta": {
+                    "nombre": "Elige la Receta",
+                    "opciones": {
+                        "Receta Original": {"id": "79", "descripcion": "El sabor clásico de KFC"},
+                        "Crispy": {"id": "80", "descripcion": "Extra crujiente y dorado"},
+                        "Picante": {"id": "11233", "descripcion": "Con especias picantes"}
+                    }
+                },
+                "complemento": {
+                    "nombre": "Elige tu complemento",
+                    "opciones": {
+                        "Papa Familiar": {"id": "102", "descripcion": "Papas fritas familiares para compartir"},
+                        "Ensalada Familiar": {"id": "113", "descripcion": "Ensalada fresca familiar"}
+                    }
+                },
+                "bebida": {
+                    "nombre": "Elige el sabor de tu bebida",
+                    "opciones": {
+                        "Coca-Cola Sin Azúcar 1L": {"id": "12194", "descripcion": "Coca-Cola sin azúcar 1 litro"},
+                        "Inca Kola Sin Azúcar 1L": {"id": "12196", "descripcion": "Inca Kola sin azúcar 1 litro"}
+                    }
+                }
+            },
+            "categoria": "combo"
         },
-        "Bocaditos de Pollo Mágicos (6u)": {
-            "descripcion": "Tiernos trocitos de pollo empanizado.",
-            "ingredientes": "Carne de pollo, empanizado, aceite vegetal, especias.",
-            "calorias": "220-280",
-            "precio": 2.50,
-            "destacado": "¡Ideales para dipear!"
+        "MDK 10 PIEZAS COMBO": {
+            "nombre_completo": "Miércoles de KFC: 10 Piezas en Combo",
+            "descripcion": "10 piezas + complemento + bebida grande",
+            "precio": 49.90,
+            "sku": "13640",
+            "atributos_requeridos": {
+                "receta": {
+                    "nombre": "Elige la Receta",
+                    "opciones": {
+                        "Receta Original": {"id": "79", "descripcion": "El sabor clásico de KFC"},
+                        "Crispy": {"id": "80", "descripcion": "Extra crujiente y dorado"},
+                        "Picante": {"id": "11233", "descripcion": "Con especias picantes"}
+                    }
+                },
+                "complemento": {
+                    "nombre": "Elige tu complemento",
+                    "opciones": {
+                        "Papa Familiar": {"id": "102", "descripcion": "Papas fritas familiares para compartir"},
+                        "Ensalada Familiar": {"id": "113", "descripcion": "Ensalada fresca familiar"}
+                    }
+                },
+                "bebida": {
+                    "nombre": "Elige el sabor de tu bebida",
+                    "opciones": {
+                        "Inca Kola Sin Azúcar 1.5L": {"id": "110", "descripcion": "Inca Kola sin azúcar 1.5 litros"},
+                        "Coca-Cola Sin Azúcar 1.5L": {"id": "111", "descripcion": "Coca-Cola sin azúcar 1.5 litros"}
+                    }
+                }
+            },
+            "categoria": "combo"
         },
-        "Papas Mágicas (para compartir)": {
-            "descripcion": "¡Una montaña de papas para todos!",
-            "ingredientes": "Papas, aceite vegetal, sal.",
-            "calorias": "700-800",
-            "precio": 4.00,
-            "destacado": "¡Perfectas para el grupo!"
-        }
-    },
-    "POSTRES": {
-        "Batido Fantasía (Choc. Croc.)": {
-            "descripcion": "Cremoso batido con trocitos crocantes de chocolate.",
-            "ingredientes": "Helado de vainilla, leche, sirope de chocolate, trocitos crocantes de galleta.",
-            "calorias": "450-550",
-            "precio": 3.00,
-            "destacado": "¡Una explosión de texturas!"
-        },
-        "Batido Clásico de Chocolate": {
-            "descripcion": "El sabor clásico del chocolate en un batido.",
-            "ingredientes": "Helado de vainilla, leche, sirope de chocolate intenso.",
-            "calorias": "400-500",
-            "precio": 2.50,
-            "destacado": "Simple y delicioso."
-        },
-        "Copa Helada Clásica (Choc/Fresa)": {
-            "descripcion": "Helado de vainilla con tu sirope favorito.",
-            "ingredientes": "Helado de vainilla, sirope (chocolate o fresa).",
-            "calorias": "200-250",
-            "precio": 1.50,
-            "destacado": "Un final dulce y refrescante."
-        },
-        "Conito Helado": {
-            "descripcion": "Vainilla, chocolate o mixto. ¡Un clásico!",
-            "ingredientes": "Masa de helado.",
-            "calorias": "120-150",
-            "precio": 1.00,
-            "destacado": "¡La opción más económica y refrescante!"
-        },
-        "Mezcla Mágica (Trocitos Croc.)": {
-            "descripcion": "Helado mezclado con toppings deliciosos.",
-            "ingredientes": "Helado de vainilla, trocitos crocantes de galleta/chocolate.",
-            "calorias": "300-400",
-            "precio": 2.50,
-            "destacado": "¡Crea tu propia magia!"
-        }
-    },
-    "BEBIDAS": {
-        "Refresco (Mediano)": {
-            "descripcion": "Varios sabores disponibles.",
-            "ingredientes": "Varía según el sabor.",
-            "calorias": "150-180 (con azúcar)",
-            "precio": 1.50,
-            "destacado": "Opciones con o sin azúcar."
-        },
-        "Agua Embotellada": {
-            "descripcion": "Natural o con gas.",
-            "ingredientes": "Agua mineral.",
-            "calorias": "0",
-            "precio": 1.00,
-            "destacado": "La opción más saludable."
-        },
-        "Jugo de Naranja (Pequeño)": {
-            "descripcion": "Natural y refrescante.",
-            "ingredientes": "Naranja.",
-            "calorias": "100-120",
-            "precio": 2.00,
-            "destacado": "¡Pura vitamina C!"
+        "MDK 12 PIEZAS COMBO": {
+            "nombre_completo": "Miércoles de KFC: 12 Piezas en Combo",
+            "descripcion": "12 piezas + complemento súper familiar + bebida grande",
+            "precio": 64.90,
+            "sku": "15990",
+            "atributos_requeridos": {
+                "receta": {
+                    "nombre": "Elige la Receta",
+                    "opciones": {
+                        "Receta Original": {"id": "79", "descripcion": "El sabor clásico de KFC"},
+                        "Crispy": {"id": "80", "descripcion": "Extra crujiente y dorado"},
+                        "Picante": {"id": "11233", "descripcion": "Con especias picantes"}
+                    }
+                },
+                "complemento": {
+                    "nombre": "Elige tu complemento",
+                    "opciones": {
+                        "Papa Super Familiar": {"id": "15098", "descripcion": "Papas súper familiares para toda la familia"}
+                    }
+                },
+                "bebida": {
+                    "nombre": "Elige el sabor de tu bebida",
+                    "opciones": {
+                        "Inca Kola Sin Azúcar 1.5L": {"id": "110", "descripcion": "Inca Kola sin azúcar 1.5 litros"},
+                        "Coca-Cola Sin Azúcar 1.5L": {"id": "111", "descripcion": "Coca-Cola sin azúcar 1.5 litros"}
+                    }
+                }
+            },
+            "categoria": "combo"
         }
     }
 }
 
-# Combos predefinidos con descuentos
-COMBOS_CRF = {
-    "Combo Fantástico Clásico": {
-        "componentes": ["Clásica con Queso CRF", "Papitas Fantásticas (Medianas)", "Refresco (Mediano)"],
-        "precio_individual": 7.00,
-        "precio_combo": 5.00,
-        "ahorro": 2.00
-    },
-    "Combo Doble Delicia": {
-        "componentes": ["Doble Delicia CRF", "Papitas Fantásticas (Medianas)", "Refresco (Mediano)"],
-        "precio_individual": 8.50,
-        "precio_combo": 7.00,
-        "ahorro": 1.50
-    },
-    "Combo Pollo Fantástico": {
-        "componentes": ["Pollo Fantástico Crujiente", "Papitas Fantásticas (Medianas)", "Refresco (Mediano)"],
-        "precio_individual": 7.50,
-        "precio_combo": 6.00,
-        "ahorro": 1.50
-    },
-    "Combo Hamburguesita": {
-        "componentes": ["Hamburguesita con Queso", "Papitas Fantásticas (Medianas)", "Refresco (Mediano)"],
-        "precio_individual": 5.00,
-        "precio_combo": 4.00,
-        "ahorro": 1.00
-    }
-}
-
-# Variable global para almacenar pedidos en construcción
+# Variable global para almacenar pedidos en construcción y selecciones pendientes
 pedidos_en_proceso = {}
+selecciones_pendientes = {}
 
 
-def consultar_cardapio_tool(categoria: Optional[str] = None) -> Dict[str, Any]:
+def consultar_menu_kfc_tool(categoria: Optional[str] = None) -> Dict[str, Any]:
     """
-    Consultar el cardápio completo o por categoría específica.
+    Consultar el menú completo de KFC o por categoría específica.
 
     Args:
-        categoria: Categoría específica (SANDWICHES, ACOMPAÑAMIENTOS, POSTRES, BEBIDAS)
+        categoria: Categoría específica (SOLO_PIEZAS, EN_COMBO)
 
     Returns:
-        Información del cardápio
+        Información del menú KFC
     """
-    logger.info(f"Consultando cardápio - categoría: {categoria}")
+    logger.info(f"Consultando menú KFC - categoría: {categoria}")
     
-    if categoria and categoria.upper() in CARDAPIO_CRF:
+    if categoria and categoria.upper() in KFC_MENU:
         return {
             "categoria": categoria.upper(),
-            "productos": CARDAPIO_CRF[categoria.upper()]
+            "productos": KFC_MENU[categoria.upper()],
+            "mensaje": f"Aquí tienes los productos de {categoria.replace('_', ' ').title()}"
         }
     
     return {
-        "cardapio_completo": CARDAPIO_CRF,
-        "combos_disponibles": COMBOS_CRF
+        "menu_completo": KFC_MENU,
+        "categorias": ["SOLO_PIEZAS", "EN_COMBO"],
+        "mensaje": "¡Bienvenido a KFC! Estos son nuestros especiales de Miércoles de KFC"
     }
 
 
-def calcular_combo_tool(nombre_combo: str) -> Dict[str, Any]:
+def iniciar_seleccion_producto_tool(session_id: str, nombre_producto: str) -> Dict[str, Any]:
     """
-    Calcular precio y componentes de un combo específico.
-
-    Args:
-        nombre_combo: Nombre del combo a calcular
-
-    Returns:
-        Detalles del combo con precio y ahorro
-    """
-    logger.info(f"Calculando combo: {nombre_combo}")
-    
-    if nombre_combo not in COMBOS_CRF:
-        return {"error": f"Combo '{nombre_combo}' no encontrado"}
-    
-    combo = COMBOS_CRF[nombre_combo]
-    
-    return {
-        "nombre": nombre_combo,
-        "componentes": combo["componentes"],
-        "precio_individual": combo["precio_individual"],
-        "precio_combo": combo["precio_combo"],
-        "ahorro": combo["ahorro"],
-        "descripcion": f"Ahorra ${combo['ahorro']:.2f} con este combo fantástico!"
-    }
-
-
-def adicionar_item_pedido_tool(session_id: str, producto: str, cantidad: int = 1) -> Dict[str, Any]:
-    """
-    Adicionar un item al pedido en construcción.
+    Iniciar el proceso de selección de un producto KFC con sus atributos.
 
     Args:
         session_id: ID de la sesión del cliente
-        producto: Nombre del producto a agregar
-        cantidad: Cantidad del producto
+        nombre_producto: Nombre del producto KFC a configurar
 
     Returns:
-        Estado actual del pedido
+        Primera pregunta sobre atributos o confirmación si no requiere atributos
     """
-    logger.info(f"Adicionando item - Session: {session_id}, Producto: {producto}, Cantidad: {cantidad}")
+    logger.info(f"Iniciando selección de producto - Session: {session_id}, Producto: {nombre_producto}")
     
-    # Buscar el producto en el cardápio
+    # Buscar el producto en el menú
     producto_encontrado = None
-    precio_unitario = 0
+    categoria_producto = None
     
-    for categoria, productos in CARDAPIO_CRF.items():
-        if producto in productos:
-            producto_encontrado = productos[producto]
-            precio_unitario = producto_encontrado["precio"]
+    for categoria, productos in KFC_MENU.items():
+        if nombre_producto in productos:
+            producto_encontrado = productos[nombre_producto]
+            categoria_producto = categoria
             break
     
     if not producto_encontrado:
-        return {"error": f"Producto '{producto}' no encontrado en el cardápio"}
+        return {"error": f"Producto '{nombre_producto}' no encontrado en el menú KFC"}
+    
+    # Inicializar selección pendiente
+    if session_id not in selecciones_pendientes:
+        selecciones_pendientes[session_id] = {}
+    
+    selecciones_pendientes[session_id] = {
+        "producto": nombre_producto,
+        "categoria": categoria_producto,
+        "atributos_seleccionados": {},
+        "atributos_pendientes": list(producto_encontrado.get("atributos_requeridos", {}).keys()),
+        "precio": producto_encontrado["precio"],
+        "sku": producto_encontrado["sku"]
+    }
+    
+    # Si no requiere atributos, agregar directamente
+    if not producto_encontrado.get("atributos_requeridos"):
+        return adicionar_producto_finalizado_tool(session_id)
+    
+    # Obtener primer atributo pendiente
+    primer_atributo = selecciones_pendientes[session_id]["atributos_pendientes"][0]
+    atributo_info = producto_encontrado["atributos_requeridos"][primer_atributo]
+    
+    opciones_texto = []
+    for opcion, datos in atributo_info["opciones"].items():
+        opciones_texto.append(f"• {opcion}: {datos['descripcion']}")
+    
+    return {
+        "producto": nombre_producto,
+        "categoria": categoria_producto,
+        "precio": producto_encontrado["precio"],
+        "atributo_actual": primer_atributo,
+        "pregunta": atributo_info["nombre"],
+        "opciones": list(atributo_info["opciones"].keys()),
+        "opciones_detalle": opciones_texto,
+        "mensaje": f"¡Perfecto! Has elegido {nombre_producto} por S/ {producto_encontrado['precio']:.2f}. Ahora necesito que elijas: {atributo_info['nombre']}"
+    }
+
+
+def seleccionar_atributo_tool(session_id: str, atributo: str, valor: str) -> Dict[str, Any]:
+    """
+    Seleccionar un valor para un atributo del producto en configuración.
+
+    Args:
+        session_id: ID de la sesión del cliente
+        atributo: Nombre del atributo (receta, complemento, bebida)
+        valor: Valor seleccionado para el atributo
+
+    Returns:
+        Siguiente pregunta de atributo o confirmación final
+    """
+    logger.info(f"Seleccionando atributo - Session: {session_id}, Atributo: {atributo}, Valor: {valor}")
+    
+    if session_id not in selecciones_pendientes:
+        return {"error": "No hay producto en selección. Primero elige un producto."}
+    
+    seleccion = selecciones_pendientes[session_id]
+    producto_info = KFC_MENU[seleccion["categoria"]][seleccion["producto"]]
+    
+    # Validar que el atributo existe y el valor es válido
+    if atributo not in producto_info.get("atributos_requeridos", {}):
+        return {"error": f"Atributo '{atributo}' no válido para este producto"}
+    
+    opciones_validas = producto_info["atributos_requeridos"][atributo]["opciones"]
+    if valor not in opciones_validas:
+        return {"error": f"Opción '{valor}' no válida para {atributo}"}
+    
+    # Guardar selección
+    seleccion["atributos_seleccionados"][atributo] = valor
+    
+    # Remover de pendientes
+    if atributo in seleccion["atributos_pendientes"]:
+        seleccion["atributos_pendientes"].remove(atributo)
+    
+    # Si quedan atributos pendientes, preguntar el siguiente
+    if seleccion["atributos_pendientes"]:
+        siguiente_atributo = seleccion["atributos_pendientes"][0]
+        atributo_info = producto_info["atributos_requeridos"][siguiente_atributo]
+        
+        opciones_texto = []
+        for opcion, datos in atributo_info["opciones"].items():
+            opciones_texto.append(f"• {opcion}: {datos['descripcion']}")
+        
+        return {
+            "atributo_guardado": f"{atributo}: {valor}",
+            "atributo_actual": siguiente_atributo,
+            "pregunta": atributo_info["nombre"],
+            "opciones": list(atributo_info["opciones"].keys()),
+            "opciones_detalle": opciones_texto,
+            "mensaje": f"¡Excelente! Has elegido {valor}. Ahora: {atributo_info['nombre']}"
+        }
+    
+    # Todos los atributos completados, agregar al pedido
+    return adicionar_producto_finalizado_tool(session_id)
+
+
+def adicionar_producto_finalizado_tool(session_id: str) -> Dict[str, Any]:
+    """
+    Agregar el producto completamente configurado al pedido.
+
+    Args:
+        session_id: ID de la sesión del cliente
+
+    Returns:
+        Confirmación del producto agregado al pedido
+    """
+    logger.info(f"Finalizando adición de producto - Session: {session_id}")
+    
+    if session_id not in selecciones_pendientes:
+        return {"error": "No hay producto configurado para agregar"}
+    
+    seleccion = selecciones_pendientes[session_id]
     
     # Inicializar pedido si no existe
     if session_id not in pedidos_en_proceso:
@@ -291,41 +382,44 @@ def adicionar_item_pedido_tool(session_id: str, producto: str, cantidad: int = 1
             "total": 0.0
         }
     
-    # Verificar si el producto ya está en el pedido
-    item_existente = None
-    for item in pedidos_en_proceso[session_id]["items"]:
-        if item["producto"] == producto:
-            item_existente = item
-            break
+    # Crear nombre completo del producto con atributos
+    nombre_completo = seleccion["producto"]
+    if seleccion["atributos_seleccionados"]:
+        detalles = []
+        for atributo, valor in seleccion["atributos_seleccionados"].items():
+            detalles.append(f"{valor}")
+        nombre_completo += f" ({', '.join(detalles)})"
     
-    if item_existente:
-        item_existente["cantidad"] += cantidad
-        item_existente["subtotal"] = item_existente["cantidad"] * precio_unitario
-    else:
-        nuevo_item = {
-            "producto": producto,
-            "cantidad": cantidad,
-            "precio_unitario": precio_unitario,
-            "subtotal": cantidad * precio_unitario
-        }
-        pedidos_en_proceso[session_id]["items"].append(nuevo_item)
+    # Agregar al pedido
+    nuevo_item = {
+        "producto": nombre_completo,
+        "producto_base": seleccion["producto"],
+        "atributos": seleccion["atributos_seleccionados"],
+        "cantidad": 1,
+        "precio_unitario": seleccion["precio"],
+        "subtotal": seleccion["precio"],
+        "sku": seleccion["sku"],
+        "categoria": seleccion["categoria"]
+    }
+    
+    pedidos_en_proceso[session_id]["items"].append(nuevo_item)
     
     # Recalcular total
     pedidos_en_proceso[session_id]["total"] = sum(
         item["subtotal"] for item in pedidos_en_proceso[session_id]["items"]
     )
     
+    # Limpiar selección pendiente
+    del selecciones_pendientes[session_id]
+    
     return {
-        "item_agregado": {
-            "producto": producto,
-            "cantidad": cantidad,
-            "precio_unitario": precio_unitario
-        },
-        "pedido_actual": pedidos_en_proceso[session_id]
+        "item_agregado": nuevo_item,
+        "pedido_actual": pedidos_en_proceso[session_id],
+        "mensaje": f"¡Perfecto! He agregado {nombre_completo} por S/ {seleccion['precio']:.2f} a tu pedido."
     }
 
 
-def consultar_pedido_atual_tool(session_id: str) -> Dict[str, Any]:
+def consultar_pedido_actual_tool(session_id: str) -> Dict[str, Any]:
     """
     Consultar el estado actual del pedido en construcción.
 
@@ -335,75 +429,85 @@ def consultar_pedido_atual_tool(session_id: str) -> Dict[str, Any]:
     Returns:
         Estado actual del pedido
     """
-    logger.info(f"Consultando pedido atual - Session: {session_id}")
+    logger.info(f"Consultando pedido actual - Session: {session_id}")
     
     if session_id not in pedidos_en_proceso:
         return {
             "pedido_vacio": True,
-            "mensaje": "No hay items en el pedido actual"
+            "mensaje": "No tienes productos en tu pedido actual"
         }
+    
+    pedido = pedidos_en_proceso[session_id]
+    
+    # Formatear resumen del pedido
+    resumen_items = []
+    for item in pedido["items"]:
+        resumen_items.append(f"• {item['producto']} - S/ {item['subtotal']:.2f}")
     
     return {
         "pedido_vacio": False,
-        "pedido": pedidos_en_proceso[session_id]
+        "pedido": pedido,
+        "resumen": resumen_items,
+        "total_formateado": f"S/ {pedido['total']:.2f}",
+        "cantidad_items": len(pedido["items"]),
+        "mensaje": f"Tu pedido actual tiene {len(pedido['items'])} productos por un total de S/ {pedido['total']:.2f}"
     }
 
 
-def sugerir_acompanhamentos_tool(productos_actuales: List[str]) -> Dict[str, Any]:
+def sugerir_complementos_kfc_tool(productos_actuales: List[str]) -> Dict[str, Any]:
     """
-    Sugerir acompañamientos basados en los productos actuales del pedido.
+    Sugerir productos adicionales basados en el pedido actual.
 
     Args:
         productos_actuales: Lista de productos ya en el pedido
 
     Returns:
-        Sugerencias de acompañamientos y postres
+        Sugerencias de productos adicionales
     """
-    logger.info(f"Generando sugerencias para productos: {productos_actuales}")
+    logger.info(f"Generando sugerencias KFC para productos: {productos_actuales}")
     
-    tiene_sandwich = any(prod in CARDAPIO_CRF["SANDWICHES"] for prod in productos_actuales)
-    tiene_acompanamiento = any(prod in CARDAPIO_CRF["ACOMPAÑAMIENTOS"] for prod in productos_actuales)
-    tiene_bebida = any(prod in CARDAPIO_CRF["BEBIDAS"] for prod in productos_actuales)
-    tiene_postre = any(prod in CARDAPIO_CRF["POSTRES"] for prod in productos_actuales)
+    tiene_solo_piezas = any("MDK" in prod and "COMBO" not in prod for prod in productos_actuales)
+    tiene_combo = any("COMBO" in prod for prod in productos_actuales)
     
     sugerencias = []
     
-    if tiene_sandwich and not tiene_acompanamiento:
+    if tiene_solo_piezas:
         sugerencias.extend([
-            "Aros de Cebolla Dorados (M) - ¡Solo $2.50 y son espectaculares!",
-            "Papitas Fantásticas (Medianas) - ¡El acompañante perfecto por $2.00!"
+            "¿Te gustaría convertir tu pedido en combo? ¡Incluye complemento y bebida por solo S/ 10.00 más!",
+            "¿Qué tal si agregamos más piezas? Tenemos ofertas especiales en MDK 8, 10 o 12 piezas."
         ])
     
-    if not tiene_bebida:
-        sugerencias.append("Refresco (Mediano) - ¡Completa tu comida por solo $1.50!")
-    
-    if not tiene_postre:
+    if not tiene_combo and not tiene_solo_piezas:
         sugerencias.extend([
-            "Batido Fantasía (Choc. Croc.) - ¡Una explosión de texturas por $3.00!",
-            "Conito Helado - ¡La opción más económica y refrescante por $1.00!"
+            "Te recomiendo nuestro MDK 6 Piezas Combo por S/ 29.90 - ¡6 piezas + complemento + bebida!",
+            "¿Prefieres solo las piezas? MDK 6 Piezas por S/ 19.90 es una excelente opción."
         ])
     
-    if len(productos_actuales) > 1:
-        sugerencias.append("Papas Mágicas (para compartir) - ¡Ideales para el grupo por $4.00!")
+    if len(productos_actuales) == 0:
+        sugerencias.extend([
+            "¡Bienvenido a KFC! Te recomiendo nuestros especiales de Miércoles de KFC.",
+            "¿Qué te parece nuestro MDK 6 Piezas Combo? ¡El favorito de nuestros clientes!"
+        ])
     
     return {
-        "tiene_sandwich": tiene_sandwich,
+        "tiene_solo_piezas": tiene_solo_piezas,
+        "tiene_combo": tiene_combo,
         "sugerencias": sugerencias,
-        "mensaje": "¿Te animas a probar alguno de estos para completar tu experiencia fantástica?"
+        "mensaje": "¿Te gustaría agregar algo más a tu pedido KFC?"
     }
 
 
-def finalizar_pedido_tool(session_id: str) -> Dict[str, Any]:
+def finalizar_pedido_kfc_tool(session_id: str) -> Dict[str, Any]:
     """
-    Finalizar el pedido y preparar los datos para la función finalizeOrder.
+    Finalizar el pedido KFC y preparar los datos para procesar.
 
     Args:
         session_id: ID de la sesión del cliente
 
     Returns:
-        Datos del pedido para finalizeOrder
+        Datos del pedido para procesar
     """
-    logger.info(f"Finalizando pedido - Session: {session_id}")
+    logger.info(f"Finalizando pedido KFC - Session: {session_id}")
     
     if session_id not in pedidos_en_proceso:
         return {
@@ -416,15 +520,19 @@ def finalizar_pedido_tool(session_id: str) -> Dict[str, Any]:
     if not pedido["items"]:
         return {
             "error": "Pedido vacío",
-            "mensaje": "No hay items en el pedido para finalizar"
+            "mensaje": "No hay productos en el pedido para finalizar"
         }
     
-    # Preparar orderItems para la función finalizeOrder
+    # Preparar orderItems para finalizeOrder
     order_items = []
     for item in pedido["items"]:
         order_items.append({
             "productName": item["producto"],
-            "quantity": item["cantidad"]
+            "productBase": item["producto_base"],
+            "attributes": item.get("atributos", {}),
+            "quantity": item["cantidad"],
+            "sku": item.get("sku", ""),
+            "unitPrice": item["precio_unitario"]
         })
     
     # Limpiar el pedido después de finalizar
@@ -435,13 +543,13 @@ def finalizar_pedido_tool(session_id: str) -> Dict[str, Any]:
         "orderItems": order_items,
         "total": pedido["total"],
         "resumen_pedido": pedido,
-        "mensaje": "Pedido listo para finalizeOrder"
+        "mensaje": "Pedido KFC listo para procesar"
     }
 
 
 def limpiar_pedido_tool(session_id: str) -> Dict[str, Any]:
     """
-    Limpiar/cancelar el pedido actual.
+    Limpiar/cancelar el pedido actual y selecciones pendientes.
 
     Args:
         session_id: ID de la sesión del cliente
@@ -449,18 +557,29 @@ def limpiar_pedido_tool(session_id: str) -> Dict[str, Any]:
     Returns:
         Confirmación de limpieza
     """
-    logger.info(f"Limpiando pedido - Session: {session_id}")
+    logger.info(f"Limpiando pedido KFC - Session: {session_id}")
     
+    # Limpiar pedido
+    pedido_limpiado = False
     if session_id in pedidos_en_proceso:
         del pedidos_en_proceso[session_id]
-        return {"success": True, "mensaje": "Pedido cancelado exitosamente"}
+        pedido_limpiado = True
+    
+    # Limpiar selecciones pendientes
+    seleccion_limpiada = False
+    if session_id in selecciones_pendientes:
+        del selecciones_pendientes[session_id]
+        seleccion_limpiada = True
+    
+    if pedido_limpiado or seleccion_limpiada:
+        return {"success": True, "mensaje": "Tu pedido ha sido cancelado exitosamente"}
     
     return {"success": True, "mensaje": "No había pedido para cancelar"}
 
 
-def calcular_precio_productos_tool(productos: List[str]) -> Dict[str, Any]:
+def calcular_precio_productos_kfc_tool(productos: List[str]) -> Dict[str, Any]:
     """
-    Calcular el precio total de una lista de productos.
+    Calcular el precio total de una lista de productos KFC.
 
     Args:
         productos: Lista de nombres de productos
@@ -468,7 +587,7 @@ def calcular_precio_productos_tool(productos: List[str]) -> Dict[str, Any]:
     Returns:
         Cálculo de precios individuales y total
     """
-    logger.info(f"Calculando precios para productos: {productos}")
+    logger.info(f"Calculando precios KFC para productos: {productos}")
     
     resultados = []
     total = 0.0
@@ -476,39 +595,43 @@ def calcular_precio_productos_tool(productos: List[str]) -> Dict[str, Any]:
     for producto in productos:
         precio = None
         categoria_encontrada = None
+        sku = None
         
-        for categoria, items in CARDAPIO_CRF.items():
+        for categoria, items in KFC_MENU.items():
             if producto in items:
                 precio = items[producto]["precio"]
                 categoria_encontrada = categoria
+                sku = items[producto]["sku"]
                 break
         
         if precio is not None:
             resultados.append({
                 "producto": producto,
                 "categoria": categoria_encontrada,
-                "precio": precio
+                "precio": precio,
+                "sku": sku,
+                "precio_formateado": f"S/ {precio:.2f}"
             })
             total += precio
         else:
             resultados.append({
                 "producto": producto,
-                "error": "Producto no encontrado"
+                "error": "Producto no encontrado en menú KFC"
             })
     
     return {
         "productos": resultados,
-        "total": total
+        "total": total,
+        "total_formateado": f"S/ {total:.2f}"
     }
 
 
 def finalize_order_tool(order_items: List[Dict[str, Any]]) -> Dict[str, Any]:
     """
-    Simular la función finalizeOrder para procesar el pedido final.
-    Esta función simula el envío del pedido a un sistema externo.
+    Procesar el pedido final de KFC.
 
     Args:
-        order_items: Lista de items del pedido con formato [{"productName": str, "quantity": int}]
+        order_items: Lista de items del pedido con formato extendido para KFC
 
     Returns:
         Resultado del procesamiento del pedido
@@ -516,7 +639,7 @@ def finalize_order_tool(order_items: List[Dict[str, Any]]) -> Dict[str, Any]:
     import random
     import time
     
-    logger.info(f"Procesando pedido final con items: {order_items}")
+    logger.info(f"Procesando pedido final KFC con items: {order_items}")
     
     # Validar formato de order_items
     if not isinstance(order_items, list):
@@ -539,24 +662,25 @@ def finalize_order_tool(order_items: List[Dict[str, Any]]) -> Dict[str, Any]:
     
     # Simular éxito en 95% de los casos
     if random.random() < 0.95:
-        order_id = f"CRF-{random.randint(100000, 999999)}"
+        order_id = f"KFC-{random.randint(100000, 999999)}"
         total_items = sum(item["quantity"] for item in order_items)
         
-        logger.info(f"Pedido procesado exitosamente - ID: {order_id}")
+        logger.info(f"Pedido KFC procesado exitosamente - ID: {order_id}")
         
         return {
             "status": "SUCCESS",
             "orderId": order_id,
-            "message": "Pedido procesado exitosamente",
+            "message": "¡Pedido KFC procesado exitosamente!",
             "items": order_items,
             "totalItems": total_items,
-            "estimatedTime": "15-20 minutos"
+            "estimatedTime": "20-25 minutos",
+            "restaurant": "KFC"
         }
     else:
-        logger.warning("Simulando error en procesamiento de pedido")
+        logger.warning("Simulando error en procesamiento de pedido KFC")
         
         return {
             "status": "ERROR",
-            "error": "Error en el sistema de pedidos",
+            "error": "Error en el sistema de pedidos KFC",
             "message": "Por favor intenta nuevamente en unos momentos"
         }

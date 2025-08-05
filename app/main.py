@@ -24,7 +24,7 @@ from food.agent import root_agent
 # Load Gemini API Key
 load_dotenv()
 
-APP_NAME = "Comida Rápida Fantástica - Félix Assistant"
+APP_NAME = "KFC - Asistente KFC Miércoles de KFC"
 session_service = InMemorySessionService()
 
 
@@ -213,11 +213,11 @@ async def get_pedido(session_id: str):
         }
 
 
-@app.get("/debug/cardapio")
-async def debug_cardapio():
-    """Debug endpoint to check menu"""
-    from food.tools.tools import CARDAPIO_CRF, COMBOS_CRF
-    return {"cardapio": CARDAPIO_CRF, "combos": COMBOS_CRF}
+@app.get("/debug/menu")
+async def debug_menu():
+    """Debug endpoint to check KFC menu"""
+    from food.tools.tools import KFC_MENU
+    return {"menu_kfc": KFC_MENU}
 
 
 @app.websocket("/ws/{session_id}")
@@ -248,3 +248,10 @@ async def websocket_endpoint(
 
     # Disconnected
     print(f"Client #{session_id} disconnected")
+
+
+# For Cloud Run deployment
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8080))
+    uvicorn.run(app, host="0.0.0.0", port=port)

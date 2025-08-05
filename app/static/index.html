@@ -3,22 +3,22 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comida Rápida Fantástica - Félix, tu Amigo del Sabor</title>
+    <title>KFC - Asistente KFC para Miércoles de KFC</title>
     <script src="/static/js/app.js" type="module"></script>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
       :root {
-        --primary-red: #FF4444;
-        --primary-orange: #FF8800;
-        --primary-yellow: #FFD700;
-        --dark-red: #CC2222;
-        --dark-orange: #DD6600;
-        --green-accent: #22CC44;
-        --background-cream: #FFF8F0;
+        --kfc-red: #D50000;
+        --kfc-dark-red: #B71C1C;
+        --kfc-white: #FFFFFF;
+        --kfc-cream: #FFF8F5;
+        --kfc-gray: #424242;
+        --kfc-light-gray: #F5F5F5;
         --text-dark: #2D1B1B;
         --text-light: #FFFFFF;
-        --shadow: rgba(0, 0, 0, 0.15);
+        --shadow: rgba(213, 0, 0, 0.15);
         --border-radius: 12px;
+        --gold-accent: #FFD700;
       }
       
       * {
@@ -29,7 +29,7 @@
       
       body {
         font-family: 'Inter', sans-serif;
-        background: linear-gradient(135deg, var(--background-cream) 0%, #FFF5E6 100%);
+        background: linear-gradient(135deg, var(--kfc-cream) 0%, #FFF5F0 100%);
         color: var(--text-dark);
         line-height: 1.6;
         min-height: 100vh;
@@ -49,7 +49,7 @@
       .header {
         grid-column: 1 / -1;
         text-align: center;
-        background: linear-gradient(45deg, var(--primary-red), var(--primary-orange));
+        background: linear-gradient(45deg, var(--kfc-red), var(--kfc-dark-red));
         color: var(--text-light);
         padding: 20px;
         border-radius: var(--border-radius);
@@ -59,13 +59,14 @@
       
       .logo {
         font-family: 'Fredoka One', cursive;
-        font-size: 2.5rem;
+        font-size: 3rem;
         margin-bottom: 8px;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        letter-spacing: 2px;
       }
       
       .tagline {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         font-weight: 500;
         opacity: 0.95;
       }
@@ -84,10 +85,10 @@
       .menu-title {
         font-family: 'Fredoka One', cursive;
         font-size: 1.5rem;
-        color: var(--primary-red);
+        color: var(--kfc-red);
         margin-bottom: 20px;
         text-align: center;
-        border-bottom: 2px solid var(--primary-yellow);
+        border-bottom: 2px solid var(--gold-accent);
         padding-bottom: 10px;
       }
       
@@ -98,10 +99,10 @@
       .category-title {
         font-weight: 600;
         font-size: 1.1rem;
-        color: var(--dark-red);
+        color: var(--kfc-white);
         margin-bottom: 12px;
         padding: 8px 12px;
-        background: linear-gradient(45deg, var(--primary-yellow), #FFE55C);
+        background: linear-gradient(45deg, var(--kfc-red), var(--kfc-dark-red));
         border-radius: 8px;
         text-align: center;
       }
@@ -112,7 +113,7 @@
         align-items: center;
         padding: 8px 12px;
         margin-bottom: 8px;
-        background: var(--background-cream);
+        background: var(--kfc-light-gray);
         border-radius: 8px;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -120,9 +121,10 @@
       }
       
       .menu-item:hover {
-        background: var(--primary-yellow);
+        background: var(--gold-accent);
         transform: translateX(5px);
-        border-color: var(--primary-orange);
+        border-color: var(--kfc-red);
+        box-shadow: 0 2px 8px var(--shadow);
       }
       
       .item-info {
@@ -144,9 +146,50 @@
       
       .item-price {
         font-weight: 600;
-        color: var(--primary-red);
+        color: var(--kfc-red);
         font-size: 1rem;
         margin-left: 10px;
+      }
+      
+      /* Special KFC Combos */
+      .combo-section {
+        background: linear-gradient(45deg, var(--kfc-red), var(--kfc-dark-red));
+        color: white;
+        padding: 15px;
+        border-radius: var(--border-radius);
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      
+      .combo-title {
+        font-family: 'Fredoka One', cursive;
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+      
+      .combo-item {
+        background: rgba(255, 255, 255, 0.2);
+        margin: 8px 0;
+        padding: 10px;
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      .combo-item:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.02);
+      }
+      
+      .combo-savings {
+        background: var(--gold-accent);
+        color: var(--text-dark);
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-weight: 600;
+        display: inline-block;
+        margin-top: 5px;
       }
       
       /* Order Section (Third Column) */
@@ -165,17 +208,17 @@
         background: white;
         border-radius: var(--border-radius);
         padding: 20px;
-        border: 2px solid var(--green-accent);
-        box-shadow: 0 2px 10px rgba(34, 204, 68, 0.2);
+        border: 2px solid var(--kfc-red);
+        box-shadow: 0 2px 10px rgba(213, 0, 0, 0.2);
       }
       
       .order-title {
         font-family: 'Fredoka One', cursive;
         font-size: 1.3rem;
-        color: var(--green-accent);
+        color: var(--kfc-red);
         margin-bottom: 20px;
         text-align: center;
-        border-bottom: 2px solid var(--primary-yellow);
+        border-bottom: 2px solid var(--gold-accent);
         padding-bottom: 10px;
       }
       
@@ -190,11 +233,11 @@
       .order-total {
         font-weight: 600;
         font-size: 1.1rem;
-        color: var(--primary-red);
+        color: var(--kfc-red);
         text-align: center;
         margin-top: 10px;
         padding-top: 10px;
-        border-top: 2px solid var(--primary-yellow);
+        border-top: 2px solid var(--gold-accent);
       }
       
       /* Chat Section */
@@ -210,24 +253,24 @@
       }
       
       .chat-header {
-        background: linear-gradient(45deg, var(--primary-orange), var(--primary-yellow));
-        color: var(--text-dark);
+        background: linear-gradient(45deg, var(--kfc-red), var(--kfc-dark-red));
+        color: var(--text-light);
         padding: 15px 20px;
         text-align: center;
         font-weight: 600;
       }
       
-      .felix-avatar {
+      .kfc-avatar {
         display: inline-block;
         width: 40px;
         height: 40px;
-        background: var(--primary-red);
+        background: var(--gold-accent);
         border-radius: 50%;
         margin-right: 10px;
         vertical-align: middle;
         text-align: center;
         line-height: 40px;
-        color: white;
+        color: var(--kfc-red);
         font-weight: bold;
         font-size: 1.2rem;
       }
@@ -236,7 +279,7 @@
         flex: 1;
         overflow-y: auto;
         padding: 20px;
-        background: linear-gradient(to bottom, #FFFBF7, #FFF8F0);
+        background: linear-gradient(to bottom, #FFFBF7, #FFF8F5);
         display: flex;
         flex-direction: column;
         scroll-behavior: smooth;
@@ -252,16 +295,16 @@
       }
       
       .agent-message {
-        background: linear-gradient(45deg, var(--primary-yellow), #FFE55C);
+        background: linear-gradient(45deg, var(--gold-accent), #FFE55C);
         color: var(--text-dark);
         align-self: flex-start;
         border-bottom-left-radius: 4px;
-        border: 1px solid var(--primary-orange);
+        border: 1px solid var(--kfc-red);
         font-weight: 500;
       }
       
       .user-message {
-        background: linear-gradient(45deg, var(--primary-red), var(--dark-red));
+        background: linear-gradient(45deg, var(--kfc-red), var(--kfc-dark-red));
         color: var(--text-light);
         align-self: flex-end;
         border-bottom-right-radius: 4px;
@@ -273,14 +316,14 @@
         display: flex;
         gap: 10px;
         padding: 16px;
-        background: var(--background-cream);
-        border-top: 2px solid var(--primary-yellow);
+        background: var(--kfc-cream);
+        border-top: 2px solid var(--gold-accent);
       }
       
       #message {
         flex: 1;
         padding: 12px 16px;
-        border: 2px solid var(--primary-orange);
+        border: 2px solid var(--kfc-red);
         border-radius: 25px;
         font-size: 16px;
         outline: none;
@@ -289,8 +332,8 @@
       }
       
       #message:focus {
-        border-color: var(--primary-red);
-        box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.3);
+        border-color: var(--kfc-dark-red);
+        box-shadow: 0 0 0 3px rgba(213, 0, 0, 0.3);
         transform: scale(1.02);
       }
       
@@ -307,13 +350,13 @@
       }
       
       #sendButton {
-        background: linear-gradient(45deg, var(--primary-red), var(--dark-red));
+        background: linear-gradient(45deg, var(--kfc-red), var(--kfc-dark-red));
         color: var(--text-light);
       }
       
       #sendButton:hover:not(:disabled) {
         transform: translateY(-2px) scale(1.05);
-        box-shadow: 0 4px 15px rgba(255, 68, 68, 0.4);
+        box-shadow: 0 4px 15px rgba(213, 0, 0, 0.4);
       }
       
       #sendButton:disabled {
@@ -323,7 +366,7 @@
       }
       
       #startAudioButton {
-        background: linear-gradient(45deg, var(--green-accent), #1AA033);
+        background: linear-gradient(45deg, #22CC44, #1AA033);
         color: var(--text-light);
       }
       
@@ -366,47 +409,13 @@
       }
       
       .status-dot.connected {
-        background-color: var(--green-accent);
+        background-color: #22CC44;
         animation: pulse 2s infinite;
       }
       
       .status-dot.recording {
-        background-color: var(--primary-red);
+        background-color: var(--kfc-red);
         animation: pulse-recording 1s infinite;
-      }
-      
-      /* Combo Highlights */
-      .combo-section {
-        background: linear-gradient(45deg, var(--green-accent), #22DD55);
-        color: white;
-        padding: 15px;
-        border-radius: var(--border-radius);
-        margin-bottom: 20px;
-        text-align: center;
-      }
-      
-      .combo-title {
-        font-family: 'Fredoka One', cursive;
-        font-size: 1.3rem;
-        margin-bottom: 10px;
-      }
-      
-      .combo-item {
-        background: rgba(255, 255, 255, 0.2);
-        margin: 8px 0;
-        padding: 10px;
-        border-radius: 8px;
-        font-weight: 500;
-      }
-      
-      .combo-savings {
-        background: var(--primary-yellow);
-        color: var(--text-dark);
-        padding: 5px 10px;
-        border-radius: 15px;
-        font-weight: 600;
-        display: inline-block;
-        margin-top: 5px;
       }
       
       /* Responsive Design */
@@ -453,26 +462,6 @@
         100% { transform: scale(1); }
       }
       
-      /* Special Effects */
-      .sparkle {
-        position: relative;
-        overflow: hidden;
-      }
-      
-      .sparkle::before {
-        content: '✨';
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        font-size: 0.8rem;
-        animation: sparkle 2s infinite;
-      }
-      
-      @keyframes sparkle {
-        0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
-        50% { opacity: 1; transform: scale(1) rotate(180deg); }
-      }
-      
       /* Order Item Styles */
       .order-item {
         display: flex;
@@ -504,7 +493,7 @@
       
       .order-item-price {
         font-weight: 600;
-        color: var(--primary-red);
+        color: var(--kfc-red);
         margin-left: 10px;
       }
       
@@ -530,7 +519,7 @@
       /* Order Success Animation */
       @keyframes orderSuccess {
         0% { transform: scale(1); }
-        50% { transform: scale(1.1); background-color: var(--green-accent); }
+        50% { transform: scale(1.1); background-color: var(--kfc-red); }
         100% { transform: scale(1); }
       }
       
@@ -545,7 +534,7 @@
         height: 20px;
         border: 3px solid rgba(0, 0, 0, 0.1);
         border-radius: 50%;
-        border-top-color: var(--primary-orange);
+        border-top-color: var(--kfc-red);
         animation: spin 1s ease-in-out infinite;
       }
       
@@ -553,35 +542,9 @@
         to { transform: rotate(360deg); }
       }
       
-      /* Quick Add Buttons */
-      .quick-add {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        display: none;
-        gap: 5px;
-      }
-      
-      .menu-item:hover .quick-add {
-        display: flex;
-      }
-      
-      .quick-add-btn {
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        border: none;
-        background: var(--primary-red);
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
-      
-      .quick-add-btn:hover {
-        transform: scale(1.2);
-        background: var(--dark-red);
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
       }
     </style>
   </head>
@@ -589,123 +552,109 @@
   <body>
     <div class="container">
       <div class="header">
-        <div class="logo">🍔 Comida Rápida Fantástica</div>
-        <div class="tagline">¡Félix, tu Amigo del Sabor te está esperando!</div>
+        <div class="logo">🍗 KFC</div>
+        <div class="tagline">Tu Asistente KFC para los Miércoles de KFC</div>
       </div>
       
       <div class="menu-section">
-        <div class="menu-title">🍟 Nuestro Menú Fantástico</div>
+        <div class="menu-title">🍗 Miércoles de KFC</div>
         
-        <!-- Combos Especiales -->
-        <div class="combo-section sparkle">
+        <!-- Combos Destacados -->
+        <div class="combo-section">
           <div class="combo-title">¡COMBOS INCREÍBLES!</div>
-          <div class="combo-item">
-            <strong>Combo Fantástico Clásico</strong><br>
-            Hamburguesa + Papitas + Refresco<br>
-            <span class="combo-savings">¡Ahorra $2.00! Solo $5.00</span>
+          <div class="combo-item" data-product="MDK 6 PIEZAS COMBO">
+            <strong>MDK 6 Piezas Combo</strong><br>
+            6 piezas + complemento + bebida<br>
+            <span class="combo-savings">¡Solo S/ 29.90!</span>
           </div>
-          <div class="combo-item">
-            <strong>Combo Doble Delicia</strong><br>
-            Doble carne + Papitas + Refresco<br>
-            <span class="combo-savings">¡Ahorra $1.50! Solo $7.00</span>
-          </div>
-        </div>
-        
-        <!-- Sándwiches -->
-        <div class="menu-category">
-          <div class="category-title">🍔 SÁNDWICHES</div>
-          <div class="menu-item" data-product="Clásica con Queso CRF">
-            <div class="item-info">
-              <div class="item-name">Clásica con Queso CRF</div>
-              <div class="item-description">La estrella con queso derretido</div>
-            </div>
-            <div class="item-price">$3.50</div>
-          </div>
-          <div class="menu-item" data-product="Doble Delicia CRF">
-            <div class="item-info">
-              <div class="item-name">Doble Delicia CRF</div>
-              <div class="item-description">Doble carne, doble sabor</div>
-            </div>
-            <div class="item-price">$5.00</div>
-          </div>
-          <div class="menu-item" data-product="Pollo Fantástico Crujiente">
-            <div class="item-info">
-              <div class="item-name">Pollo Fantástico Crujiente</div>
-              <div class="item-description">Súper crujiente y delicioso</div>
-            </div>
-            <div class="item-price">$4.00</div>
-          </div>
-          <div class="menu-item" data-product="Rey Tocino CRF">
-            <div class="item-info">
-              <div class="item-name">Rey Tocino CRF</div>
-              <div class="item-description">Paraíso para amantes del tocino</div>
-            </div>
-            <div class="item-price">$6.00</div>
+          <div class="combo-item" data-product="MDK 8 PIEZAS COMBO">
+            <strong>MDK 8 Piezas Combo</strong><br>
+            8 piezas + complemento + bebida<br>
+            <span class="combo-savings">¡Solo S/ 39.90!</span>
           </div>
         </div>
         
-        <!-- Acompañamientos -->
+        <!-- Solo Piezas -->
         <div class="menu-category">
-          <div class="category-title">🍟 ACOMPAÑAMIENTOS</div>
-          <div class="menu-item" data-product="Papitas Fantásticas (Medianas)">
+          <div class="category-title">🍗 SOLO PIEZAS</div>
+          <div class="menu-item" data-product="MDK 6 PIEZAS">
             <div class="item-info">
-              <div class="item-name">Papitas Fantásticas (M)</div>
-              <div class="item-description">Doradas y crujientes</div>
+              <div class="item-name">MDK 6 Piezas</div>
+              <div class="item-description">6 deliciosas piezas de pollo</div>
             </div>
-            <div class="item-price">$2.00</div>
+            <div class="item-price">S/ 19.90</div>
           </div>
-          <div class="menu-item" data-product="Aros de Cebolla Dorados (M)">
+          <div class="menu-item" data-product="MDK 8 PIEZAS">
             <div class="item-info">
-              <div class="item-name">Aros de Cebolla (M)</div>
-              <div class="item-description">Crujientes por fuera</div>
+              <div class="item-name">MDK 8 Piezas</div>
+              <div class="item-description">8 jugosas piezas para compartir</div>
             </div>
-            <div class="item-price">$2.50</div>
+            <div class="item-price">S/ 29.90</div>
+          </div>
+          <div class="menu-item" data-product="MDK 10 PIEZAS">
+            <div class="item-info">
+              <div class="item-name">MDK 10 Piezas</div>
+              <div class="item-description">10 piezas para toda la familia</div>
+            </div>
+            <div class="item-price">S/ 39.90</div>
+          </div>
+          <div class="menu-item" data-product="MDK 12 PIEZAS">
+            <div class="item-info">
+              <div class="item-name">MDK 12 Piezas</div>
+              <div class="item-description">12 piezas para grupos grandes</div>
+            </div>
+            <div class="item-price">S/ 49.90</div>
           </div>
         </div>
         
-        <!-- Postres -->
+        <!-- En Combo -->
         <div class="menu-category">
-          <div class="category-title">🍨 POSTRES</div>
-          <div class="menu-item" data-product="Batido Fantasía (Choc. Croc.)">
+          <div class="category-title">🥤 EN COMBO</div>
+          <div class="menu-item" data-product="MDK 6 PIEZAS COMBO">
             <div class="item-info">
-              <div class="item-name">Batido Fantasía</div>
-              <div class="item-description">Con trocitos crocantes</div>
+              <div class="item-name">MDK 6 Piezas Combo</div>
+              <div class="item-description">6 piezas + complemento + bebida</div>
             </div>
-            <div class="item-price">$3.00</div>
+            <div class="item-price">S/ 29.90</div>
           </div>
-          <div class="menu-item" data-product="Conito Helado">
+          <div class="menu-item" data-product="MDK 8 PIEZAS COMBO">
             <div class="item-info">
-              <div class="item-name">Conito Helado</div>
-              <div class="item-description">La opción más económica</div>
+              <div class="item-name">MDK 8 Piezas Combo</div>
+              <div class="item-description">8 piezas + complemento + bebida</div>
             </div>
-            <div class="item-price">$1.00</div>
+            <div class="item-price">S/ 39.90</div>
+          </div>
+          <div class="menu-item" data-product="MDK 10 PIEZAS COMBO">
+            <div class="item-info">
+              <div class="item-name">MDK 10 Piezas Combo</div>
+              <div class="item-description">10 piezas + complemento + bebida grande</div>
+            </div>
+            <div class="item-price">S/ 49.90</div>
+          </div>
+          <div class="menu-item" data-product="MDK 12 PIEZAS COMBO">
+            <div class="item-info">
+              <div class="item-name">MDK 12 Piezas Combo</div>
+              <div class="item-description">12 piezas + complemento súper + bebida</div>
+            </div>
+            <div class="item-price">S/ 64.90</div>
           </div>
         </div>
         
-        <!-- Bebidas -->
-        <div class="menu-category">
-          <div class="category-title">🥤 BEBIDAS</div>
-          <div class="menu-item" data-product="Refresco (Mediano)">
-            <div class="item-info">
-              <div class="item-name">Refresco (Mediano)</div>
-              <div class="item-description">Varios sabores disponibles</div>
-            </div>
-            <div class="item-price">$1.50</div>
-          </div>
-          <div class="menu-item" data-product="Jugo de Naranja (Pequeño)">
-            <div class="item-info">
-              <div class="item-name">Jugo de Naranja</div>
-              <div class="item-description">Natural y refrescante</div>
-            </div>
-            <div class="item-price">$2.00</div>
+        <!-- Información adicional -->
+        <div style="margin-top: 20px; padding: 15px; background: var(--kfc-light-gray); border-radius: 8px; text-align: center;">
+          <div style="font-weight: 600; color: var(--kfc-red); margin-bottom: 5px;">Recetas Disponibles:</div>
+          <div style="font-size: 0.8rem; color: #666;">
+            • Original (11 hierbas y especias)<br>
+            • Crispy (extra crujiente)<br>
+            • Picante (con especias picantes)
           </div>
         </div>
       </div>
       
       <div class="chat-section">
         <div class="chat-header">
-          <span class="felix-avatar">🍔</span>
-          <strong>Félix, tu Amigo del Sabor</strong> - ¡Listo para crear tu comida fantástica!
+          <span class="kfc-avatar">🍗</span>
+          <strong>Asistente KFC</strong> - ¡Listo para ayudarte con los Miércoles de KFC!
         </div>
         
         <div id="messages">
@@ -717,7 +666,7 @@
         </div>
         
         <form id="messageForm">
-          <input type="text" id="message" name="message" placeholder="¡Habla con Félix! Ej: 'Quiero un combo clásico'..." autocomplete="off" />
+          <input type="text" id="message" name="message" placeholder="¡Habla con el Asistente KFC! Ej: 'Quiero MDK 6 piezas combo'..." autocomplete="off" />
           <button type="submit" id="sendButton" disabled>Enviar</button>
           <button type="button" id="startAudioButton">🎤 Voz</button>
           <button type="button" id="stopAudioButton">🛑 Parar</button>
@@ -727,14 +676,14 @@
       <!-- Order Section (Third Column) -->
       <div class="order-section">
         <div class="current-order">
-          <div class="order-title">🛒 Tu Pedido Actual</div>
+          <div class="order-title">🛒 Tu Pedido KFC</div>
           <div id="current-order-items">
             <div id="empty-order-message" style="text-align: center; color: #999; font-style: italic;">
-              ¡Habla con Félix para hacer tu pedido!
+              ¡Habla con el Asistente KFC para hacer tu pedido!
             </div>
           </div>
           <div id="order-total" class="order-total" style="display: none;">
-            Total: $<span id="total-amount">0.00</span>
+            Total: S/ <span id="total-amount">0.00</span>
           </div>
           <button id="clear-order-btn" class="clear-order-btn" style="display: none;">
             🗑️ Limpiar Pedido
@@ -780,7 +729,7 @@
                   <div class="order-item-name">${item.producto}</div>
                   <div class="order-item-quantity">Cantidad: ${item.cantidad}</div>
                 </div>
-                <div class="order-item-price">$${item.subtotal.toFixed(2)}</div>
+                <div class="order-item-price">S/ ${item.subtotal.toFixed(2)}</div>
               </div>
             `;
           });
@@ -886,10 +835,9 @@
         // Add combo button functionality
         const comboItems = document.querySelectorAll('.combo-item');
         comboItems.forEach(item => {
-          item.style.cursor = 'pointer';
           item.addEventListener('click', function() {
-            const comboText = this.querySelector('strong').textContent;
-            messageInput.value = `Quiero el ${comboText}`;
+            const productName = this.dataset.product;
+            messageInput.value = `Quiero ${productName}`;
             messageInput.focus();
           });
         });
@@ -905,10 +853,10 @@
         
         // Quick order suggestions
         const quickOrders = [
-          { text: '🍔 Combo Clásico', value: 'Quiero el Combo Fantástico Clásico' },
-          { text: '🍟 Solo Papitas', value: 'Quiero Papitas Fantásticas (Medianas)' },
-          { text: '🥤 Solo Bebida', value: 'Quiero un Refresco (Mediano)' },
-          { text: '🍨 Postre', value: 'Quiero un Conito Helado' }
+          { text: '🍗 MDK 6 Combo', value: 'Quiero MDK 6 Piezas Combo' },
+          { text: '🍗 MDK 8 Combo', value: 'Quiero MDK 8 Piezas Combo' },
+          { text: '🍗 Solo 6 Piezas', value: 'Quiero MDK 6 Piezas' },
+          { text: '🍗 Solo 8 Piezas', value: 'Quiero MDK 8 Piezas' }
         ];
         
         // Add quick order buttons after the message form
@@ -920,7 +868,7 @@
           const btn = document.createElement('button');
           btn.textContent = order.text;
           btn.type = 'button';
-          btn.style.cssText = 'padding: 8px 15px; font-size: 12px; background: var(--primary-yellow); color: var(--text-dark); border-radius: 20px;';
+          btn.style.cssText = 'padding: 8px 15px; font-size: 12px; background: var(--gold-accent); color: var(--text-dark); border-radius: 20px;';
           btn.addEventListener('click', function() {
             messageInput.value = order.value;
             messageInput.focus();

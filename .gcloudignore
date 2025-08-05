@@ -1,0 +1,65 @@
+# Environment files
+.env
+.env.local
+.env.*
+
+# Git files
+.git/
+.gitignore
+
+# Python cache and build files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Memory bank and documentation
+memory-bank/
+audio-improvement-plan.md
+audio-settings-plan.md
+
+# Development scripts
+setup_venv.sh
+
+# Testing files
+.pytest_cache/
+.coverage
+htmlcov/
+
+# MacOS files
+.DS_Store
+
+# Windows files
+Thumbs.db
+ehthumbs.db
+
+# Log files
+*.log
+logs/

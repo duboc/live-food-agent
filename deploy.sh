@@ -7,7 +7,7 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-echo -e "${GREEN}🍗 KFC Live Agent - Cloud Run Deployment${NC}"
+echo -e "${GREEN}🍔 Carl's Jr Live Agent - Cloud Run Deployment${NC}"
 echo "================================================"
 
 # Check if .env file exists
@@ -63,14 +63,14 @@ echo -e "${YELLOW}🔧 Enabling required APIs...${NC}"
 gcloud services enable run.googleapis.com cloudbuild.googleapis.com --quiet
 
 # Deploy to Cloud Run
-echo -e "${GREEN}🚀 Deploying KFC Live Agent to Cloud Run...${NC}"
+echo -e "${GREEN}🚀 Deploying Carl's Jr Live Agent to Cloud Run...${NC}"
 echo -e "${BLUE}   Region: us-central1${NC}"
-echo -e "${BLUE}   Service: kfc-live-agent${NC}"
+echo -e "${BLUE}   Service: carls-jr-live-agent${NC}"
 echo -e "${BLUE}   Memory: 2Gi${NC}"
 echo -e "${BLUE}   CPU: 2${NC}"
 echo ""
 
-gcloud run deploy kfc-live-agent \
+gcloud run deploy carls-jr-live-agent \
   --source . \
   --region us-central1 \
   --allow-unauthenticated \
@@ -86,16 +86,16 @@ if [ $? -eq 0 ]; then
     echo ""
     echo -e "${GREEN}🎉 Deployment successful!${NC}"
     echo "================================================"
-    echo -e "${BLUE}Your KFC Live Agent is now available at:${NC}"
-    SERVICE_URL=$(gcloud run services describe kfc-live-agent --region us-central1 --format="value(status.url)")
+    echo -e "${BLUE}Your Carl's Jr Live Agent is now available at:${NC}"
+    SERVICE_URL=$(gcloud run services describe carls-jr-live-agent --region us-central1 --format="value(status.url)")
     echo -e "${GREEN}🔗 $SERVICE_URL${NC}"
     echo ""
     echo -e "${YELLOW}📱 Features available:${NC}"
-    echo "   • Real-time text chat with KFC Assistant"
+    echo "   • Real-time text chat with Carlos (Carl's Jr Assistant)"
     echo "   • Voice interaction in Spanish"
-    echo "   • Interactive KFC menu with combos"
+    echo "   • Interactive Carl's Jr menu with chargrilled burgers"
     echo "   • Live order tracking"
-    echo "   • MDK Wednesday specials"
+    echo "   • Famous Star, Big Carl & Angus specialties"
     echo ""
     echo -e "${BLUE}💡 You can now share this URL with others!${NC}"
 else

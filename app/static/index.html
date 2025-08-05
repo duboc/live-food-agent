@@ -3,22 +3,24 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KFC - Asistente KFC para Miércoles de KFC</title>
+    <title>Carl's Jr - Asistente Carlos para Hamburguesas a la Parrilla</title>
     <script src="/static/js/app.js" type="module"></script>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
       :root {
-        --kfc-red: #D50000;
-        --kfc-dark-red: #B71C1C;
-        --kfc-white: #FFFFFF;
-        --kfc-cream: #FFF8F5;
-        --kfc-gray: #424242;
-        --kfc-light-gray: #F5F5F5;
+        --carls-red: #DC143C;
+        --carls-dark-red: #B22222;
+        --carls-yellow: #FFD700;
+        --carls-dark-yellow: #FFA500;
+        --carls-white: #FFFFFF;
+        --carls-cream: #FFF8F0;
+        --carls-gray: #424242;
+        --carls-light-gray: #F5F5F5;
         --text-dark: #2D1B1B;
         --text-light: #FFFFFF;
-        --shadow: rgba(213, 0, 0, 0.15);
+        --shadow: rgba(220, 20, 60, 0.15);
         --border-radius: 12px;
-        --gold-accent: #FFD700;
+        --star-accent: #FFD700;
       }
       
       * {
@@ -29,7 +31,7 @@
       
       body {
         font-family: 'Inter', sans-serif;
-        background: linear-gradient(135deg, var(--kfc-cream) 0%, #FFF5F0 100%);
+        background: linear-gradient(135deg, var(--carls-cream) 0%, #FFF5F0 100%);
         color: var(--text-dark);
         line-height: 1.6;
         min-height: 100vh;
@@ -49,7 +51,7 @@
       .header {
         grid-column: 1 / -1;
         text-align: center;
-        background: linear-gradient(45deg, var(--kfc-red), var(--kfc-dark-red));
+        background: linear-gradient(45deg, var(--carls-red), var(--carls-dark-red));
         color: var(--text-light);
         padding: 20px;
         border-radius: var(--border-radius);
@@ -58,11 +60,16 @@
       }
       
       .logo {
-        font-family: 'Fredoka One', cursive;
-        font-size: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         margin-bottom: 8px;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        letter-spacing: 2px;
+      }
+      
+      .logo img {
+        height: 60px;
+        width: auto;
+        filter: brightness(1.1) contrast(1.1);
       }
       
       .tagline {
@@ -85,10 +92,10 @@
       .menu-title {
         font-family: 'Fredoka One', cursive;
         font-size: 1.5rem;
-        color: var(--kfc-red);
+        color: var(--carls-red);
         margin-bottom: 20px;
         text-align: center;
-        border-bottom: 2px solid var(--gold-accent);
+        border-bottom: 2px solid var(--carls-yellow);
         padding-bottom: 10px;
       }
       
@@ -99,10 +106,10 @@
       .category-title {
         font-weight: 600;
         font-size: 1.1rem;
-        color: var(--kfc-white);
+        color: var(--carls-white);
         margin-bottom: 12px;
         padding: 8px 12px;
-        background: linear-gradient(45deg, var(--kfc-red), var(--kfc-dark-red));
+        background: linear-gradient(45deg, var(--carls-red), var(--carls-dark-red));
         border-radius: 8px;
         text-align: center;
       }
@@ -113,7 +120,7 @@
         align-items: center;
         padding: 8px 12px;
         margin-bottom: 8px;
-        background: var(--kfc-light-gray);
+        background: var(--carls-light-gray);
         border-radius: 8px;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -121,9 +128,9 @@
       }
       
       .menu-item:hover {
-        background: var(--gold-accent);
+        background: var(--star-accent);
         transform: translateX(5px);
-        border-color: var(--kfc-red);
+        border-color: var(--carls-red);
         box-shadow: 0 2px 8px var(--shadow);
       }
       
@@ -146,14 +153,14 @@
       
       .item-price {
         font-weight: 600;
-        color: var(--kfc-red);
+        color: var(--carls-red);
         font-size: 1rem;
         margin-left: 10px;
       }
       
-      /* Special KFC Combos */
+      /* Special Carl's Jr Combos */
       .combo-section {
-        background: linear-gradient(45deg, var(--kfc-red), var(--kfc-dark-red));
+        background: linear-gradient(45deg, var(--carls-red), var(--carls-dark-red));
         color: white;
         padding: 15px;
         border-radius: var(--border-radius);
@@ -183,7 +190,7 @@
       }
       
       .combo-savings {
-        background: var(--gold-accent);
+        background: var(--star-accent);
         color: var(--text-dark);
         padding: 5px 10px;
         border-radius: 15px;
@@ -208,17 +215,17 @@
         background: white;
         border-radius: var(--border-radius);
         padding: 20px;
-        border: 2px solid var(--kfc-red);
-        box-shadow: 0 2px 10px rgba(213, 0, 0, 0.2);
+        border: 2px solid var(--carls-red);
+        box-shadow: 0 2px 10px rgba(220, 20, 60, 0.2);
       }
       
       .order-title {
         font-family: 'Fredoka One', cursive;
         font-size: 1.3rem;
-        color: var(--kfc-red);
+        color: var(--carls-red);
         margin-bottom: 20px;
         text-align: center;
-        border-bottom: 2px solid var(--gold-accent);
+        border-bottom: 2px solid var(--star-accent);
         padding-bottom: 10px;
       }
       
@@ -233,11 +240,11 @@
       .order-total {
         font-weight: 600;
         font-size: 1.1rem;
-        color: var(--kfc-red);
+        color: var(--carls-red);
         text-align: center;
         margin-top: 10px;
         padding-top: 10px;
-        border-top: 2px solid var(--gold-accent);
+        border-top: 2px solid var(--star-accent);
       }
       
       /* Chat Section */
@@ -253,24 +260,24 @@
       }
       
       .chat-header {
-        background: linear-gradient(45deg, var(--kfc-red), var(--kfc-dark-red));
+        background: linear-gradient(45deg, var(--carls-red), var(--carls-dark-red));
         color: var(--text-light);
         padding: 15px 20px;
         text-align: center;
         font-weight: 600;
       }
       
-      .kfc-avatar {
+      .carls-avatar {
         display: inline-block;
         width: 40px;
         height: 40px;
-        background: var(--gold-accent);
+        background: var(--star-accent);
         border-radius: 50%;
         margin-right: 10px;
         vertical-align: middle;
         text-align: center;
         line-height: 40px;
-        color: var(--kfc-red);
+        color: var(--carls-red);
         font-weight: bold;
         font-size: 1.2rem;
       }
@@ -295,16 +302,16 @@
       }
       
       .agent-message {
-        background: linear-gradient(45deg, var(--gold-accent), #FFE55C);
+        background: linear-gradient(45deg, var(--star-accent), #FFE55C);
         color: var(--text-dark);
         align-self: flex-start;
         border-bottom-left-radius: 4px;
-        border: 1px solid var(--kfc-red);
+        border: 1px solid var(--carls-red);
         font-weight: 500;
       }
       
       .user-message {
-        background: linear-gradient(45deg, var(--kfc-red), var(--kfc-dark-red));
+        background: linear-gradient(45deg, var(--carls-red), var(--carls-dark-red));
         color: var(--text-light);
         align-self: flex-end;
         border-bottom-right-radius: 4px;
@@ -316,14 +323,14 @@
         display: flex;
         gap: 10px;
         padding: 16px;
-        background: var(--kfc-cream);
-        border-top: 2px solid var(--gold-accent);
+        background: var(--carls-cream);
+        border-top: 2px solid var(--star-accent);
       }
       
       #message {
         flex: 1;
         padding: 12px 16px;
-        border: 2px solid var(--kfc-red);
+        border: 2px solid var(--carls-red);
         border-radius: 25px;
         font-size: 16px;
         outline: none;
@@ -332,8 +339,8 @@
       }
       
       #message:focus {
-        border-color: var(--kfc-dark-red);
-        box-shadow: 0 0 0 3px rgba(213, 0, 0, 0.3);
+        border-color: var(--carls-dark-red);
+        box-shadow: 0 0 0 3px rgba(220, 20, 60, 0.3);
         transform: scale(1.02);
       }
       
@@ -350,13 +357,13 @@
       }
       
       #sendButton {
-        background: linear-gradient(45deg, var(--kfc-red), var(--kfc-dark-red));
+        background: linear-gradient(45deg, var(--carls-red), var(--carls-dark-red));
         color: var(--text-light);
       }
       
       #sendButton:hover:not(:disabled) {
         transform: translateY(-2px) scale(1.05);
-        box-shadow: 0 4px 15px rgba(213, 0, 0, 0.4);
+        box-shadow: 0 4px 15px rgba(220, 20, 60, 0.4);
       }
       
       #sendButton:disabled {
@@ -414,7 +421,7 @@
       }
       
       .status-dot.recording {
-        background-color: var(--kfc-red);
+        background-color: var(--carls-red);
         animation: pulse-recording 1s infinite;
       }
       
@@ -493,7 +500,7 @@
       
       .order-item-price {
         font-weight: 600;
-        color: var(--kfc-red);
+        color: var(--carls-red);
         margin-left: 10px;
       }
       
@@ -519,7 +526,7 @@
       /* Order Success Animation */
       @keyframes orderSuccess {
         0% { transform: scale(1); }
-        50% { transform: scale(1.1); background-color: var(--kfc-red); }
+        50% { transform: scale(1.1); background-color: var(--carls-red); }
         100% { transform: scale(1); }
       }
       
@@ -534,7 +541,7 @@
         height: 20px;
         border: 3px solid rgba(0, 0, 0, 0.1);
         border-radius: 50%;
-        border-top-color: var(--kfc-red);
+        border-top-color: var(--carls-red);
         animation: spin 1s ease-in-out infinite;
       }
       
@@ -552,109 +559,111 @@
   <body>
     <div class="container">
       <div class="header">
-        <div class="logo">🍗 KFC</div>
-        <div class="tagline">Tu Asistente KFC para los Miércoles de KFC</div>
+        <div class="logo">
+          <img src="/static/carls.png" alt="Carl's Jr" />
+        </div>
+        <div class="tagline">Tu Asistente Carlos para Hamburguesas a la Parrilla</div>
       </div>
       
       <div class="menu-section">
-        <div class="menu-title">🍗 Miércoles de KFC</div>
+        <div class="menu-title">🍔 Hamburguesas Carl's Jr</div>
         
         <!-- Combos Destacados -->
         <div class="combo-section">
-          <div class="combo-title">¡COMBOS INCREÍBLES!</div>
-          <div class="combo-item" data-product="MDK 6 PIEZAS COMBO">
-            <strong>MDK 6 Piezas Combo</strong><br>
-            6 piezas + complemento + bebida<br>
-            <span class="combo-savings">¡Solo S/ 29.90!</span>
+          <div class="combo-title">¡COMBOS CHARGRILLED!</div>
+          <div class="combo-item" data-product="Combo Famous Star">
+            <strong>Combo Famous Star</strong><br>
+            Hamburguesa + papas + bebida<br>
+            <span class="combo-savings">¡Solo $8.90!</span>
           </div>
-          <div class="combo-item" data-product="MDK 8 PIEZAS COMBO">
-            <strong>MDK 8 Piezas Combo</strong><br>
-            8 piezas + complemento + bebida<br>
-            <span class="combo-savings">¡Solo S/ 39.90!</span>
+          <div class="combo-item" data-product="Combo Big Carl">
+            <strong>Combo Big Carl</strong><br>
+            Hamburguesa grande + papas + bebida<br>
+            <span class="combo-savings">¡Solo $10.60!</span>
           </div>
         </div>
         
-        <!-- Solo Piezas -->
+        <!-- Hamburguesas Individuales -->
         <div class="menu-category">
-          <div class="category-title">🍗 SOLO PIEZAS</div>
-          <div class="menu-item" data-product="MDK 6 PIEZAS">
+          <div class="category-title">🍔 HAMBURGUESAS CHARGRILLED</div>
+          <div class="menu-item" data-product="Famous Star">
             <div class="item-info">
-              <div class="item-name">MDK 6 Piezas</div>
-              <div class="item-description">6 deliciosas piezas de pollo</div>
+              <div class="item-name">Famous Star</div>
+              <div class="item-description">Nuestra hamburguesa estrella con queso y salsa especial</div>
             </div>
-            <div class="item-price">S/ 19.90</div>
+            <div class="item-price">$5.40</div>
           </div>
-          <div class="menu-item" data-product="MDK 8 PIEZAS">
+          <div class="menu-item" data-product="Big Carl">
             <div class="item-info">
-              <div class="item-name">MDK 8 Piezas</div>
-              <div class="item-description">8 jugosas piezas para compartir</div>
+              <div class="item-name">Big Carl</div>
+              <div class="item-description">Hamburguesa grande con carne premium a la parrilla</div>
             </div>
-            <div class="item-price">S/ 29.90</div>
+            <div class="item-price">$7.10</div>
           </div>
-          <div class="menu-item" data-product="MDK 10 PIEZAS">
+          <div class="menu-item" data-product="Angus Mega Burger">
             <div class="item-info">
-              <div class="item-name">MDK 10 Piezas</div>
-              <div class="item-description">10 piezas para toda la familia</div>
+              <div class="item-name">Angus Mega Burger</div>
+              <div class="item-description">Carne Angus de alta calidad chargrilled</div>
             </div>
-            <div class="item-price">S/ 39.90</div>
+            <div class="item-price">$6.80</div>
           </div>
-          <div class="menu-item" data-product="MDK 12 PIEZAS">
+          <div class="menu-item" data-product="Western Bacon Cheeseburger">
             <div class="item-info">
-              <div class="item-name">MDK 12 Piezas</div>
-              <div class="item-description">12 piezas para grupos grandes</div>
+              <div class="item-name">Western Bacon Cheeseburger</div>
+              <div class="item-description">Con bacon crujiente y salsa BBQ especial</div>
             </div>
-            <div class="item-price">S/ 49.90</div>
+            <div class="item-price">$7.50</div>
           </div>
         </div>
         
         <!-- En Combo -->
         <div class="menu-category">
-          <div class="category-title">🥤 EN COMBO</div>
-          <div class="menu-item" data-product="MDK 6 PIEZAS COMBO">
+          <div class="category-title">🥤 COMBOS CARL'S JR</div>
+          <div class="menu-item" data-product="Combo Famous Star">
             <div class="item-info">
-              <div class="item-name">MDK 6 Piezas Combo</div>
-              <div class="item-description">6 piezas + complemento + bebida</div>
+              <div class="item-name">Combo Famous Star</div>
+              <div class="item-description">Hamburguesa + papas + bebida</div>
             </div>
-            <div class="item-price">S/ 29.90</div>
+            <div class="item-price">$8.90</div>
           </div>
-          <div class="menu-item" data-product="MDK 8 PIEZAS COMBO">
+          <div class="menu-item" data-product="Combo Big Carl">
             <div class="item-info">
-              <div class="item-name">MDK 8 Piezas Combo</div>
-              <div class="item-description">8 piezas + complemento + bebida</div>
+              <div class="item-name">Combo Big Carl</div>
+              <div class="item-description">Hamburguesa grande + papas + bebida</div>
             </div>
-            <div class="item-price">S/ 39.90</div>
+            <div class="item-price">$10.60</div>
           </div>
-          <div class="menu-item" data-product="MDK 10 PIEZAS COMBO">
+          <div class="menu-item" data-product="Combo Angus Mega Burger">
             <div class="item-info">
-              <div class="item-name">MDK 10 Piezas Combo</div>
-              <div class="item-description">10 piezas + complemento + bebida grande</div>
+              <div class="item-name">Combo Angus Mega Burger</div>
+              <div class="item-description">Carne Angus + papas + bebida</div>
             </div>
-            <div class="item-price">S/ 49.90</div>
+            <div class="item-price">$10.30</div>
           </div>
-          <div class="menu-item" data-product="MDK 12 PIEZAS COMBO">
+          <div class="menu-item" data-product="BBQ Pack">
             <div class="item-info">
-              <div class="item-name">MDK 12 Piezas Combo</div>
-              <div class="item-description">12 piezas + complemento súper + bebida</div>
+              <div class="item-name">BBQ Pack</div>
+              <div class="item-description">Hamburguesa + papas + Chicken Stars</div>
             </div>
-            <div class="item-price">S/ 64.90</div>
+            <div class="item-price">$8.90</div>
           </div>
         </div>
         
         <!-- Información adicional -->
-        <div style="margin-top: 20px; padding: 15px; background: var(--kfc-light-gray); border-radius: 8px; text-align: center;">
-          <div style="font-weight: 600; color: var(--kfc-red); margin-bottom: 5px;">Recetas Disponibles:</div>
+        <div style="margin-top: 20px; padding: 15px; background: var(--carls-light-gray); border-radius: 8px; text-align: center;">
+          <div style="font-weight: 600; color: var(--carls-red); margin-bottom: 5px;">Puntos de Cocción:</div>
           <div style="font-size: 0.8rem; color: #666;">
-            • Original (11 hierbas y especias)<br>
-            • Crispy (extra crujiente)<br>
-            • Picante (con especias picantes)
+            • Medio: Jugosa y sabrosa<br>
+            • Tres Cuartos: Bien cocida pero jugosa<br>
+            • Bien Cocida: Completamente cocida
           </div>
         </div>
       </div>
       
       <div class="chat-section">
         <div class="chat-header">
-          <span class="kfc-avatar">🍗</span>
-          <strong>Asistente KFC</strong> - ¡Listo para ayudarte con los Miércoles de KFC!
+          <span class="carls-avatar">🍔</span>
+          <strong>Asistente Carlos</strong> - ¡Especialista en hamburguesas chargrilled!
         </div>
         
         <div id="messages">
@@ -666,7 +675,7 @@
         </div>
         
         <form id="messageForm">
-          <input type="text" id="message" name="message" placeholder="¡Habla con el Asistente KFC! Ej: 'Quiero MDK 6 piezas combo'..." autocomplete="off" />
+          <input type="text" id="message" name="message" placeholder="¡Habla con Carlos! Ej: 'Quiero Combo Famous Star'..." autocomplete="off" />
           <button type="submit" id="sendButton" disabled>Enviar</button>
           <button type="button" id="startAudioButton">🎤 Voz</button>
           <button type="button" id="stopAudioButton">🛑 Parar</button>
@@ -676,10 +685,10 @@
       <!-- Order Section (Third Column) -->
       <div class="order-section">
         <div class="current-order">
-          <div class="order-title">🛒 Tu Pedido KFC</div>
+          <div class="order-title">🛒 Tu Pedido Carl's Jr</div>
           <div id="current-order-items">
             <div id="empty-order-message" style="text-align: center; color: #999; font-style: italic;">
-              ¡Habla con el Asistente KFC para hacer tu pedido!
+              ¡Habla con Carlos para hacer tu pedido!
             </div>
           </div>
           <div id="order-total" class="order-total" style="display: none;">
@@ -853,10 +862,10 @@
         
         // Quick order suggestions
         const quickOrders = [
-          { text: '🍗 MDK 6 Combo', value: 'Quiero MDK 6 Piezas Combo' },
-          { text: '🍗 MDK 8 Combo', value: 'Quiero MDK 8 Piezas Combo' },
-          { text: '🍗 Solo 6 Piezas', value: 'Quiero MDK 6 Piezas' },
-          { text: '🍗 Solo 8 Piezas', value: 'Quiero MDK 8 Piezas' }
+          { text: '🍔 Famous Star Combo', value: 'Quiero Combo Famous Star' },
+          { text: '🍔 Big Carl Combo', value: 'Quiero Combo Big Carl' },
+          { text: '🍔 Solo Famous Star', value: 'Quiero Famous Star' },
+          { text: '🍔 Solo Big Carl', value: 'Quiero Big Carl' }
         ];
         
         // Add quick order buttons after the message form
@@ -868,7 +877,7 @@
           const btn = document.createElement('button');
           btn.textContent = order.text;
           btn.type = 'button';
-          btn.style.cssText = 'padding: 8px 15px; font-size: 12px; background: var(--gold-accent); color: var(--text-dark); border-radius: 20px;';
+          btn.style.cssText = 'padding: 8px 15px; font-size: 12px; background: var(--star-accent); color: var(--text-dark); border-radius: 20px;';
           btn.addEventListener('click', function() {
             messageInput.value = order.value;
             messageInput.focus();

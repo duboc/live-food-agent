@@ -8,201 +8,334 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-# Menú de KFC - Miércoles de KFC
-KFC_MENU = {
-    "SOLO_PIEZAS": {
-        "MDK 6 PIEZAS": {
-            "nombre_completo": "Miércoles de KFC: 6 Piezas",
-            "descripcion": "6 deliciosas piezas de pollo con la receta que prefieras",
-            "precio": 19.90,
-            "sku": "13638",
-            "atributos_requeridos": {
-                "receta": {
-                    "nombre": "Elige la Receta",
-                    "opciones": {
-                        "Receta Original": {"id": "79", "descripcion": "El sabor clásico de KFC"},
-                        "Crispy": {"id": "80", "descripcion": "Extra crujiente y dorado"},
-                        "Picante": {"id": "11233", "descripcion": "Con especias picantes"}
-                    }
-                }
-            },
-            "categoria": "solo_piezas"
+# Menú de Carl's Jr Peru
+CARLS_JR_MENU = {
+    "PROMOCIONES_Y_PACKS": {
+        "BBQ Pack": {
+            "nombre_completo": "BBQ Pack",
+            "descripcion": "Hamburguesa con carne 100% grelhada con molho BBQ, queijo americano, cebola e picles. Acompanha batatas e Chicken Stars (4 unidades)",
+            "precio": 8.90,
+            "sku": "PACK001",
+            "categoria": "pack",
+            "atributos_requeridos": {}
         },
-        "MDK 8 PIEZAS": {
-            "nombre_completo": "Miércoles de KFC: 8 Piezas",
-            "descripcion": "8 jugosas piezas de pollo para compartir",
-            "precio": 29.90,
-            "sku": "12554",
-            "atributos_requeridos": {
-                "receta": {
-                    "nombre": "Elige la Receta",
-                    "opciones": {
-                        "Receta Original": {"id": "79", "descripcion": "El sabor clásico de KFC"},
-                        "Crispy": {"id": "80", "descripcion": "Extra crujiente y dorado"},
-                        "Picante": {"id": "11233", "descripcion": "Con especias picantes"}
-                    }
-                }
-            },
-            "categoria": "solo_piezas"
+        "Big Star Pack": {
+            "nombre_completo": "Big Star Pack",
+            "descripcion": "1 Famous Star Burger + 1 Big Carl Burger + 2 batatas médias",
+            "precio": 17.90,
+            "sku": "PACK002",
+            "categoria": "pack",
+            "atributos_requeridos": {}
         },
-        "MDK 10 PIEZAS": {
-            "nombre_completo": "Miércoles de KFC: 10 Piezas",
-            "descripcion": "10 piezas irresistibles para toda la familia",
-            "precio": 39.90,
-            "sku": "11492",
-            "atributos_requeridos": {
-                "receta": {
-                    "nombre": "Elige la Receta",
-                    "opciones": {
-                        "Receta Original": {"id": "79", "descripcion": "El sabor clásico de KFC"},
-                        "Crispy": {"id": "80", "descripcion": "Extra crujiente y dorado"},
-                        "Picante": {"id": "11233", "descripcion": "Con especias picantes"}
-                    }
-                }
-            },
-            "categoria": "solo_piezas"
-        },
-        "MDK 12 PIEZAS": {
-            "nombre_completo": "Miércoles de KFC: 12 Piezas",
-            "descripcion": "12 piezas perfectas para grupos grandes",
-            "precio": 49.90,
-            "sku": "15650",
-            "atributos_requeridos": {
-                "receta": {
-                    "nombre": "Elige la Receta",
-                    "opciones": {
-                        "Receta Original": {"id": "79", "descripcion": "El sabor clásico de KFC"},
-                        "Crispy": {"id": "80", "descripcion": "Extra crujiente y dorado"},
-                        "Picante": {"id": "11233", "descripcion": "Con especias picantes"}
-                    }
-                }
-            },
-            "categoria": "solo_piezas"
+        "Pesto Pack": {
+            "nombre_completo": "Pesto Pack",
+            "descripcion": "2 Pesto Burgers + 2 batatas médias",
+            "precio": 15.00,
+            "sku": "PACK003",
+            "categoria": "pack",
+            "atributos_requeridos": {}
         }
     },
-    "EN_COMBO": {
-        "MDK 6 PIEZAS COMBO": {
-            "nombre_completo": "Miércoles de KFC: 6 Piezas en Combo",
-            "descripcion": "6 piezas + complemento + bebida familiar",
-            "precio": 29.90,
-            "sku": "13639",
+    "HAMBURGUESAS_A_LA_PARRILLA": {
+        "Famous Star con Queso": {
+            "nombre_completo": "Famous Star con Queso",
+            "descripcion": "Nuestra hamburguesa estrella con carne a la parrilla, queso americano, lechuga, tomate y salsa especial",
+            "precio": 5.40,
+            "sku": "HAM001",
+            "categoria": "hamburguesa",
             "atributos_requeridos": {
-                "receta": {
-                    "nombre": "Elige la Receta",
+                "punto_coccion": {
+                    "nombre": "¿Cómo la quieres?",
                     "opciones": {
-                        "Receta Original": {"id": "79", "descripcion": "El sabor clásico de KFC"},
-                        "Crispy": {"id": "80", "descripcion": "Extra crujiente y dorado"},
-                        "Picante": {"id": "11233", "descripcion": "Con especias picantes"}
-                    }
-                },
-                "complemento": {
-                    "nombre": "Elige tu complemento",
-                    "opciones": {
-                        "Papa Familiar": {"id": "102", "descripcion": "Papas fritas familiares para compartir"},
-                        "Ensalada Familiar": {"id": "113", "descripcion": "Ensalada fresca familiar"}
-                    }
-                },
-                "bebida": {
-                    "nombre": "Elige el sabor de tu bebida",
-                    "opciones": {
-                        "Coca-Cola Sin Azúcar 1L": {"id": "12194", "descripcion": "Coca-Cola sin azúcar 1 litro"},
-                        "Inca Kola Sin Azúcar 1L": {"id": "12196", "descripcion": "Inca Kola sin azúcar 1 litro"}
+                        "Medio": {"id": "PT001", "descripcion": "Término medio, jugosa"},
+                        "Tres Cuartos": {"id": "PT002", "descripcion": "Bien cocida pero jugosa"},
+                        "Bien Cocida": {"id": "PT003", "descripcion": "Completamente cocida"}
                     }
                 }
-            },
-            "categoria": "combo"
+            }
         },
-        "MDK 8 PIEZAS COMBO": {
-            "nombre_completo": "Miércoles de KFC: 8 Piezas en Combo",
-            "descripcion": "8 piezas + complemento + bebida familiar",
-            "precio": 39.90,
-            "sku": "16284",
+        "Big Carl": {
+            "nombre_completo": "Hamburguesa Big Carl",
+            "descripcion": "Hamburguesa tamaño grande con carne premium a la parrilla",
+            "precio": 7.10,
+            "sku": "HAM002",
+            "categoria": "hamburguesa",
             "atributos_requeridos": {
-                "receta": {
-                    "nombre": "Elige la Receta",
+                "punto_coccion": {
+                    "nombre": "¿Cómo la quieres?",
                     "opciones": {
-                        "Receta Original": {"id": "79", "descripcion": "El sabor clásico de KFC"},
-                        "Crispy": {"id": "80", "descripcion": "Extra crujiente y dorado"},
-                        "Picante": {"id": "11233", "descripcion": "Con especias picantes"}
-                    }
-                },
-                "complemento": {
-                    "nombre": "Elige tu complemento",
-                    "opciones": {
-                        "Papa Familiar": {"id": "102", "descripcion": "Papas fritas familiares para compartir"},
-                        "Ensalada Familiar": {"id": "113", "descripcion": "Ensalada fresca familiar"}
-                    }
-                },
-                "bebida": {
-                    "nombre": "Elige el sabor de tu bebida",
-                    "opciones": {
-                        "Coca-Cola Sin Azúcar 1L": {"id": "12194", "descripcion": "Coca-Cola sin azúcar 1 litro"},
-                        "Inca Kola Sin Azúcar 1L": {"id": "12196", "descripcion": "Inca Kola sin azúcar 1 litro"}
+                        "Medio": {"id": "PT001", "descripcion": "Término medio, jugosa"},
+                        "Tres Cuartos": {"id": "PT002", "descripcion": "Bien cocida pero jugosa"},
+                        "Bien Cocida": {"id": "PT003", "descripcion": "Completamente cocida"}
                     }
                 }
-            },
-            "categoria": "combo"
+            }
         },
-        "MDK 10 PIEZAS COMBO": {
-            "nombre_completo": "Miércoles de KFC: 10 Piezas en Combo",
-            "descripcion": "10 piezas + complemento + bebida grande",
-            "precio": 49.90,
-            "sku": "13640",
+        "Western Bacon": {
+            "nombre_completo": "Western Bacon Burger",
+            "descripcion": "Hamburguesa con bacon crujiente y salsa BBQ",
+            "precio": 6.10,
+            "sku": "HAM003",
+            "categoria": "hamburguesa",
             "atributos_requeridos": {
-                "receta": {
-                    "nombre": "Elige la Receta",
+                "punto_coccion": {
+                    "nombre": "¿Cómo la quieres?",
                     "opciones": {
-                        "Receta Original": {"id": "79", "descripcion": "El sabor clásico de KFC"},
-                        "Crispy": {"id": "80", "descripcion": "Extra crujiente y dorado"},
-                        "Picante": {"id": "11233", "descripcion": "Con especias picantes"}
-                    }
-                },
-                "complemento": {
-                    "nombre": "Elige tu complemento",
-                    "opciones": {
-                        "Papa Familiar": {"id": "102", "descripcion": "Papas fritas familiares para compartir"},
-                        "Ensalada Familiar": {"id": "113", "descripcion": "Ensalada fresca familiar"}
-                    }
-                },
-                "bebida": {
-                    "nombre": "Elige el sabor de tu bebida",
-                    "opciones": {
-                        "Inca Kola Sin Azúcar 1.5L": {"id": "110", "descripcion": "Inca Kola sin azúcar 1.5 litros"},
-                        "Coca-Cola Sin Azúcar 1.5L": {"id": "111", "descripcion": "Coca-Cola sin azúcar 1.5 litros"}
+                        "Medio": {"id": "PT001", "descripcion": "Término medio, jugosa"},
+                        "Tres Cuartos": {"id": "PT002", "descripcion": "Bien cocida pero jugosa"},
+                        "Bien Cocida": {"id": "PT003", "descripcion": "Completamente cocida"}
                     }
                 }
-            },
-            "categoria": "combo"
+            }
         },
-        "MDK 12 PIEZAS COMBO": {
-            "nombre_completo": "Miércoles de KFC: 12 Piezas en Combo",
-            "descripcion": "12 piezas + complemento súper familiar + bebida grande",
-            "precio": 64.90,
-            "sku": "15990",
+        "Hamburguesa Súper Star con Queso": {
+            "nombre_completo": "Súper Star con Queso",
+            "descripcion": "Version súper de nuestra Famous Star con doble carne",
+            "precio": 7.10,
+            "sku": "HAM004",
+            "categoria": "hamburguesa",
             "atributos_requeridos": {
-                "receta": {
-                    "nombre": "Elige la Receta",
+                "punto_coccion": {
+                    "nombre": "¿Cómo la quieres?",
                     "opciones": {
-                        "Receta Original": {"id": "79", "descripcion": "El sabor clásico de KFC"},
-                        "Crispy": {"id": "80", "descripcion": "Extra crujiente y dorado"},
-                        "Picante": {"id": "11233", "descripcion": "Con especias picantes"}
+                        "Medio": {"id": "PT001", "descripcion": "Término medio, jugosa"},
+                        "Tres Cuartos": {"id": "PT002", "descripcion": "Bien cocida pero jugosa"},
+                        "Bien Cocida": {"id": "PT003", "descripcion": "Completamente cocida"}
+                    }
+                }
+            }
+        },
+        "Hamburguesa Doble Western Bacon": {
+            "nombre_completo": "Doble Western Bacon",
+            "descripcion": "Doble carne con bacon crujiente y salsa BBQ",
+            "precio": 8.00,
+            "sku": "HAM005",
+            "categoria": "hamburguesa",
+            "atributos_requeridos": {
+                "punto_coccion": {
+                    "nombre": "¿Cómo la quieres?",
+                    "opciones": {
+                        "Medio": {"id": "PT001", "descripcion": "Término medio, jugosa"},
+                        "Tres Cuartos": {"id": "PT002", "descripcion": "Bien cocida pero jugosa"},
+                        "Bien Cocida": {"id": "PT003", "descripcion": "Completamente cocida"}
+                    }
+                }
+            }
+        },
+        "Hamburguesa Teriyaki": {
+            "nombre_completo": "Hamburguesa Teriyaki",
+            "descripcion": "Hamburguesa con salsa teriyaki dulce",
+            "precio": 5.90,
+            "sku": "HAM006",
+            "categoria": "hamburguesa",
+            "atributos_requeridos": {
+                "punto_coccion": {
+                    "nombre": "¿Cómo la quieres?",
+                    "opciones": {
+                        "Medio": {"id": "PT001", "descripcion": "Término medio, jugosa"},
+                        "Tres Cuartos": {"id": "PT002", "descripcion": "Bien cocida pero jugosa"},
+                        "Bien Cocida": {"id": "PT003", "descripcion": "Completamente cocida"}
+                    }
+                }
+            }
+        }
+    },
+    "ANGUS_MEGA_BURGER": {
+        "Original Angus Burger": {
+            "nombre_completo": "Original Angus Burger",
+            "descripcion": "Hamburguesa premium con carne Angus de alta calidad",
+            "precio": 6.80,
+            "sku": "ANG001",
+            "categoria": "angus",
+            "atributos_requeridos": {
+                "punto_coccion": {
+                    "nombre": "¿Cómo la quieres?",
+                    "opciones": {
+                        "Medio": {"id": "PT001", "descripcion": "Término medio, jugosa"},
+                        "Tres Cuartos": {"id": "PT002", "descripcion": "Bien cocida pero jugosa"},
+                        "Bien Cocida": {"id": "PT003", "descripcion": "Completamente cocida"}
+                    }
+                }
+            }
+        },
+        "Famous Star Mega Angus Burger": {
+            "nombre_completo": "Famous Star Mega Angus",
+            "descripcion": "Nuestra Famous Star con carne Angus premium",
+            "precio": 6.80,
+            "sku": "ANG002",
+            "categoria": "angus",
+            "atributos_requeridos": {
+                "punto_coccion": {
+                    "nombre": "¿Cómo la quieres?",
+                    "opciones": {
+                        "Medio": {"id": "PT001", "descripcion": "Término medio, jugosa"},
+                        "Tres Cuartos": {"id": "PT002", "descripcion": "Bien cocida pero jugosa"},
+                        "Bien Cocida": {"id": "PT003", "descripcion": "Completamente cocida"}
+                    }
+                }
+            }
+        },
+        "Western Bacon Cheese Angus Mega Burger": {
+            "nombre_completo": "Western Bacon Cheese Angus Mega",
+            "descripcion": "Angus con bacon crujiente y queso",
+            "precio": 7.50,
+            "sku": "ANG003",
+            "categoria": "angus",
+            "atributos_requeridos": {
+                "punto_coccion": {
+                    "nombre": "¿Cómo la quieres?",
+                    "opciones": {
+                        "Medio": {"id": "PT001", "descripcion": "Término medio, jugosa"},
+                        "Tres Cuartos": {"id": "PT002", "descripcion": "Bien cocida pero jugosa"},
+                        "Bien Cocida": {"id": "PT003", "descripcion": "Completamente cocida"}
+                    }
+                }
+            }
+        }
+    },
+    "FRANGO": {
+        "Chicken Tenders 3 pzas": {
+            "nombre_completo": "Chicken Tenders (3 piezas)",
+            "descripcion": "3 tiras de pollo empanizado y crujiente",
+            "precio": 4.80,
+            "sku": "CHK001",
+            "categoria": "pollo",
+            "atributos_requeridos": {
+                "salsa": {
+                    "nombre": "¿Qué salsa prefieres?",
+                    "opciones": {
+                        "Honey Mustard": {"id": "SAL001", "descripcion": "Miel con mostaza"},
+                        "Buttermilk Ranch": {"id": "SAL002", "descripcion": "Salsa ranch cremosa"},
+                        "BBQ": {"id": "SAL003", "descripcion": "Salsa barbacoa"}
+                    }
+                }
+            }
+        },
+        "Chicken Tenders 5 pzas": {
+            "nombre_completo": "Chicken Tenders (5 piezas)",
+            "descripcion": "5 tiras de pollo empanizado y crujiente",
+            "precio": 7.00,
+            "sku": "CHK002",
+            "categoria": "pollo",
+            "atributos_requeridos": {
+                "salsa": {
+                    "nombre": "¿Qué salsa prefieres?",
+                    "opciones": {
+                        "Honey Mustard": {"id": "SAL001", "descripcion": "Miel con mostaza"},
+                        "Buttermilk Ranch": {"id": "SAL002", "descripcion": "Salsa ranch cremosa"},
+                        "BBQ": {"id": "SAL003", "descripcion": "Salsa barbacoa"}
+                    }
+                }
+            }
+        },
+        "Chicken Stars 6 pzas": {
+            "nombre_completo": "Chicken Stars (6 piezas)",
+            "descripcion": "6 nuggets de pollo en forma de estrella",
+            "precio": 3.30,
+            "sku": "CHK003",
+            "categoria": "pollo",
+            "atributos_requeridos": {}
+        },
+        "Bacon Swiss Crispy Sandwich": {
+            "nombre_completo": "Bacon Swiss Crispy Sandwich",
+            "descripcion": "Sándwich de pollo crispy con bacon y queso suizo",
+            "precio": 5.40,
+            "sku": "CHK004",
+            "categoria": "pollo",
+            "atributos_requeridos": {}
+        }
+    },
+    "COMBOS": {
+        "Combo Famous Star": {
+            "nombre_completo": "Combo Famous Star con Queso",
+            "descripcion": "Famous Star + papas + bebida",
+            "precio": 8.90,
+            "sku": "CMB001",
+            "categoria": "combo",
+            "atributos_requeridos": {
+                "punto_coccion": {
+                    "nombre": "¿Cómo quieres la hamburguesa?",
+                    "opciones": {
+                        "Medio": {"id": "PT001", "descripcion": "Término medio, jugosa"},
+                        "Tres Cuartos": {"id": "PT002", "descripcion": "Bien cocida pero jugosa"},
+                        "Bien Cocida": {"id": "PT003", "descripcion": "Completamente cocida"}
                     }
                 },
-                "complemento": {
-                    "nombre": "Elige tu complemento",
+                "acompanamiento": {
+                    "nombre": "¿Qué papas prefieres?",
                     "opciones": {
-                        "Papa Super Familiar": {"id": "15098", "descripcion": "Papas súper familiares para toda la familia"}
+                        "Papas Normales": {"id": "ACP001", "descripcion": "Papas fritas clásicas"},
+                        "Crisscut Fries": {"id": "ACP002", "descripcion": "Papas en forma de rejilla"},
+                        "Onion Rings": {"id": "ACP003", "descripcion": "Aros de cebolla"}
                     }
                 },
                 "bebida": {
-                    "nombre": "Elige el sabor de tu bebida",
+                    "nombre": "¿Qué bebida quieres?",
                     "opciones": {
-                        "Inca Kola Sin Azúcar 1.5L": {"id": "110", "descripcion": "Inca Kola sin azúcar 1.5 litros"},
-                        "Coca-Cola Sin Azúcar 1.5L": {"id": "111", "descripcion": "Coca-Cola sin azúcar 1.5 litros"}
+                        "Coca-Cola": {"id": "BEB001", "descripcion": "Coca-Cola clásica"},
+                        "Fanta": {"id": "BEB002", "descripcion": "Fanta naranja"},
+                        "Sprite": {"id": "BEB003", "descripcion": "Sprite lima-limón"}
                     }
                 }
-            },
-            "categoria": "combo"
+            }
+        },
+        "Combo Big Carl": {
+            "nombre_completo": "Combo Big Carl",
+            "descripcion": "Big Carl + papas + bebida",
+            "precio": 10.60,
+            "sku": "CMB002",
+            "categoria": "combo",
+            "atributos_requeridos": {
+                "punto_coccion": {
+                    "nombre": "¿Cómo quieres la hamburguesa?",
+                    "opciones": {
+                        "Medio": {"id": "PT001", "descripcion": "Término medio, jugosa"},
+                        "Tres Cuartos": {"id": "PT002", "descripcion": "Bien cocida pero jugosa"},
+                        "Bien Cocida": {"id": "PT003", "descripcion": "Completamente cocida"}
+                    }
+                },
+                "acompanamiento": {
+                    "nombre": "¿Qué papas prefieres?",
+                    "opciones": {
+                        "Papas Normales": {"id": "ACP001", "descripcion": "Papas fritas clásicas"},
+                        "Crisscut Fries": {"id": "ACP002", "descripcion": "Papas en forma de rejilla"},
+                        "Onion Rings": {"id": "ACP003", "descripcion": "Aros de cebolla"}
+                    }
+                },
+                "bebida": {
+                    "nombre": "¿Qué bebida quieres?",
+                    "opciones": {
+                        "Coca-Cola": {"id": "BEB001", "descripcion": "Coca-Cola clásica"},
+                        "Fanta": {"id": "BEB002", "descripcion": "Fanta naranja"},
+                        "Sprite": {"id": "BEB003", "descripcion": "Sprite lima-limón"}
+                    }
+                }
+            }
+        },
+        "Combo Buttermilk Ranch": {
+            "nombre_completo": "Combo Buttermilk Ranch",
+            "descripcion": "Chicken sandwich con salsa ranch + papas + bebida",
+            "precio": 8.69,
+            "sku": "CMB003",
+            "categoria": "combo",
+            "atributos_requeridos": {
+                "acompanamiento": {
+                    "nombre": "¿Qué papas prefieres?",
+                    "opciones": {
+                        "Papas Normales": {"id": "ACP001", "descripcion": "Papas fritas clásicas"},
+                        "Crisscut Fries": {"id": "ACP002", "descripcion": "Papas en forma de rejilla"},
+                        "Onion Rings": {"id": "ACP003", "descripcion": "Aros de cebolla"}
+                    }
+                },
+                "bebida": {
+                    "nombre": "¿Qué bebida quieres?",
+                    "opciones": {
+                        "Coca-Cola": {"id": "BEB001", "descripcion": "Coca-Cola clásica"},
+                        "Fanta": {"id": "BEB002", "descripcion": "Fanta naranja"},
+                        "Sprite": {"id": "BEB003", "descripcion": "Sprite lima-limón"}
+                    }
+                }
+            }
         }
     }
 }
@@ -212,39 +345,39 @@ pedidos_en_proceso = {}
 selecciones_pendientes = {}
 
 
-def consultar_menu_kfc_tool(categoria: Optional[str] = None) -> Dict[str, Any]:
+def consultar_menu_carls_jr_tool(categoria: Optional[str] = None) -> Dict[str, Any]:
     """
-    Consultar el menú completo de KFC o por categoría específica.
+    Consultar el menú completo de Carl's Jr o por categoría específica.
 
     Args:
-        categoria: Categoría específica (SOLO_PIEZAS, EN_COMBO)
+        categoria: Categoría específica (PROMOCIONES_Y_PACKS, HAMBURGUESAS_A_LA_PARRILLA, ANGUS_MEGA_BURGER, FRANGO, COMBOS)
 
     Returns:
-        Información del menú KFC
+        Información del menú Carl's Jr
     """
-    logger.info(f"Consultando menú KFC - categoría: {categoria}")
+    logger.info(f"Consultando menú Carl's Jr - categoría: {categoria}")
     
-    if categoria and categoria.upper() in KFC_MENU:
+    if categoria and categoria.upper() in CARLS_JR_MENU:
         return {
             "categoria": categoria.upper(),
-            "productos": KFC_MENU[categoria.upper()],
+            "productos": CARLS_JR_MENU[categoria.upper()],
             "mensaje": f"Aquí tienes los productos de {categoria.replace('_', ' ').title()}"
         }
     
     return {
-        "menu_completo": KFC_MENU,
-        "categorias": ["SOLO_PIEZAS", "EN_COMBO"],
-        "mensaje": "¡Bienvenido a KFC! Estos son nuestros especiales de Miércoles de KFC"
+        "menu_completo": CARLS_JR_MENU,
+        "categorias": ["PROMOCIONES_Y_PACKS", "HAMBURGUESAS_A_LA_PARRILLA", "ANGUS_MEGA_BURGER", "FRANGO", "COMBOS"],
+        "mensaje": "¡Bienvenido a Carl's Jr! Estas son nuestras deliciosas hamburguesas a la parrilla"
     }
 
 
 def iniciar_seleccion_producto_tool(session_id: str, nombre_producto: str) -> Dict[str, Any]:
     """
-    Iniciar el proceso de selección de un producto KFC con sus atributos.
+    Iniciar el proceso de selección de un producto Carl's Jr con sus atributos.
 
     Args:
         session_id: ID de la sesión del cliente
-        nombre_producto: Nombre del producto KFC a configurar
+        nombre_producto: Nombre del producto Carl's Jr a configurar
 
     Returns:
         Primera pregunta sobre atributos o confirmación si no requiere atributos
@@ -255,14 +388,14 @@ def iniciar_seleccion_producto_tool(session_id: str, nombre_producto: str) -> Di
     producto_encontrado = None
     categoria_producto = None
     
-    for categoria, productos in KFC_MENU.items():
+    for categoria, productos in CARLS_JR_MENU.items():
         if nombre_producto in productos:
             producto_encontrado = productos[nombre_producto]
             categoria_producto = categoria
             break
     
     if not producto_encontrado:
-        return {"error": f"Producto '{nombre_producto}' no encontrado en el menú KFC"}
+        return {"error": f"Producto '{nombre_producto}' no encontrado en el menú Carl's Jr"}
     
     # Inicializar selección pendiente
     if session_id not in selecciones_pendientes:
@@ -297,7 +430,7 @@ def iniciar_seleccion_producto_tool(session_id: str, nombre_producto: str) -> Di
         "pregunta": atributo_info["nombre"],
         "opciones": list(atributo_info["opciones"].keys()),
         "opciones_detalle": opciones_texto,
-        "mensaje": f"¡Perfecto! Has elegido {nombre_producto} por S/ {producto_encontrado['precio']:.2f}. Ahora necesito que elijas: {atributo_info['nombre']}"
+        "mensaje": f"¡Perfecto! Has elegido {nombre_producto} por ${producto_encontrado['precio']:.2f}. Ahora necesito que elijas: {atributo_info['nombre']}"
     }
 
 
@@ -307,7 +440,7 @@ def seleccionar_atributo_tool(session_id: str, atributo: str, valor: str) -> Dic
 
     Args:
         session_id: ID de la sesión del cliente
-        atributo: Nombre del atributo (receta, complemento, bebida)
+        atributo: Nombre del atributo (punto_coccion, acompanamiento, bebida, salsa)
         valor: Valor seleccionado para el atributo
 
     Returns:
@@ -319,7 +452,7 @@ def seleccionar_atributo_tool(session_id: str, atributo: str, valor: str) -> Dic
         return {"error": "No hay producto en selección. Primero elige un producto."}
     
     seleccion = selecciones_pendientes[session_id]
-    producto_info = KFC_MENU[seleccion["categoria"]][seleccion["producto"]]
+    producto_info = CARLS_JR_MENU[seleccion["categoria"]][seleccion["producto"]]
     
     # Validar que el atributo existe y el valor es válido
     if atributo not in producto_info.get("atributos_requeridos", {}):
@@ -454,9 +587,9 @@ def consultar_pedido_actual_tool(session_id: str) -> Dict[str, Any]:
     }
 
 
-def sugerir_complementos_kfc_tool(productos_actuales: List[str]) -> Dict[str, Any]:
+def sugerir_complementos_carls_jr_tool(productos_actuales: List[str]) -> Dict[str, Any]:
     """
-    Sugerir productos adicionales basados en el pedido actual.
+    Sugerir productos adicionales basados en el pedido actual de Carl's Jr.
 
     Args:
         productos_actuales: Lista de productos ya en el pedido
@@ -464,42 +597,54 @@ def sugerir_complementos_kfc_tool(productos_actuales: List[str]) -> Dict[str, An
     Returns:
         Sugerencias de productos adicionales
     """
-    logger.info(f"Generando sugerencias KFC para productos: {productos_actuales}")
+    logger.info(f"Generando sugerencias Carl's Jr para productos: {productos_actuales}")
     
-    tiene_solo_piezas = any("MDK" in prod and "COMBO" not in prod for prod in productos_actuales)
-    tiene_combo = any("COMBO" in prod for prod in productos_actuales)
+    tiene_hamburguesa_individual = any("Famous Star" in prod or "Big Carl" in prod or "Western" in prod for prod in productos_actuales if "Combo" not in prod)
+    tiene_combo = any("Combo" in prod for prod in productos_actuales)
+    tiene_pack = any("Pack" in prod for prod in productos_actuales)
+    tiene_angus = any("Angus" in prod for prod in productos_actuales)
     
     sugerencias = []
     
-    if tiene_solo_piezas:
+    if tiene_hamburguesa_individual and not tiene_combo:
         sugerencias.extend([
-            "¿Te gustaría convertir tu pedido en combo? ¡Incluye complemento y bebida por solo S/ 10.00 más!",
-            "¿Qué tal si agregamos más piezas? Tenemos ofertas especiales en MDK 8, 10 o 12 piezas."
+            "¿Te gustaría convertir tu hamburguesa en combo? ¡Incluye papas y bebida por solo $3.50 más!",
+            "¿Qué tal agregar unas Crisscut Fries? Son nuestras papas especiales en forma de rejilla."
         ])
     
-    if not tiene_combo and not tiene_solo_piezas:
+    if not tiene_combo and not tiene_hamburguesa_individual and not tiene_pack:
         sugerencias.extend([
-            "Te recomiendo nuestro MDK 6 Piezas Combo por S/ 29.90 - ¡6 piezas + complemento + bebida!",
-            "¿Prefieres solo las piezas? MDK 6 Piezas por S/ 19.90 es una excelente opción."
+            "Te recomiendo nuestro Combo Famous Star por $8.90 - ¡hamburguesa + papas + bebida!",
+            "¿O prefieres probar el BBQ Pack por $8.90? Incluye hamburguesa, papas y Chicken Stars.",
+            "Para algo premium, prueba el Big Carl por $7.10 - ¡nuestra hamburguesa más grande!"
+        ])
+    
+    if tiene_combo and not tiene_angus:
+        sugerencias.extend([
+            "¿Te gustaría probar nuestras hamburguesas Angus premium? Son con carne de mayor calidad.",
+            "¿Qué tal agregar Chicken Stars como acompañamiento? Son perfectos para compartir."
         ])
     
     if len(productos_actuales) == 0:
         sugerencias.extend([
-            "¡Bienvenido a KFC! Te recomiendo nuestros especiales de Miércoles de KFC.",
-            "¿Qué te parece nuestro MDK 6 Piezas Combo? ¡El favorito de nuestros clientes!"
+            "¡Bienvenido a Carl's Jr! Te recomiendo nuestra Famous Star con Queso - ¡nuestra hamburguesa estrella!",
+            "¿Qué te parece nuestro BBQ Pack? Es una excelente oferta completa por $8.90.",
+            "Si tienes mucha hambre, el Big Carl es perfecto - ¡nuestra hamburguesa más grande!"
         ])
     
     return {
-        "tiene_solo_piezas": tiene_solo_piezas,
+        "tiene_hamburguesa_individual": tiene_hamburguesa_individual,
         "tiene_combo": tiene_combo,
+        "tiene_pack": tiene_pack,
+        "tiene_angus": tiene_angus,
         "sugerencias": sugerencias,
-        "mensaje": "¿Te gustaría agregar algo más a tu pedido KFC?"
+        "mensaje": "¿Te gustaría agregar algo más a tu pedido Carl's Jr?"
     }
 
 
-def finalizar_pedido_kfc_tool(session_id: str) -> Dict[str, Any]:
+def finalizar_pedido_carls_jr_tool(session_id: str) -> Dict[str, Any]:
     """
-    Finalizar el pedido KFC y preparar los datos para procesar.
+    Finalizar el pedido Carl's Jr y preparar los datos para procesar.
 
     Args:
         session_id: ID de la sesión del cliente
@@ -507,7 +652,7 @@ def finalizar_pedido_kfc_tool(session_id: str) -> Dict[str, Any]:
     Returns:
         Datos del pedido para procesar
     """
-    logger.info(f"Finalizando pedido KFC - Session: {session_id}")
+    logger.info(f"Finalizando pedido Carl's Jr - Session: {session_id}")
     
     if session_id not in pedidos_en_proceso:
         return {
@@ -543,7 +688,7 @@ def finalizar_pedido_kfc_tool(session_id: str) -> Dict[str, Any]:
         "orderItems": order_items,
         "total": pedido["total"],
         "resumen_pedido": pedido,
-        "mensaje": "Pedido KFC listo para procesar"
+        "mensaje": "Pedido Carl's Jr listo para procesar"
     }
 
 
@@ -557,7 +702,7 @@ def limpiar_pedido_tool(session_id: str) -> Dict[str, Any]:
     Returns:
         Confirmación de limpieza
     """
-    logger.info(f"Limpiando pedido KFC - Session: {session_id}")
+    logger.info(f"Limpiando pedido Carl's Jr - Session: {session_id}")
     
     # Limpiar pedido
     pedido_limpiado = False
@@ -577,9 +722,9 @@ def limpiar_pedido_tool(session_id: str) -> Dict[str, Any]:
     return {"success": True, "mensaje": "No había pedido para cancelar"}
 
 
-def calcular_precio_productos_kfc_tool(productos: List[str]) -> Dict[str, Any]:
+def calcular_precio_productos_carls_jr_tool(productos: List[str]) -> Dict[str, Any]:
     """
-    Calcular el precio total de una lista de productos KFC.
+    Calcular el precio total de una lista de productos Carl's Jr.
 
     Args:
         productos: Lista de nombres de productos
@@ -587,7 +732,7 @@ def calcular_precio_productos_kfc_tool(productos: List[str]) -> Dict[str, Any]:
     Returns:
         Cálculo de precios individuales y total
     """
-    logger.info(f"Calculando precios KFC para productos: {productos}")
+    logger.info(f"Calculando precios Carl's Jr para productos: {productos}")
     
     resultados = []
     total = 0.0
@@ -597,7 +742,7 @@ def calcular_precio_productos_kfc_tool(productos: List[str]) -> Dict[str, Any]:
         categoria_encontrada = None
         sku = None
         
-        for categoria, items in KFC_MENU.items():
+        for categoria, items in CARLS_JR_MENU.items():
             if producto in items:
                 precio = items[producto]["precio"]
                 categoria_encontrada = categoria
@@ -610,28 +755,28 @@ def calcular_precio_productos_kfc_tool(productos: List[str]) -> Dict[str, Any]:
                 "categoria": categoria_encontrada,
                 "precio": precio,
                 "sku": sku,
-                "precio_formateado": f"S/ {precio:.2f}"
+                "precio_formateado": f"${precio:.2f}"
             })
             total += precio
         else:
             resultados.append({
                 "producto": producto,
-                "error": "Producto no encontrado en menú KFC"
+                "error": "Producto no encontrado en menú Carl's Jr"
             })
     
     return {
         "productos": resultados,
         "total": total,
-        "total_formateado": f"S/ {total:.2f}"
+        "total_formateado": f"${total:.2f}"
     }
 
 
 def finalize_order_tool(order_items: List[Dict[str, Any]]) -> Dict[str, Any]:
     """
-    Procesar el pedido final de KFC.
+    Procesar el pedido final de Carl's Jr.
 
     Args:
-        order_items: Lista de items del pedido con formato extendido para KFC
+        order_items: Lista de items del pedido con formato extendido para Carl's Jr
 
     Returns:
         Resultado del procesamiento del pedido
@@ -639,7 +784,7 @@ def finalize_order_tool(order_items: List[Dict[str, Any]]) -> Dict[str, Any]:
     import random
     import time
     
-    logger.info(f"Procesando pedido final KFC con items: {order_items}")
+    logger.info(f"Procesando pedido final Carl's Jr con items: {order_items}")
     
     # Validar formato de order_items
     if not isinstance(order_items, list):
@@ -662,25 +807,25 @@ def finalize_order_tool(order_items: List[Dict[str, Any]]) -> Dict[str, Any]:
     
     # Simular éxito en 95% de los casos
     if random.random() < 0.95:
-        order_id = f"KFC-{random.randint(100000, 999999)}"
+        order_id = f"CJR-{random.randint(100000, 999999)}"
         total_items = sum(item["quantity"] for item in order_items)
         
-        logger.info(f"Pedido KFC procesado exitosamente - ID: {order_id}")
+        logger.info(f"Pedido Carl's Jr procesado exitosamente - ID: {order_id}")
         
         return {
             "status": "SUCCESS",
             "orderId": order_id,
-            "message": "¡Pedido KFC procesado exitosamente!",
+            "message": "¡Pedido Carl's Jr procesado exitosamente!",
             "items": order_items,
             "totalItems": total_items,
-            "estimatedTime": "20-25 minutos",
-            "restaurant": "KFC"
+            "estimatedTime": "15-20 minutos",
+            "restaurant": "Carl's Jr"
         }
     else:
-        logger.warning("Simulando error en procesamiento de pedido KFC")
+        logger.warning("Simulando error en procesamiento de pedido Carl's Jr")
         
         return {
             "status": "ERROR",
-            "error": "Error en el sistema de pedidos KFC",
+            "error": "Error en el sistema de pedidos Carl's Jr",
             "message": "Por favor intenta nuevamente en unos momentos"
         }

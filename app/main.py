@@ -47,7 +47,6 @@ def start_agent_session(session_id, is_audio=False):
 
     # Set response modality
     modality = "AUDIO" if is_audio else "TEXT"
-
     # Create speech config with voice settings
     speech_config = types.SpeechConfig(
         language_code="es-ES",

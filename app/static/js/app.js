@@ -106,10 +106,25 @@ function connectWebsocket() {
       if (currentMessageId && role === "model") {
         const existingMessage = document.getElementById(currentMessageId);
         if (existingMessage) {
-          // Append the text without adding extra spaces
-          // Use a span element to maintain proper text flow
-          const textNode = document.createTextNode(message_from_server.data);
-          existingMessage.appendChild(textNode);
+          // For streaming messages, accumulate text and re-parse markdown
+          const audioIcon = existingMessage.querySelector(".audio-icon");
+          const currentText = existingMessage.dataset.rawText || "";
+          const newText = currentText + message_from_server.data;
+          existingMessage.dataset.rawText = newText;
+          
+          // Parse markdown and update content
+          const parsedHtml = parseMarkdown(newText);
+          existingMessage.innerHTML = "";
+          
+          // Re-add audio icon if it existed
+          if (audioIcon) {
+            existingMessage.appendChild(audioIcon);
+          }
+          
+          // Add parsed content
+          const contentDiv = document.createElement("span");
+          contentDiv.innerHTML = parsedHtml;
+          existingMessage.appendChild(contentDiv);
 
           // Scroll to the bottom
           messagesDiv.scrollTop = messagesDiv.scrollHeight;
@@ -126,6 +141,9 @@ function connectWebsocket() {
       messageElem.className =
         role === "user" ? "user-message" : "agent-message";
 
+      // Store raw text for streaming accumulation
+      messageElem.dataset.rawText = message_from_server.data;
+
       // Add audio icon for model messages if audio is enabled
       if (is_audio && role === "model") {
         const audioIcon = document.createElement("span");
@@ -133,10 +151,19 @@ function connectWebsocket() {
         messageElem.appendChild(audioIcon);
       }
 
-      // Add the text content
-      messageElem.appendChild(
-        document.createTextNode(message_from_server.data)
-      );
+      // Add the text content with markdown parsing
+      if (role === "user") {
+        // User messages are plain text
+        messageElem.appendChild(
+          document.createTextNode(message_from_server.data)
+        );
+      } else {
+        // Agent messages may contain markdown
+        const parsedHtml = parseMarkdown(message_from_server.data);
+        const contentDiv = document.createElement("span");
+        contentDiv.innerHTML = parsedHtml;
+        messageElem.appendChild(contentDiv);
+      }
 
       // Add the message to the DOM
       messagesDiv.appendChild(messageElem);
@@ -341,6 +368,53 @@ function audioRecorderHandler(pcmData) {
     // Only log ~1% of audio chunks
     console.log("[CLIENT TO AGENT] sent audio data");
   }
+}
+
+// Simple markdown parser for basic formatting
+function parseMarkdown(text) {
+  if (!text) return text;
+  
+  let html = text;
+  
+  // Convert **bold** to <strong>bold</strong>
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  
+  // Convert bullet lists - handle multiple list items
+  const lines = html.split('\n');
+  let inList = false;
+  let result = [];
+  
+  for (let line of lines) {
+    const trimmedLine = line.trim();
+    
+    if (trimmedLine.startsWith('* ')) {
+      if (!inList) {
+        result.push('<ul>');
+        inList = true;
+      }
+      // Remove the '* ' and wrap in <li>
+      const listItem = trimmedLine.substring(2);
+      result.push(`<li>${listItem}</li>`);
+    } else {
+      if (inList) {
+        result.push('</ul>');
+        inList = false;
+      }
+      if (trimmedLine) {
+        result.push(line);
+      }
+    }
+  }
+  
+  // Close any open list
+  if (inList) {
+    result.push('</ul>');
+  }
+  
+  // Join lines and handle line breaks
+  html = result.join('\n').replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+  
+  return html;
 }
 
 // Encode an array buffer with Base64

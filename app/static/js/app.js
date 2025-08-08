@@ -65,14 +65,18 @@ function connectWebsocket() {
       typingIndicator.classList.add("visible");
     }
 
-    // Check if the turn is complete
-    if (
-      message_from_server.turn_complete &&
-      message_from_server.turn_complete === true
-    ) {
+    // Check if the turn is complete or interrupted
+    if (message_from_server.turn_complete || message_from_server.interrupted) {
       // Reset currentMessageId to ensure the next message gets a new element
       currentMessageId = null;
       typingIndicator.classList.remove("visible");
+      
+      // Clear audio buffer if interrupted (for barge-in)
+      if (message_from_server.interrupted && audioPlayerNode) {
+        audioPlayerNode.port.postMessage({ command: "endOfAudio" });
+        console.log("[BARGE-IN] Interrupted - clearing audio buffer");
+      }
+      
       return;
     }
 

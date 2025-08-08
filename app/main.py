@@ -12,8 +12,7 @@ from fastapi.staticfiles import StaticFiles
 from google.adk.agents import LiveRequestQueue
 from google.adk.agents.run_config import RunConfig
 from google.adk.events.event import Event
-from google.adk.runners import Runner
-from google.adk.sessions.in_memory_session_service import InMemorySessionService
+from google.adk.runners import InMemoryRunner
 from google.genai import types
 from food.agent import root_agent
 
@@ -25,24 +24,21 @@ from food.agent import root_agent
 load_dotenv()
 
 APP_NAME = "KFC - Asistente KFC Miércoles de KFC"
-session_service = InMemorySessionService()
 
 
-def start_agent_session(session_id, is_audio=False):
+async def start_agent_session(session_id, is_audio=False):
     """Starts an agent session"""
 
-    # Create a Session
-    session = session_service.create_session(
-        app_name=APP_NAME,
-        user_id=session_id,
-        session_id=session_id,
-    )
-
     # Create a Runner
-    runner = Runner(
+    runner = InMemoryRunner(
         app_name=APP_NAME,
         agent=root_agent,
-        session_service=session_service,
+    )
+
+    # Create a Session
+    session = await runner.session_service.create_session(
+        app_name=APP_NAME,
+        user_id=session_id,
     )
 
     # Set response modality
@@ -60,8 +56,11 @@ def start_agent_session(session_id, is_audio=False):
     # Create run config with basic settings
     config = {"response_modalities": [modality], "speech_config": speech_config}
 
-    # Add output_audio_transcription when audio is enabled to get both audio and text
+    # Add audio transcription when audio is enabled
     if is_audio:
+        # Enable input transcription for barge-in detection
+        config["input_audio_transcription"] = {}
+        # Enable output transcription to get both audio and text
         config["output_audio_transcription"] = {}
 
     run_config = RunConfig(**config)
@@ -82,8 +81,7 @@ async def agent_to_client_messaging(
     websocket: WebSocket, live_events: AsyncIterable[Event | None]
 ):
     """Agent to client communication"""
-    while True:
-        async for event in live_events:
+    async for event in live_events:
             if event is None:
                 continue
 
@@ -233,7 +231,7 @@ async def websocket_endpoint(
     print(f"Client #{session_id} connected, audio mode: {is_audio}")
 
     # Start agent session
-    live_events, live_request_queue = start_agent_session(
+    live_events, live_request_queue = await start_agent_session(
         session_id, is_audio == "true"
     )
 
@@ -244,7 +242,12 @@ async def websocket_endpoint(
     client_to_agent_task = asyncio.create_task(
         client_to_agent_messaging(websocket, live_request_queue)
     )
-    await asyncio.gather(agent_to_client_task, client_to_agent_task)
+    # Wait until the websocket is disconnected or an error occurs
+    tasks = [agent_to_client_task, client_to_agent_task]
+    await asyncio.wait(tasks, return_when=asyncio.FIRST_EXCEPTION)
+
+    # Close LiveRequestQueue
+    live_request_queue.close()
 
     # Disconnected
     print(f"Client #{session_id} disconnected")
